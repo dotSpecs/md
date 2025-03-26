@@ -12,26 +12,46 @@ container {
 /* 一级标题样式 */
 h1 {
 }
+h1 .content {
+
+}
 /* 二级标题样式 */
 h2 {
+}
+h2 .content {
+
 }
 /* 三级标题样式 */
 h3 {
 }
+h3 .content {
+
+}
 /* 四级标题样式 */
 h4 {
+}
+h4 .content {
+
 }
 /* 五级标题样式 */
 h5 {
 }
+h5 .content {
+
+}
 /* 六级标题样式 */
 h6 {
+}
+h6 .content {
+
 }
 /* 图片样式 */
 image {
 }
 /* 引用样式 */
 blockquote {
+}
+blockquote .quote-mark{
 }
 /* 引用段落样式 */
 blockquote_p {

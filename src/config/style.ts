@@ -53,6 +53,16 @@ export const colorOptions: IConfigOption[] = [
     desc: `稳重冷静`,
   },
   {
+    label: `蔷薇紫`,
+    value: `#916dd5`,
+    desc: `浪漫梦幻`,
+  },
+  {
+    label: `科技蓝`,
+    value: `#4286f4`,
+    desc: `科技未来`,
+  },
+  {
     label: `翡翠绿`,
     value: `#009874`,
     desc: `自然平衡`,

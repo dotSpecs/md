@@ -82,12 +82,22 @@ function getStyles(styleMapping: ThemeStyles, tokenName: string, addition: strin
   return `style="${styles}${addition}"`
 }
 
+function getStyleValue(styleMapping: ThemeStyles, tokenName: string, property: string): string {
+  console.log(styleMapping, tokenName, property)
+  const dict = styleMapping[tokenName as keyof ThemeStyles]
+  if (!dict) {
+    console.log(`no dict`)
+    return ``
+  }
+  return (dict[property as keyof typeof dict] as string) || ``
+}
+
 function buildFootnoteArray(footnotes: [number, string, string][]): string {
   return footnotes
     .map(([index, title, link]) =>
       link === title
-        ? `<code style="font-size: 90%; opacity: 0.6;">[${index}]</code>: <i style="word-break: break-all">${title}</i><br/>`
-        : `<code style="font-size: 90%; opacity: 0.6;">[${index}]</code> ${title}: <i style="word-break: break-all">${link}</i><br/>`,
+        ? `<code style="font-size: 90%; opacity: 0.6;">[${index}]</code>: <i style="word-break: break-all; font-weight: bold;">${title}</i><br/>`
+        : `<code style="font-size: 90%; opacity: 0.6;">[${index}]</code> <span style="font-weight: bold;">${title}</span>: <i style="word-break: break-all;">${link}</i><br/>`,
     )
     .join(`\n`)
 }
@@ -198,8 +208,10 @@ export function initRenderer(opts: IOpts) {
     }
 
     return (
-      styledContent(`h4`, `引用链接`)
-      + styledContent(`footnotes`, buildFootnoteArray(footnotes), `p`)
+      `<blockquote ${styles(`blockquote`)}>${
+        styledContent(`h4`, `引用链接`)
+      }${styledContent(`footnotes`, buildFootnoteArray(footnotes), `p`)
+      }</blockquote>`
     )
   }
 
@@ -207,7 +219,24 @@ export function initRenderer(opts: IOpts) {
     heading({ tokens, depth }: Tokens.Heading) {
       const text = this.parser.parseInline(tokens)
       const tag = `h${depth}`
-      return styledContent(tag, text)
+
+      // 获取各个部分的样式
+      const contentStyles = styles(`${tag} .content`)
+      const prefixStyles = styles(`${tag} .prefix`)
+      const suffixStyles = styles(`${tag} .suffix`)
+
+      // 获取 content 属性值
+      const prefixContent = getStyleValue(styleMapping, `${tag} .prefix`, `content`) || ``
+      const suffixContent = getStyleValue(styleMapping, `${tag} .suffix`, `content`) || ``
+
+      console.log(styleMapping, prefixContent)
+
+      const content = `
+        <span class="prefix" ${prefixStyles}>${prefixContent}</span>
+        <span class="content" ${contentStyles}>${text}</span>
+        <span class="suffix" ${suffixStyles}>${suffixContent}</span>
+      `
+      return styledContent(tag, content)
     },
 
     paragraph({ tokens }: Tokens.Paragraph): string {
@@ -223,7 +252,12 @@ export function initRenderer(opts: IOpts) {
     blockquote({ tokens }: Tokens.Blockquote): string {
       let text = this.parser.parse(tokens)
       text = text.replace(/<p .*?>/g, `<p ${styles(`blockquote_p`)}>`)
-      return styledContent(`blockquote`, text)
+
+      const contentStyles = styles(`blockquote .quote-mark`)
+      const markContent = getStyleValue(styleMapping, `blockquote .quote-mark`, `content`) || ``
+
+      const quote = `<span class="quote-mark" ${contentStyles}>${markContent}</span>`
+      return styledContent(`blockquote`, `${quote}${text}`, `blockquote`)
     },
 
     code({ text, lang = `` }: Tokens.Code): string {
@@ -254,9 +288,11 @@ export function initRenderer(opts: IOpts) {
     },
 
     listitem(item: Tokens.ListItem): string {
-      const prefix = isOrdered ? `${listIndex + 1}. ` : `• `
+      const dotStyle = getStyleValue(styleMapping, `listitem`, `--md-primary-color`) || ``
+      const dot = getStyleValue(styleMapping, `listitem`, `content`) || ``
+      const prefix = isOrdered ? `${listIndex + 1}. ` : (dot ? `${dot}` : `• `)
       const content = item.tokens.map(t => (this[t.type as keyof Renderer] as <T>(token: T) => string)(t)).join(``)
-      return styledContent(`listitem`, `${prefix}${content}`, `li`)
+      return styledContent(`listitem`, dot ? `<span style='color: ${dotStyle}'>${prefix}</span><span>${content}</span>` : `${prefix}${content}`, `li`)
     },
 
     list({ ordered, items, start = 1 }: Tokens.List): string {

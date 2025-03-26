@@ -9,24 +9,30 @@ const defaultTheme: Theme = {
     'line-height': `1.75`,
   },
   block: {
-    container: {},
+    'container': {},
     // 一级标题
-    h1: {
+    'h1': {
+      'margin': `2em auto 1em`,
+      'font-size': `1.3em`,
+    },
+    'h1 .content': {
       'display': `table`,
       'padding': `0 1em`,
       'border-bottom': `2px solid var(--md-primary-color)`,
-      'margin': `2em auto 1em`,
       'color': `hsl(var(--foreground))`,
-      'font-size': `1.2em`,
+      'font-size': `1.3em`,
       'font-weight': `bold`,
       'text-align': `center`,
     },
 
     // 二级标题
-    h2: {
+    'h2': {
+      'margin': `2em auto 1em`,
+      'font-size': `1.2em`,
+    },
+    'h2 .content': {
       'display': `table`,
       'padding': `0 0.2em`,
-      'margin': `4em auto 2em`,
       'color': `#fff`,
       'background': `var(--md-primary-color)`,
       'font-size': `1.2em`,
@@ -35,10 +41,13 @@ const defaultTheme: Theme = {
     },
 
     // 三级标题
-    h3: {
+    'h3': {
+      'margin': `2em auto 1em`,
+      'font-size': `1.1em`,
+    },
+    'h3 .content': {
       'padding-left': `8px`,
       'border-left': `3px solid var(--md-primary-color)`,
-      'margin': `2em 8px 0.75em 0`,
       'color': `hsl(var(--foreground))`,
       'font-size': `1.1em`,
       'font-weight': `bold`,
@@ -46,37 +55,49 @@ const defaultTheme: Theme = {
     },
 
     // 四级标题
-    h4: {
-      'margin': `2em 8px 0.5em`,
+    'h4': {
+      'margin': `1.5em auto 0.5em`,
+      'font-size': `1em`,
+      'color': `var(--md-primary-color)`,
+    },
+    'h4 .content': {
       'color': `var(--md-primary-color)`,
       'font-size': `1em`,
       'font-weight': `bold`,
     },
 
     // 五级标题
-    h5: {
-      'margin': `1.5em 8px 0.5em`,
+    'h5': {
+      'margin': `1.5em auto 0.5em`,
+      'font-size': `1em`,
+      'color': `var(--md-primary-color)`,
+    },
+    'h5 .content': {
       'color': `var(--md-primary-color)`,
       'font-size': `1em`,
       'font-weight': `bold`,
     },
 
     // 六级标题
-    h6: {
-      'margin': `1.5em 8px 0.5em`,
+    'h6': {
+      'margin': `1.5em auto 0.5em`,
+      'font-size': `1em`,
+      'color': `var(--md-primary-color)`,
+    },
+    'h6 .content': {
       'font-size': `1em`,
       'color': `var(--md-primary-color)`,
     },
 
     // 段落
-    p: {
+    'p': {
       'margin': `1.5em 8px`,
       'letter-spacing': `0.1em`,
       'color': `hsl(var(--foreground))`,
     },
 
     // 引用
-    blockquote: {
+    'blockquote': {
       'font-style': `normal`,
       'padding': `1em`,
       'border-left': `4px solid var(--md-primary-color)`,
@@ -86,74 +107,78 @@ const defaultTheme: Theme = {
       'margin-bottom': `1em`,
     },
 
+    'blockquote .quote-mark': {
+
+    },
+
     // 引用内容
-    blockquote_p: {
+    'blockquote_p': {
       'display': `block`,
       'font-size': `1em`,
       'letter-spacing': `0.1em`,
       'color': `hsl(var(--foreground))`,
     },
 
-    blockquote_note: {
+    'blockquote_note': {
     },
 
-    blockquote_tip: {
+    'blockquote_tip': {
     },
 
-    blockquote_important: {
+    'blockquote_important': {
     },
 
-    blockquote_warning: {
+    'blockquote_warning': {
     },
 
-    blockquote_caution: {
+    'blockquote_caution': {
     },
 
     // GFM 警告块标题
-    blockquote_title: {
+    'blockquote_title': {
       'display': `flex`,
       'align-items': `center`,
       'gap': `0.5em`,
       'margin-bottom': `0.5em`,
     },
 
-    blockquote_title_note: {
+    'blockquote_title_note': {
       color: `#478be6`,
     },
 
-    blockquote_title_tip: {
+    'blockquote_title_tip': {
       color: `#57ab5a`,
     },
 
-    blockquote_title_important: {
+    'blockquote_title_important': {
       color: `#986ee2`,
     },
 
-    blockquote_title_warning: {
+    'blockquote_title_warning': {
       color: `#c69026`,
     },
 
-    blockquote_title_caution: {
+    'blockquote_title_caution': {
       color: `#e5534b`,
     },
 
-    blockquote_p_note: {
+    'blockquote_p_note': {
     },
 
-    blockquote_p_tip: {
+    'blockquote_p_tip': {
     },
 
-    blockquote_p_important: {
+    'blockquote_p_important': {
     },
 
-    blockquote_p_warning: {
+    'blockquote_p_warning': {
     },
 
-    blockquote_p_caution: {
+    'blockquote_p_caution': {
     },
 
     // 代码块
-    code_pre: {
+    'code_pre': {
       'font-size': `14px`,
       'overflow-x': `auto`,
       'border-radius': `8px`,
@@ -163,14 +188,14 @@ const defaultTheme: Theme = {
     },
 
     // 行内代码
-    code: {
+    'code': {
       'margin': 0,
       'white-space': `nowrap`,
       'font-family': `Menlo, Operator Mono, Consolas, Monaco, monospace`,
     },
 
     // 图片
-    image: {
+    'image': {
       'display': `block`,
       'width': `100% !important`,
       'margin': `0.1em auto 0.5em`,
@@ -178,32 +203,32 @@ const defaultTheme: Theme = {
     },
 
     // 有序列表
-    ol: {
+    'ol': {
       'padding-left': `1em`,
       'margin-left': `0`,
       'color': `hsl(var(--foreground))`,
     },
 
     // 无序列表
-    ul: {
+    'ul': {
       'list-style': `circle`,
       'padding-left': `1em`,
       'margin-left': `0`,
       'color': `hsl(var(--foreground))`,
     },
 
-    footnotes: {
+    'footnotes': {
       'margin': `0.5em 8px`,
       'font-size': `80%`,
       'color': `hsl(var(--foreground))`,
     },
 
-    figure: {
+    'figure': {
       margin: `1.5em 8px`,
       color: `hsl(var(--foreground))`,
     },
 
-    hr: {
+    'hr': {
       'border-style': `solid`,
       'border-width': `2px 0 0`,
       'border-color': `rgba(0,0,0,0.1)`,
@@ -291,36 +316,36 @@ const graceTheme = toMerged(defaultTheme, {
   },
   block: {
     'container': {},
-    'h1': {
+    'h1 .content': {
       'padding': `0.5em 1em`,
       'border-bottom': `2px solid var(--md-primary-color)`,
       'font-size': `1.4em`,
       'text-shadow': `2px 2px 4px rgba(0,0,0,0.1)`,
     },
 
-    'h2': {
+    'h2 .content': {
       'padding': `0.3em 1em`,
       'border-radius': `8px`,
       'font-size': `1.3em`,
       'box-shadow': `0 4px 6px rgba(0,0,0,0.1)`,
     },
 
-    'h3': {
+    'h3 .content': {
       'padding-left': `12px`,
       'font-size': `1.2em`,
       'border-left': `4px solid var(--md-primary-color)`,
       'border-bottom': `1px dashed var(--md-primary-color)`,
     },
 
-    'h4': {
+    'h4 .content': {
       'font-size': `1.1em`,
     },
 
-    'h5': {
+    'h5 .content': {
       'font-size': `1em`,
     },
 
-    'h6': {
+    'h6 .content': {
       'font-size': `1em`,
     },
 
@@ -434,21 +459,21 @@ const simpleTheme = toMerged(defaultTheme, {
   base: {
   },
   block: {
-    container: {},
-    h1: {
+    'container': {},
+    'h1 .content': {
       'padding': `0.5em 1em`,
       'font-size': `1.4em`,
       'text-shadow': `1px 1px 3px rgba(0,0,0,0.05)`,
     },
 
-    h2: {
+    'h2 .content': {
       'padding': `0.3em 1.2em`,
       'font-size': `1.3em`,
       'border-radius': `8px 24px 8px 24px`,
       'box-shadow': `0 2px 6px rgba(0,0,0,0.06)`,
     },
 
-    h3: {
+    'h3 .content': {
       'padding-left': `12px`,
       'font-size': `1.2em`,
       'border-radius': `6px`,
@@ -460,20 +485,20 @@ const simpleTheme = toMerged(defaultTheme, {
       'background': `color-mix(in srgb, var(--md-primary-color) 8%, transparent)`,
     },
 
-    h4: {
+    'h4 .content': {
       'font-size': `1.1em`,
       'border-radius': `6px`,
     },
 
-    h5: {
+    'h5 .content': {
       'border-radius': `6px`,
     },
 
-    h6: {
+    'h6 .content': {
       'border-radius': `6px`,
     },
 
-    blockquote: {
+    'blockquote': {
       'font-style': `italic`,
       'padding': `1em 1em 1em 2em`,
       'color': `rgba(0,0,0,0.6)`,
@@ -482,84 +507,84 @@ const simpleTheme = toMerged(defaultTheme, {
       'border-right': `0.2px solid rgba(0, 0, 0, 0.04)`,
     },
 
-    blockquote_note: {
+    'blockquote_note': {
       'font-style': `italic`,
     },
 
-    blockquote_tip: {
+    'blockquote_tip': {
       'font-style': `italic`,
     },
 
-    blockquote_important: {
+    'blockquote_important': {
       'font-style': `italic`,
     },
 
-    blockquote_warning: {
+    'blockquote_warning': {
       'font-style': `italic`,
     },
 
-    blockquote_caution: {
+    'blockquote_caution': {
       'font-style': `italic`,
     },
 
-    blockquote_title: {
+    'blockquote_title': {
     },
 
-    blockquote_title_note: {
+    'blockquote_title_note': {
 
     },
 
-    blockquote_title_tip: {
+    'blockquote_title_tip': {
     },
 
-    blockquote_title_important: {
+    'blockquote_title_important': {
     },
 
-    blockquote_title_warning: {
+    'blockquote_title_warning': {
     },
 
-    blockquote_title_caution: {
+    'blockquote_title_caution': {
     },
 
-    blockquote_p_note: {
+    'blockquote_p_note': {
     },
 
-    blockquote_p_tip: {
+    'blockquote_p_tip': {
     },
 
-    blockquote_p_important: {
+    'blockquote_p_important': {
     },
 
-    blockquote_p_warning: {
+    'blockquote_p_warning': {
     },
 
-    blockquote_p_caution: {
+    'blockquote_p_caution': {
     },
 
-    code_pre: {
+    'code_pre': {
       border: `1px solid rgba(0, 0, 0, 0.04)`,
     },
 
-    code: {
+    'code': {
       'white-space': `pre-wrap`,
       'font-family': `'Fira Code', Menlo, Operator Mono, Consolas, Monaco, monospace`,
     },
 
-    image: {
+    'image': {
       'border-radius': `8px`,
       'border': `1px solid rgba(0, 0, 0, 0.04)`,
     },
 
-    ol: {
+    'ol': {
       'padding-left': `1.5em`,
     },
 
-    ul: {
+    'ul': {
       'list-style': `none`,
       'padding-left': `1.5em`,
     },
 
-    hr: {
+    'hr': {
       height: `1px`,
       border: `none`,
       margin: `2em 0`,
@@ -573,10 +598,681 @@ const simpleTheme = toMerged(defaultTheme, {
   },
 })
 
+const auroraTheme = toMerged(defaultTheme, {
+  base: {
+
+  },
+  block: {
+    'container': {
+      'margin': `0px`,
+      'padding': `10px 10px`,
+      'background-attachment': `scroll`,
+      'background-clip': `border-box`,
+      'background-color': `color-mix(in srgb, var(--md-primary-color) 0%, transparent)`,
+      'background-image': `linear-gradient(90deg, color-mix(in srgb, var(--md-primary-color) 10%, transparent) 0%, color-mix(in srgb, var(--md-primary-color) 0%, transparent) 6.76%),
+        linear-gradient(360deg, color-mix(in srgb, var(--md-primary-color) 10%, transparent) 0%, color-mix(in srgb, var(--md-primary-color) 0%, transparent) 9.46%)`,
+      'background-origin': `padding-box`,
+      'background-position-x': `left`,
+      'background-position-y': `top`,
+      'background-repeat': `repeat, repeat`,
+      'background-size': `20px 20px, 20px 20px`,
+    },
+    'h1': {
+
+    },
+
+    'h1 .content': {
+      'display': `inline-block`,
+      'padding': `0`,
+      'border-bottom': `none`,
+      'text-align': `left`,
+      'background-image': `linear-gradient(0deg, var(--md-primary-color) 40%, transparent 40%)`,
+    },
+
+    'h2 .content': {
+      'display': `block`,
+      'padding-left': `10px`,
+      // 'border-radius': `6px`,
+      'border-left': `4px solid var(--md-primary-color)`,
+      'background': `none`,
+      'color': `hsl(var(--foreground))`,
+      'text-align': `left`,
+    },
+
+    'h2 .content strong': {
+      color: `var(--md-primary-color)`,
+    },
+
+    'h3': {
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`,
+    },
+
+    'h3 .prefix': {
+      content: ``,
+    },
+
+    'h3 .content': {
+      'padding-left': `0`,
+      'font-size': `1.1em`,
+      'line-height': `1.5em`,
+      'border-radius': `0`,
+      'border-bottom': `2px solid var(--md-primary-color)`,
+      'border-left': `none`,
+      'border-right': `none`,
+      'border-top': `none`,
+      'background': `none`,
+    },
+
+    'h3 .suffix': {
+    },
+
+    'h3 .content strong': {
+      color: `var(--md-primary-color)`,
+    },
+
+    'h4 .content': {
+      'font-size': `1.1em`,
+      // 'color': `hsl(var(--foreground))`,
+    },
+
+    'h5 .content': {
+      // 'color': `hsl(var(--foreground))`,
+    },
+
+    'h6 .content': {
+      // 'color': `hsl(var(--foreground))`,
+    },
+
+    'p': {
+      margin: `1.5em 0px`,
+    },
+
+    'blockquote': {
+      margin: `1em 0px`,
+      padding: `1em 1em 1em 1em`,
+      color: `hsl(var(--foreground))`,
+      background: `color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
+      border: `1px solid var(--md-primary-color)`,
+    },
+
+    'blockquote .quote-mark': {
+      'content': `❝`,
+      'display': `block`,
+      'color': `var(--md-primary-color)`,
+      'font-size': `1.5em`,
+      'line-height': `1.5em`,
+      'letter-spacing': `0em`,
+      'text-align': `left`,
+      'font-weight': `bold`,
+    },
+
+    'blockquote_note': {
+      // 'font-style': `italic`,
+    },
+
+    'blockquote_p': {
+
+    },
+
+    'blockquote_tip': {
+      // 'font-style': `italic`,
+    },
+
+    'blockquote_important': {
+      // 'font-style': `italic`,
+    },
+
+    'blockquote_warning': {
+      // 'font-style': `italic`,
+    },
+
+    'blockquote_caution': {
+      // 'font-style': `italic`,
+    },
+
+    'blockquote_title': {
+    },
+
+    'blockquote_title_note': {
+
+    },
+
+    'blockquote_title_tip': {
+    },
+
+    'blockquote_title_important': {
+    },
+
+    'blockquote_title_warning': {
+    },
+
+    'blockquote_title_caution': {
+    },
+
+    'blockquote_p_note': {
+    },
+
+    'blockquote_p_tip': {
+    },
+
+    'blockquote_p_important': {
+    },
+
+    'blockquote_p_warning': {
+    },
+
+    'blockquote_p_caution': {
+    },
+
+    'code_pre': {
+      margin: `10px 0px`,
+      border: `1px solid rgba(0, 0, 0, 0.04)`,
+    },
+
+    'code': {
+      // 'white-space': `pre-wrap`,
+      'font-family': `'Fira Code', Menlo, Operator Mono, Consolas, Monaco, monospace`,
+    },
+
+    'image': {
+      border: `1px solid rgba(0, 0, 0, 0.04)`,
+    },
+
+    'ol': {
+      'padding-left': `1em`,
+    },
+
+    'ul': {
+      'list-style': `none`,
+      'padding-left': `1em`,
+    },
+
+    'hr': {
+      height: `0.3em`,
+      border: `none`,
+      margin: `2em 0`,
+      background: `linear-gradient(to right, 
+        transparent,
+        var(--md-primary-color),
+        transparent
+      )`,
+    },
+  },
+  inline: {
+    listitem: {
+      margin: `0.5em 8px`,
+    },
+    codespan: {
+      color: `hsl(from var(--md-primary-color) h s calc(l * 0.9))`,
+    },
+    link: {
+      color: `var(--md-primary-color)`,
+    },
+    wx_link: {
+      color: `var(--md-primary-color)`,
+    },
+    table: {
+      'border-collapse': `collapse`,
+      'text-align': `center`,
+      'margin': `1.5em 0`,
+      'color': `hsl(var(--foreground))`,
+      'border-radius': `6px`,
+      'overflow': `hidden`,
+    },
+
+    thead: {
+      'background': `color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
+      'font-weight': `bold`,
+      'color': `hsl(var(--foreground))`,
+    },
+
+    td: {
+      border: `1px solid color-mix(in srgb, var(--md-primary-color) 20%, transparent)`,
+      padding: `0.5em 1em`,
+      color: `hsl(var(--foreground))`,
+    },
+  },
+
+})
+
+const techTheme = toMerged(defaultTheme, {
+  base: {
+    // 可以在这里设置 --md-primary-color 的值，或者使用默认值
+    '--md-primary-color': `#4286f4`,
+  },
+  block: {
+    'container': {
+      'margin': `0px`,
+      'padding': `10px`,
+      'background-attachment': `scroll`,
+      'background-clip': `border-box`,
+      'background-color': `color-mix(in srgb, var(--md-primary-color) 0%, transparent)`,
+      'background-image': `linear-gradient(90deg, color-mix(in srgb, var(--md-primary-color) 10%, transparent) 0%, color-mix(in srgb, var(--md-primary-color) 0%, transparent) 6.76%),
+        linear-gradient(360deg, color-mix(in srgb, var(--md-primary-color) 10%, transparent) 0%, color-mix(in srgb, var(--md-primary-color) 0%, transparent) 9.46%)`,
+      'background-origin': `padding-box`,
+      'background-position-x': `left`,
+      'background-position-y': `top`,
+      'background-repeat': `repeat, repeat`,
+      'background-size': `20px 20px, 20px 20px`,
+      'letter-spacing': `0.3px`,
+    },
+
+    'h1': {
+      margin: `2em auto 1em`,
+    },
+
+    'h1 .content': {
+      'display': `inline-block`,
+      'padding': `0.4em 0.8em`,
+      'background': `var(--md-primary-color)`,
+      'color': `white`,
+      'font-weight': `600`,
+      'letter-spacing': `1px`,
+      'border-radius': `4px`,
+      'box-shadow': `0 0 8px color-mix(in srgb, var(--md-primary-color) 20%, transparent)`,
+      'text-align': `center`,
+      'border-bottom': `none`,
+    },
+
+    'h2': {
+      margin: `1.8em auto 0.8em`,
+    },
+
+    'h2 .content': {
+      'display': `inline-block`,
+      'padding': `0.3em 0.6em`,
+      'background': `color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
+      'color': `var(--md-primary-color)`,
+      'font-weight': `600`,
+      'letter-spacing': `0.5px`,
+      'border-left': `3px solid var(--md-primary-color)`,
+      'border-radius': `0 4px 4px 0`,
+      'text-align': `left`,
+    },
+
+    'h3': {
+      margin: `1.5em auto 0.8em`,
+      display: `block`,
+    },
+
+    'h3 .content': {
+      'padding-left': `10px`,
+      'border-left': `2px solid var(--md-primary-color)`,
+      'color': `hsl(var(--foreground))`,
+      'font-weight': `500`,
+      'letter-spacing': `0.5px`,
+      'border-bottom': `none`,
+    },
+
+    'h4': {
+      margin: `1.2em auto 0.5em`,
+    },
+
+    'h4 .content': {
+      'color': `var(--md-primary-color)`,
+      'font-weight': `500`,
+      'position': `relative`,
+      'padding-bottom': `5px`,
+      'border-bottom': `1px solid rgba(var(--md-primary-color), 0.3)`,
+    },
+
+    'h5': {
+      margin: `1em auto 0.5em`,
+    },
+
+    'h5 .content': {
+      'color': `hsl(var(--foreground))`,
+      'font-weight': `500`,
+    },
+
+    'h6': {
+      margin: `0.8em auto 0.5em`,
+    },
+
+    'h6 .content': {
+      'color': `hsl(var(--foreground))`,
+      'font-weight': `400`,
+      'font-style': `italic`,
+    },
+
+    'p': {
+      'margin': `1.2em 0px`,
+      'line-height': `1.7`,
+      'color': `hsl(var(--foreground))`,
+    },
+
+    'blockquote': {
+      'background': `rgba(var(--md-primary-color), 0.05)`,
+      'border-left': `4px solid var(--md-primary-color)`,
+      'border-radius': `0 6px 6px 0`,
+      'padding': `1em 1.2em`,
+      'margin': `1.5em 0`,
+    },
+
+    'blockquote .quote-mark': {
+      'content': `❝`,
+      'display': `block`,
+      'color': `var(--md-primary-color)`,
+      'font-size': `1.2em`,
+      'line-height': `1.5em`,
+      'letter-spacing': `0em`,
+      'text-align': `left`,
+      'font-weight': `bold`,
+    },
+
+    'blockquote_p': {
+      'color': `hsl(var(--foreground))`,
+      'letter-spacing': `0.3px`,
+      'line-height': `1.6`,
+    },
+
+    'blockquote_note': {
+      'background': `rgba(var(--md-primary-color), 0.05)`,
+      'border-left': `4px solid var(--md-primary-color)`,
+    },
+
+    'blockquote_tip': {
+      'background': `rgba(var(--md-primary-color), 0.05)`,
+      'border-left': `4px solid var(--md-primary-color)`,
+    },
+
+    'blockquote_important': {
+      'background': `rgba(var(--md-primary-color), 0.05)`,
+      'border-left': `4px solid var(--md-primary-color)`,
+    },
+
+    'blockquote_warning': {
+      'background': `rgba(var(--md-primary-color), 0.05)`,
+      'border-left': `4px solid var(--md-primary-color)`,
+    },
+
+    'blockquote_caution': {
+      'background': `rgba(var(--md-primary-color), 0.05)`,
+      'border-left': `4px solid var(--md-primary-color)`,
+    },
+
+    'blockquote_title': {
+      'display': `flex`,
+      'align-items': `center`,
+      'gap': `0.5em`,
+      'margin-bottom': `0.8em`,
+      'font-weight': `600`,
+      'letter-spacing': `0.3px`,
+      'color': `var(--md-primary-color)`,
+    },
+
+    'code_pre': {
+      'background': `hsl(var(--muted))`,
+      'border-radius': `6px`,
+      'padding': `1em`,
+      'margin': `1.2em 0`,
+      'overflow-x': `auto`,
+      'border': `1px solid color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
+      'font-size': `14px`,
+    },
+
+    'code': {
+      'font-family': `'JetBrains Mono', Menlo, Operator Mono, Consolas, Monaco, monospace`,
+      'line-height': `1.5`,
+    },
+
+    'image': {
+      'display': `block`,
+      'max-width': `100%`,
+      'margin': `1.5em auto`,
+      'border-radius': `6px`,
+      'box-shadow': `0 0 10px color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
+      'border': `1px solid color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
+    },
+
+    'ol': {
+      'padding-left': `1.5em`,
+      'margin': `1em 0`,
+      'color': `hsl(var(--foreground))`,
+    },
+
+    'ul': {
+      'list-style': `none`,
+      'padding-left': `1.5em`,
+      'margin': `1em 0`,
+      'color': `hsl(var(--foreground))`,
+    },
+
+    'hr': {
+      height: `1px`,
+      border: `none`,
+      margin: `2em 0`,
+      background: `linear-gradient(to right, 
+        transparent,
+        var(--md-primary-color),
+        transparent
+      )`,
+      position: `relative`,
+    },
+  },
+  inline: {
+    listitem: {
+      'margin': `0.5em 0`,
+      'color': `hsl(var(--foreground))`,
+      'position': `relative`,
+      'padding-left': `0.5em`,
+    },
+
+    codespan: {
+      'font-family': `'JetBrains Mono', monospace`,
+      'background': `color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
+      'color': `var(--md-primary-color)`,
+      'padding': `2px 5px`,
+      'border-radius': `3px`,
+      'font-size': `90%`,
+    },
+
+    em: {
+      'font-style': `italic`,
+      'color': `hsl(var(--foreground))`,
+    },
+
+    link: {
+      'color': `var(--md-primary-color)`,
+      'text-decoration': `none`,
+      'border-bottom': `1px dashed color-mix(in srgb, var(--md-primary-color) 50%, transparent)`,
+    },
+
+    wx_link: {
+      'color': `var(--md-primary-color)`,
+      'text-decoration': `none`,
+      'border-bottom': `1px dashed color-mix(in srgb, var(--md-primary-color) 50%, transparent)`,
+    },
+
+    strong: {
+      'color': `var(--md-primary-color)`,
+      'font-weight': `700`,
+    },
+
+    table: {
+      'border-collapse': `collapse`,
+      'text-align': `center`,
+      'margin': `1.5em 0`,
+      'color': `hsl(var(--foreground))`,
+      'border-radius': `6px`,
+      'overflow': `hidden`,
+    },
+
+    thead: {
+      'background': `color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
+      'font-weight': `bold`,
+      'color': `hsl(var(--foreground))`,
+    },
+
+    td: {
+      border: `1px solid color-mix(in srgb, var(--md-primary-color) 20%, transparent)`,
+      padding: `0.5em 1em`,
+      color: `hsl(var(--foreground))`,
+    },
+  },
+})
+
+const symbolTheme = toMerged(defaultTheme, {
+  base: {
+    '--md-primary-color': `#8b5cf6`, // 使用紫色作为主色
+  },
+  block: {
+    'container': {
+      padding: `20px`,
+      background: `hsl(var(--background))`,
+    },
+    'h1': {
+      'margin': `2em auto 1em`,
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+      'text-align': `center`,
+    },
+    'h1 .prefix': {
+      'content': `✤`,
+      'color': `var(--md-primary-color)`,
+      'font-size': `1.2em`,
+    },
+    'h1 .content': {
+      'font-size': `1.6em`,
+      'font-weight': `bold`,
+      'padding': `0`,
+      'border-bottom': `none`,
+      'text-align': `center`, // 确保内容文字居中
+    },
+    'h1 .suffix': {
+      'content': `✤`,
+      'color': `var(--md-primary-color)`,
+      'font-size': `1.2em`,
+    },
+
+    'h2': {
+      'margin': `1.8em auto 1em`,
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+    },
+    'h2 .prefix': {
+      content: `❋`,
+      color: `var(--md-primary-color)`,
+    },
+    'h2 .content': {
+      'font-size': `1.4em`,
+      'border-bottom': `none`,
+      'background': `none`,
+      'color': `var(--foreground)`,
+      'padding': `0`,
+    },
+    'h2 .suffix': {
+      content: `❋`,
+      color: `var(--md-primary-color)`,
+    },
+
+    'h3': {
+      'margin': `1.5em auto 1em`,
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+    },
+    'h3 .prefix': {
+      content: `✧`,
+      color: `var(--md-primary-color)`,
+    },
+    'h3 .content': {
+      'font-size': `1.2em`,
+      'border-radius': `4px`,
+      'border-bottom': `none`,
+      'background': `none`,
+      'border': `none`,
+      'padding': `0`,
+    },
+    'h3 .suffix': {
+      content: `✧`,
+      color: `var(--md-primary-color)`,
+    },
+
+    'h4 .prefix': {
+      content: `✦`,
+      color: `var(--md-primary-color)`,
+    },
+    'h5 .prefix': {
+      content: `❉`,
+      color: `var(--md-primary-color)`,
+    },
+    'h6 .prefix': {
+      content: `◆`,
+      color: `var(--md-primary-color)`,
+    },
+
+    'blockquote': {
+      'background': `color-mix(in srgb, var(--md-primary-color) 5%, transparent)`,
+      'border-left': `4px solid var(--md-primary-color)`,
+      'padding': `1em`,
+      'border-radius': `4px`,
+    },
+
+    'code_pre': {
+      border: `1px solid color-mix(in srgb, var(--md-primary-color) 30%, transparent)`,
+      background: `color-mix(in srgb, var(--md-primary-color) 5%, transparent)`,
+    },
+  },
+  inline: {
+    listitem: {
+      content: `◌ `,
+    },
+    strong: {
+      'color': `var(--md-primary-color)`,
+      'font-weight': `bold`,
+    },
+    em: {
+      'color': `color-mix(in srgb, var(--md-primary-color) 80%, black)`,
+      'font-style': `italic`,
+    },
+    link: {
+      'color': `var(--md-primary-color)`,
+      'text-decoration': `none`,
+      'border-bottom': `1px dashed var(--md-primary-color)`,
+    },
+    wx_link: {
+      'color': `var(--md-primary-color)`,
+      'text-decoration': `none`,
+      'border-bottom': `1px dashed var(--md-primary-color)`,
+    },
+    table: {
+      'border-collapse': `collapse`,
+      'text-align': `center`,
+      'margin': `1.5em 0`,
+      'color': `hsl(var(--foreground))`,
+      'border-radius': `6px`,
+      'overflow': `hidden`,
+    },
+
+    thead: {
+      'background': `color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
+      'font-weight': `bold`,
+      'color': `hsl(var(--foreground))`,
+    },
+
+    td: {
+      border: `1px solid color-mix(in srgb, var(--md-primary-color) 20%, transparent)`,
+      padding: `0.5em 1em`,
+      color: `hsl(var(--foreground))`,
+    },
+  },
+})
+
 export const themeMap = {
   default: defaultTheme,
   grace: graceTheme,
   simple: simpleTheme,
+  aurora: auroraTheme,
+  tech: techTheme,
+  symbol: symbolTheme,
 }
 
 export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
@@ -594,5 +1290,20 @@ export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
     label: `简洁`,
     value: `simple`,
     desc: `@okooo5km`,
+  },
+  {
+    label: `极光`,
+    value: `aurora`,
+    desc: `@dotSpecs`,
+  },
+  {
+    label: `科技`,
+    value: `tech`,
+    desc: `@dotSpecs`,
+  },
+  {
+    label: `符号`,
+    value: `symbol`,
+    desc: `@dotSpecs`,
   },
 ]

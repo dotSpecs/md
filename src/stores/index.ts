@@ -41,11 +41,11 @@ export const useStore = defineStore(`store`, () => {
   const toggleEditOnLeft = useToggle(isEditOnLeft)
 
   // 是否开启微信外链接底部引用
-  const isCiteStatus = useStorage(`isCiteStatus`, false)
+  const isCiteStatus = useStorage(`isCiteStatus`, true)
   const toggleCiteStatus = useToggle(isCiteStatus)
 
   // 是否统计字数和阅读时间
-  const isCountStatus = useStorage(`isCountStatus`, false)
+  const isCountStatus = useStorage(`isCountStatus`, true)
   const toggleCountStatus = useToggle(isCountStatus)
 
   // 是否开启段落首行缩进
@@ -249,7 +249,7 @@ export const useStore = defineStore(`store`, () => {
     let outputTemp = marked.parse(markdownContent) as string
 
     // 提取标题
-    const div = document.createElement('div')
+    const div = document.createElement(`div`)
     div.innerHTML = outputTemp
     const list = div.querySelectorAll<HTMLElement>(`[data-heading]`)
 
@@ -259,8 +259,8 @@ export const useStore = defineStore(`store`, () => {
       item.setAttribute(`id`, `${i}`)
       titleList.value.push({
         url: `#${i}`,
-        title: `${item.innerText}`,
-        level: Number(item.tagName.slice(1))
+        title: `${item.textContent}`,
+        level: Number(item.tagName.slice(1)),
       })
       i++
     }
