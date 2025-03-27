@@ -93,7 +93,7 @@ const defaultTheme: Theme = {
     'p': {
       'margin': `1.5em 8px`,
       'letter-spacing': `0.1em`,
-      'color': `hsl(var(--foreground))`,
+      'color': `var(--foreground)`,
     },
 
     // 引用
@@ -116,7 +116,7 @@ const defaultTheme: Theme = {
       'display': `block`,
       'font-size': `1em`,
       'letter-spacing': `0.1em`,
-      'color': `hsl(var(--foreground))`,
+      'color': `var(--foreground)`,
     },
 
     'blockquote_note': {
@@ -1279,13 +1279,12 @@ const symbolTheme = toMerged(defaultTheme, {
   },
 })
 
-const bopuTheme = toMerged(defaultTheme, {
+const popTheme = toMerged(defaultTheme, {
   base: {
     '--md-primary-color': `#ff2e63`,
   },
   block: {
     'md-content': {
-      'show': `1`,
       'background': `#fff`,
       'padding': `10px`,
       'border': `2px solid #252a34`,
@@ -1515,6 +1514,178 @@ const bopuTheme = toMerged(defaultTheme, {
   },
 })
 
+const cyberTheme = toMerged(defaultTheme, {
+  base: {
+    '--md-primary-color': `#0ff`,
+    '--foreground': `#e0e0e0`,
+    '--cyber-pink': `#ff2d6a`,
+    '--cyber-blue': `#0ff`,
+    'font-family': `Rajdhani, Orbitron, "PingFang SC", sans-serif`,
+  },
+  block: {
+    'md-content': {
+      'position': `relative`,
+      'background': `rgba(13,14,25,.7)`,
+      'padding': `20px`,
+      'border': `1px solid rgba(0,255,255,.2)`,
+      'box-shadow': `inset 0 0 10px rgba(0,255,255,.1)`,
+    },
+    'md-content .prefix': {
+      'position': `relative`,
+      'height': `5px`,
+      'background': `linear-gradient(90deg, var(--cyber-pink), var(--cyber-blue))`,
+      'margin-bottom': `20px`,
+    },
+    'container': {
+      'border-radius': `2px`,
+      'background': `#0d0e19`,
+      'padding': `30px 25px`,
+      'position': `relative`,
+      'overflow': `hidden`,
+      'box-shadow': `0 0 25px rgba(0,255,255,.2), 0 0 5px rgba(255,0,128,.15)`,
+      'color': `#e0e0e0`,
+      'background-image': `
+        linear-gradient(rgba(18,16,36,.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(18,16,36,.8) 1px, transparent 1px)
+      `,
+      'background-size': `20px 20px`,
+    },
+    'h1 .content': {
+      'font-size': `2em`,
+      'font-weight': `600`,
+      'letter-spacing': `2px`,
+      'text-transform': `uppercase`,
+      'color': `var(--cyber-blue)`,
+      'text-shadow': `0 0 10px rgba(0,255,255,.5)`,
+      'border-bottom': `2px solid var(--cyber-blue)`,
+      'padding': `0.5em 0`,
+      'margin-bottom': `1em`,
+    },
+    'h2 .content': {
+      'font-size': `1.6em`,
+      'font-weight': `500`,
+      'letter-spacing': `1px`,
+      'text-transform': `uppercase`,
+      'color': `var(--cyber-pink)`,
+      'padding': `0.4em 1em`,
+      'background': `rgba(255,45,106,.1)`,
+      'border': `1px solid var(--cyber-pink)`,
+      'box-shadow': `0 0 10px rgba(255,45,106,.2)`,
+    },
+    'h3 .content': {
+      'font-size': `1.3em`,
+      'line-height': `2em`,
+      'font-weight': `500`,
+      'letter-spacing': `1px`,
+      'color': `var(--cyber-blue)`,
+      'border-left': `3px solid var(--cyber-blue)`,
+      'padding': `0.3em 1em`,
+      'background': `rgba(0,255,255,.1)`,
+    },
+    'h4 .content': {
+      'font-size': `1.2em`,
+      'color': `var(--cyber-blue)`,
+    },
+    'h5 .content': {
+      'font-size': `1.1em`,
+      'color': `var(--cyber-blue)`,
+    },
+    'h6 .content': {
+      color: `var(--cyber-blue)`,
+    },
+    'blockquote': {
+      'background': `rgba(0,255,255,.05)`,
+      'border': `1px solid var(--cyber-blue)`,
+      'border-left': `4px solid var(--cyber-blue)`,
+      'padding': `1em 1.2em`,
+      'box-shadow': `inset 0 0 10px rgba(0,255,255,.1)`,
+    },
+    'blockquote .quote-mark': {
+      'content': `[CITE]`,
+      'color': `var(--cyber-blue)`,
+      'font-family': `Orbitron, monospace`,
+      'font-size': `0.9em`,
+      'letter-spacing': `1px`,
+      'display': `block`,
+      'margin-bottom': `0.5em`,
+    },
+    'code_pre': {
+      'background': `#151823`,
+      'border': `1px solid var(--cyber-pink)`,
+      'border-radius': `2px`,
+      'padding': `1.2em`,
+      'font-family': `\\'Fira Code\\', monospace`,
+      'font-size': `0.9em`,
+      'box-shadow': `inset 0 0 10px rgba(255,45,106,.1)`,
+    },
+    'image': {
+      'border': `2px solid var(--cyber-blue)`,
+      'box-shadow': `0 0 15px rgba(0,255,255,.3)`,
+      'border-radius': `2px`,
+    },
+    'hr': {
+      height: `3px`,
+      border: `none`,
+      background: `linear-gradient(90deg, transparent, var(--cyber-blue), transparent)`,
+      margin: `2em 0`,
+    },
+    'footnotes': {
+      color: `var(--foreground)`,
+    },
+  },
+  inline: {
+    'listitem .prefix': {
+      'content': `[*]`,
+      'color': `var(--cyber-pink)`,
+      'font-family': `Orbitron, monospace`,
+      'margin-right': `0.5em`,
+    },
+    'codespan': {
+      'background': `rgba(255,45,106,.1)`,
+      'color': `var(--cyber-pink)`,
+      'padding': `0.2em 0.4em`,
+      'border-radius': `2px`,
+      'border': `1px solid var(--cyber-pink)`,
+      'font-family': `\\'Fira Code\\', monospace`,
+    },
+    'link': {
+      'color': `var(--cyber-blue)`,
+      'text-decoration': `none`,
+      'border-bottom': `1px solid var(--cyber-blue)`,
+      'box-shadow': `0 4px 8px -4px rgba(0,255,255,.3)`,
+      'transition': `all 0.3s ease`,
+    },
+    'wx_link': {
+      'color': `var(--cyber-blue)`,
+      'text-decoration': `none`,
+      'border-bottom': `1px solid var(--cyber-blue)`,
+      'box-shadow': `0 4px 8px -4px rgba(0,255,255,.3)`,
+      'transition': `all 0.3s ease`,
+    },
+    'strong': {
+      'color': `var(--cyber-pink)`,
+      'font-weight': `600`,
+      'letter-spacing': `0.5px`,
+    },
+    'table': {
+      'width': `100%`,
+      'border-collapse': `separate`,
+      'border-spacing': `0`,
+      'border': `1px solid var(--cyber-blue)`,
+      'background': `rgba(13,14,25,.9)`,
+      'box-shadow': `0 0 15px rgba(0,255,255,.2)`,
+    },
+    'thead': {
+      background: `rgba(0,255,255,.1)`,
+    },
+    'td': {
+      padding: `0.8em 1em`,
+      border: `1px solid rgba(0,255,255,.2)`,
+      color: `#e0e0e0`,
+    },
+  },
+})
+
 export const themeMap = {
   default: defaultTheme,
   grace: graceTheme,
@@ -1522,7 +1693,8 @@ export const themeMap = {
   aurora: auroraTheme,
   tech: techTheme,
   symbol: symbolTheme,
-  bopu: bopuTheme,
+  pop: popTheme,
+  cyber: cyberTheme,
 }
 
 export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
@@ -1558,7 +1730,12 @@ export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
   },
   {
     label: `波普`,
-    value: `bopu`,
+    value: `pop`,
+    desc: `@dotSpecs`,
+  },
+  {
+    label: `赛博朋克`,
+    value: `cyber`,
     desc: `@dotSpecs`,
   },
 ]
