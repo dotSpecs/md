@@ -255,7 +255,7 @@ export function initRenderer(opts: IOpts) {
       const contentStyles = styles(`blockquote .quote-mark`)
       const markContent = getStyleValue(styleMapping, `blockquote .quote-mark`, `content`) || ``
 
-      const quote = `<span class="quote-mark" ${contentStyles}>${markContent}</span>`
+      const quote = `<section class="quote-mark" ${contentStyles}>${markContent}</section>`
       return styledContent(`blockquote`, `${quote}${text}`, `blockquote`)
     },
 

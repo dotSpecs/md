@@ -1286,7 +1286,7 @@ const bopuTheme = toMerged(defaultTheme, {
   block: {
     'md-content': {
       'show': `1`,
-      'background': `hsl(var(--background))`,
+      'background': `#fff`,
       'padding': `10px`,
       'border': `2px solid #252a34`,
       'z-index': `2`,
@@ -1399,23 +1399,21 @@ const bopuTheme = toMerged(defaultTheme, {
       'transform': `rotate(-1deg)`,
     },
     'blockquote': {
-      'padding': `35px 15px`,
+      'padding': `35px 15px `,
       'border-left': `8px solid #ff2e63`,
-      'margin': `20px 0`,
+      'margin': `20px 0 `,
       'color': `#252a34`,
       'font-style': `italic`,
       'background-color': `rgba(255,46,99,.1)`,
       'border-radius': `0 8px 8px 0`,
-      'position': `relative`,
     },
     'blockquote .quote-mark': {
+      'margin-top': `-35px`,
       'content': `“`,
-      'position': `absolute`,
-      'top': `-30px`,
-      'left': `10px`,
       'font-size': `60px`,
       'font-family': `Georgia,serif`,
       'color': `#ff2e63`,
+      'line-height': 1,
     },
     'code_pre': {
       'border': `2px solid #ff2e63`,
