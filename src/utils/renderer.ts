@@ -396,7 +396,33 @@ export function initRenderer(opts: IOpts) {
       if (getStyles(styleMapping, `md-content`)) {
         const prefixStyles = styles(`md-content .prefix`)
         const suffixStyles = styles(`md-content .suffix`)
-        return styledContent(`container`, `<section class="prefix" ${prefixStyles}></section>${styledContent(`md-content`, content, `section`)}<section class="suffix" ${suffixStyles}></section>`, `section`)
+        const prefixContent = getStyleValue(styleMapping, `md-content .prefix`, `content`)
+        const suffixContent = getStyleValue(styleMapping, `md-content .suffix`, `content`)
+
+        const bodyPrefixStyles = styles(`md-body .prefix`)
+        const bodySuffixStyles = styles(`md-body .suffix`)
+        const bodyPrefixContent = getStyleValue(styleMapping, `md-body .prefix`, `content`)
+        const bodySuffixContent = getStyleValue(styleMapping, `md-body .suffix`, `content`)
+
+        return styledContent(`container`, [
+          // md-content .prefix
+          `<section class="prefix" ${prefixStyles}>${prefixContent}</section>`,
+
+          // md-content
+          styledContent(`md-content`, [
+            // md-body .prefix
+            `<section class="prefix" ${bodyPrefixStyles}>${bodyPrefixContent}</section>`,
+
+            // md-body container
+            styledContent(`md-body`, content, `section`),
+
+            // md-body .suffix
+            `<section class="suffix" ${bodySuffixStyles}>${bodySuffixContent}</section>`,
+          ].join(``), `section`),
+
+          // md-content .suffix
+          `<section class="suffix" ${suffixStyles}>${suffixContent}</section>`,
+        ].join(``), `section`)
       }
       else {
         return styledContent(`container`, content, `section`)
