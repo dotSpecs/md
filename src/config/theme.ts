@@ -1635,10 +1635,15 @@ const cyberTheme = toMerged(defaultTheme, {
   },
   inline: {
     'listitem .prefix': {
-      'content': `[*]`,
+      'content': `*`,
       'color': `var(--cyber-pink)`,
       'font-family': `Orbitron, monospace`,
       'margin-right': `0.5em`,
+    },
+    'ol-listitem .prefix': {
+      'color': `var(--cyber-pink)`,
+      'font-family': `Orbitron, monospace`,
+      'text-indent': 0,
     },
     'codespan': {
       'background': `rgba(255,45,106,.1)`,
@@ -1686,6 +1691,197 @@ const cyberTheme = toMerged(defaultTheme, {
   },
 })
 
+const kidsTheme = toMerged(defaultTheme, {
+  base: {
+    '--md-primary-color': `#FF6B6B`,
+    '--kid-yellow': `#FFD93D`,
+    '--kid-blue': `#4DD0E1`,
+    '--kid-green': `#6BCB77`,
+    '--kid-purple': `#B39DDB`,
+    'font-family': `"Comic Sans MS", "Comic Sans", cursive, "PingFang SC", sans-serif`,
+  },
+  block: {
+    'md-content': {
+      background: `#FFF`,
+      padding: `10px`,
+    },
+    'container': {
+      'background': `#fff`,
+      'border-radius': `20px`,
+      'border': `3px solid #FFD93D`,
+      'box-shadow': `0 8px 0 #FFB562`,
+      'padding': `25px`,
+      'background-image': `
+        radial-gradient(#FF6B6B 3px, transparent 3px),
+        radial-gradient(#4DD0E1 3px, transparent 3px)
+      `,
+      'background-size': `40px 40px`,
+      'background-position': `0 0, 20px 20px`,
+      'background-attachment': `fixed`,
+    },
+
+    'h1': {
+      'display': `flex`,
+      'gap': `.5em`,
+      'align-items': `center`,
+    },
+    'h1 .prefix': {
+      'content': `🌈`,
+      'font-size': `1.5em`,
+    },
+    'h1 .content': {
+      'font-size': `1.5em`,
+      'color': `#FF6B6B`,
+      'text-align': `center`,
+      'border': `none`,
+      'padding': `10px`,
+      'border-radius': `50px`,
+      'background': `linear-gradient(45deg, #FFE5E5, #E5F9FF)`,
+      'text-shadow': `2px 2px 0 white, 3px 3px 0 #FFB562`,
+      'letter-spacing': `2px`,
+    },
+    'h2': {
+      'display': `flex`,
+      'gap': `.5em`,
+      'align-items': `center`,
+    },
+    'h2 .prefix': {
+      'content': `🎨`,
+      'font-size': `1.4em`,
+    },
+    'h2 .content': {
+      'font-size': `1.4em`,
+      'background': `var(--kid-yellow)`,
+      'color': `#fff`,
+      'padding': `8px 20px`,
+      'border-radius': `25px`,
+      'text-shadow': `1px 1px 0 #FFB562`,
+    },
+
+    'h3 .prefix': {
+      content: `✨`,
+    },
+    'h3 .content': {
+      'font-size': `1.3em`,
+      'color': `var(--kid-blue)`,
+      'border-bottom': `3px dotted var(--kid-blue)`,
+      'padding': `5px 0`,
+      'border-left': `none`,
+    },
+    'h4 .content': {
+      'font-size': `1.2em`,
+      'color': `var(--kid-blue)`,
+    },
+    'h5 .content': {
+      'font-size': `1.1em`,
+      'color': `var(--kid-blue)`,
+    },
+    'h6 .content': {
+      color: `var(--kid-blue)`,
+    },
+
+    'blockquote': {
+      'background': `#F8F9FA`,
+      'border': `2px dashed var(--kid-purple)`,
+      'border-radius': `15px`,
+      'padding': `15px 20px`,
+    },
+
+    'blockquote .quote-mark': {
+      'content': `✎`,
+      'font-size': `24px`,
+      'color': `var(--kid-purple)`,
+      'margin-top': `-20px`,
+    },
+
+    'code_pre': {
+      'background': `#F8F9FA`,
+      'border': `2px solid var(--kid-green)`,
+      'border-radius': `15px`,
+      'font-family': `\\'Fira Code\\', monospace`,
+    },
+
+    'image': {
+      'border': `3px solid #FFD93D`,
+      'border-radius': `15px`,
+      'box-shadow': `0 4px 8px rgba(0,0,0,0.1)`,
+    },
+
+    'ul': {
+      'list-style': `none`,
+      'padding-left': `1.5em`,
+    },
+
+    'ol': {
+      'padding-left': `1.5em`,
+    },
+
+    'hr': {
+      border: `none`,
+      height: `6px`,
+      background: `url('data:image/svg+xml,%3Csvg width=\\'40\\' height=\\'6\\' viewBox=\\'0 0 40 6\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cpath d=\\'M0 3a3 3 0 1 1 6 0 3 3 0 1 1-6 0M10 3a3 3 0 1 1 6 0 3 3 0 1 1-6 0M20 3a3 3 0 1 1 6 0 3 3 0 1 1-6 0M30 3a3 3 0 1 1 6 0 3 3 0 1 1-6 0\\' fill=\\'%23FF6B6B\\' fill-opacity=\\'0.4\\' fill-rule=\\'evenodd\\'\/%3E%3C\/svg%3E') repeat-x 0 0`,
+      margin: `20px 0`,
+    },
+  },
+  inline: {
+    'listitem .prefix': {
+      'content': `🌟`,
+      'margin-right': `8px`,
+    },
+    'ol-listitem .prefix': {
+      'background': `var(--kid-yellow)`,
+      'color': `#fff`,
+      'width': `24px`,
+      'height': `24px`,
+      'border-radius': `50%`,
+      'display': `inline-flex`,
+      'align-items': `center`,
+      'justify-content': `center`,
+      'margin-right': `8px`,
+      'font-weight': `bold`,
+      'text-indent': 0,
+    },
+
+    'codespan': {
+      'background': `#F8F9FA`,
+      'border': `2px solid var(--kid-green)`,
+      'border-radius': `5px`,
+      'padding': `2px 6px`,
+      'color': `var(--kid-green)`,
+      'font-family': `"Fira Code", monospace`,
+    },
+
+    'strong': {
+      'color': `var(--kid-blue)`,
+      'font-weight': `bold`,
+    },
+
+    'link': {
+      'color': `var(--kid-purple)`,
+      'text-decoration': `none`,
+      'border-bottom': `2px solid var(--kid-purple)`,
+    },
+
+    'table': {
+      'border-collapse': `separate`,
+      'border-spacing': `0`,
+      'border': `3px solid var(--kid-yellow)`,
+      'border-radius': `15px`,
+      'overflow': `hidden`,
+    },
+
+    'thead': {
+      background: `var(--kid-yellow)`,
+      color: `#fff`,
+    },
+
+    'td': {
+      border: `2px solid var(--kid-yellow)`,
+      padding: `10px 15px`,
+    },
+  },
+})
+
 export const themeMap = {
   default: defaultTheme,
   grace: graceTheme,
@@ -1695,6 +1891,7 @@ export const themeMap = {
   symbol: symbolTheme,
   pop: popTheme,
   cyber: cyberTheme,
+  kids: kidsTheme, // 添加儿童主题
 }
 
 export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
@@ -1736,6 +1933,11 @@ export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
   {
     label: `赛博朋克`,
     value: `cyber`,
+    desc: `@dotSpecs`,
+  },
+  {
+    label: `儿童`,
+    value: `kids`,
     desc: `@dotSpecs`,
   },
 ]
