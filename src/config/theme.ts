@@ -912,7 +912,7 @@ const techTheme = toMerged(defaultTheme, {
 
     'h4 .content': {
       'color': `var(--md-primary-color)`,
-      'font-weight': `500`,
+      'font-weight': `700`,
       'position': `relative`,
       'padding-bottom': `5px`,
       'border-bottom': `1px solid rgba(var(--md-primary-color), 0.3)`,
@@ -1120,7 +1120,7 @@ const symbolTheme = toMerged(defaultTheme, {
   },
   block: {
     'container': {
-      padding: `20px`,
+      padding: `10px`,
       background: `hsl(var(--background))`,
     },
     'h1': {
@@ -1222,28 +1222,41 @@ const symbolTheme = toMerged(defaultTheme, {
     },
   },
   inline: {
-    listitem: {
-      content: `◌ `,
+    'listitem': {
+
     },
-    strong: {
+    'listitem .prefix': {
+      content: `◌ `,
+      color: `var(--md-primary-color)`,
+    },
+    // 'ol-listitem': {
+    //   display: `flex`,
+    //   'align-items': `center`,
+    //   'justify-content': `flex-start`,
+    //   'gap': `1em`,
+    // },
+    'ol-listitem .prefix': {
+      color: `var(--md-primary-color)`,
+    },
+    'strong': {
       'color': `var(--md-primary-color)`,
       'font-weight': `bold`,
     },
-    em: {
+    'em': {
       'color': `color-mix(in srgb, var(--md-primary-color) 80%, black)`,
       'font-style': `italic`,
     },
-    link: {
+    'link': {
       'color': `var(--md-primary-color)`,
       'text-decoration': `none`,
       'border-bottom': `1px dashed var(--md-primary-color)`,
     },
-    wx_link: {
+    'wx_link': {
       'color': `var(--md-primary-color)`,
       'text-decoration': `none`,
       'border-bottom': `1px dashed var(--md-primary-color)`,
     },
-    table: {
+    'table': {
       'border-collapse': `collapse`,
       'text-align': `center`,
       'margin': `1.5em 0`,
@@ -1252,16 +1265,254 @@ const symbolTheme = toMerged(defaultTheme, {
       'overflow': `hidden`,
     },
 
-    thead: {
+    'thead': {
       'background': `color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
       'font-weight': `bold`,
       'color': `hsl(var(--foreground))`,
     },
 
-    td: {
+    'td': {
       border: `1px solid color-mix(in srgb, var(--md-primary-color) 20%, transparent)`,
       padding: `0.5em 1em`,
       color: `hsl(var(--foreground))`,
+    },
+  },
+})
+
+const bopuTheme = toMerged(defaultTheme, {
+  base: {
+    '--md-primary-color': `#ff2e63`,
+  },
+  block: {
+    'md-content': {
+      'show': `1`,
+      'background': `hsl(var(--background))`,
+      'padding': `10px`,
+      'border': `2px solid #252a34`,
+      'z-index': `2`,
+      'position': `relative`,
+      'box-shadow': `10px 10px 0 rgba(37,42,52,.8)`,
+    },
+    'md-content .prefix': {
+      'position': `absolute`,
+      'top': 0,
+      'right': 0,
+      'width': `80px`,
+      'height': `80px`,
+      'background-image': `url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100\\' height=\\'100\\' viewBox=\\'0 0 100 100\\'%3E%3Cpath d=\\'M50 10C60 10 70 15 75 25C80 35 80 45 75 55C70 65 60 70 50 70C40 70 30 65 25 55C20 45 20 35 25 25C30 15 40 10 50 10Z\\' fill=\\'%2351bafa\\' stroke=\\'%23252a34\\' stroke-width=\\'3\\'/%3E%3Ctext x=\\'50\\' y=\\'50\\' font-family=\\'Arial\\' font-size=\\'20\\' font-weight=\\'bold\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\' fill=\\'%23252a34\\'%3EPOP!%3C/text%3E%3C/svg%3E')`,
+      'background-size': `80px 80px`,
+      'background-position': `20px -20px`,
+      'background-repeat': `no-repeat`,
+      'z-index': `1`,
+    },
+    'md-content .suffix': {
+      'bottom': 0,
+      'left': 0,
+      'width': `100%`,
+      'height': `100%`,
+      'background-image': `url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\' viewBox=\\'0 0 80 80\\'%3E%3Cpath d=\\'M40 5L47.8 27.1H71.7L52.3 40.8L60.1 62.9L40 49.2L19.9 62.9L27.7 40.8L8.3 27.1H32.2L40 5Z\\' fill=\\'%2351bafa\\' stroke=\\'%23333\\' stroke-width=\\'3\\' /%3E%3C/svg%3E'),url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\' viewBox=\\'0 0 80 80\\'%3E%3Cpath d=\\'M40 5L47.8 27.1H71.7L52.3 40.8L60.1 62.9L40 49.2L19.9 62.9L27.7 40.8L8.3 27.1H32.2L40 5Z\\' fill=\\'%23ff2e63\\' stroke=\\'%23333\\' stroke-width=\\'3\\' /%3E%3C/svg%3E'),url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\' viewBox=\\'0 0 80 80\\'%3E%3Cpath d=\\'M40 5L47.8 27.1H71.7L52.3 40.8L60.1 62.9L40 49.2L19.9 62.9L27.7 40.8L8.3 27.1H32.2L40 5Z\\' fill=\\'%23ff2e63\\' stroke=\\'%23333\\' stroke-width=\\'3\\' /%3E%3C/svg%3E')`,
+      'background-size': `80px 80px,80px 80px,80px 80px`,
+      'background-position': `-20px 100%,-20px 0,105% 100%`,
+      'position': `absolute`,
+      'background-repeat': `no-repeat`,
+      'z-index': `1`,
+    },
+    'container': {
+      'padding': `30px`,
+      'background': `#fde041`,
+      'background-image': `url('data:image/svg+xml;charset=utf8,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 20 20\\'%3E%3Ccircle cx=\\'2\\' cy=\\'2\\' r=\\'2\\' fill=\\'%23d3b000\\'/%3E%3C/svg%3E')`,
+      'background-size': `24px 24px`,
+      'background-position': `12px 12px`,
+      'position': `relative`,
+    },
+    'h1': {
+      position: `relative`,
+    },
+    'h1 .content': {
+      'font-size': `1.5em`,
+      'color': `#252a34`,
+      'margin-top': `20px`,
+      'margin-bottom': `20px`,
+      'text-transform': `uppercase`,
+      'letter-spacing': `1px`,
+      'text-shadow': `3px 3px 0 #ff2e63`,
+      'padding-bottom': `10px`,
+      'padding': `0`,
+      'border': `none`,
+    },
+    'h1 .suffix': {
+      position: `absolute`,
+      bottom: 0,
+      left: 0,
+      width: `100%`,
+      height: `6px`,
+      background: `repeating-linear-gradient(45deg,#ff2e63,#ff2e63 10px,#252a34 0,#252a34 20px)`,
+    },
+    'h2 .content': {
+      'font-size': `1.4em`,
+      'background-color': `#51bafa`,
+      'transform': `rotate(-2deg)`,
+      'padding': `2px 10px`,
+      'display': `block`,
+    },
+    'h3 .content': {
+      'font-size': `1.3em`,
+      'margin-top': `20px`,
+      'margin-bottom': `12px`,
+      'background-color': `#ff2e63`,
+      'border-radius': `4px`,
+      'border': `none`,
+      'padding': `5px 10px`,
+      'display': `block`,
+      'color': `#fff`,
+    },
+    'h4 .content': {
+      'font-size': `1.2em`,
+      'color': `#ff2e63`,
+    },
+    'h5 .content': {
+      'font-size': `1.1em`,
+      'color': `#ff2e63`,
+    },
+    'h6 .content': {
+      color: `#ff2e63`,
+    },
+    'ul': {
+      'background-color': `hsla(0,0%,100%,.7)`,
+      'border': `2px solid #252a34`,
+      'border-radius': `8px`,
+      'padding': `15px`,
+      'margin': `20px 0`,
+    },
+    'ol': {
+      'background-color': `hsla(0,0%,100%,.7)`,
+      'border': `2px solid #252a34`,
+      'border-radius': `8px`,
+      'padding': `15px`,
+      'margin': `20px 0`,
+    },
+    'image': {
+      'max-width': `100%`,
+      'border': `5px solid #252a34`,
+      'border-radius': 0,
+      'box-shadow': `8px 8px 0 #ff2e63`,
+      'transform': `rotate(-1deg)`,
+    },
+    'blockquote': {
+      'padding': `35px 15px`,
+      'border-left': `8px solid #ff2e63`,
+      'margin': `20px 0`,
+      'color': `#252a34`,
+      'font-style': `italic`,
+      'background-color': `rgba(255,46,99,.1)`,
+      'border-radius': `0 8px 8px 0`,
+      'position': `relative`,
+    },
+    'blockquote .quote-mark': {
+      'content': `“`,
+      'position': `absolute`,
+      'top': `-30px`,
+      'left': `10px`,
+      'font-size': `60px`,
+      'font-family': `Georgia,serif`,
+      'color': `#ff2e63`,
+    },
+    'code_pre': {
+      'border': `2px solid #ff2e63`,
+      'box-shadow': `5px 5px 0 #252a34`,
+    },
+    'hr': {
+      'border': 0,
+      'height': `6px`,
+      'background': `repeating-linear-gradient(45deg,#ff2e63,#ff2e63 10px,#252a34 0,#252a34 20px)`,
+      'margin': `25px 0`,
+      'border-radius': `3px`,
+    },
+  },
+  inline: {
+    'listitem .prefix': {
+      content: `★ `,
+      color: `#ff2e63`,
+    },
+    'ol-listitem': {
+      // position: 'relative',
+      // 'padding-left': '45px',
+      'text-indent': 0,
+      'display': `flex`,
+      'align-items': `center`,
+      'gap': `0.5em`,
+    },
+    'ol-listitem .prefix': {
+      'background-color': `#ff2e63`,
+      'color': `#fff`,
+      'font-weight': 700,
+      'width': `20px`,
+      'height': `20px`,
+      'border-radius': `50%`,
+      'text-align': `center`,
+      'border': `2px solid #252a34`,
+      'display': `flex`,
+      // 'padding-left': '12px',
+      'justify-content': `center`,
+      'align-items': `center`,
+      'box-sizing': `border-box`,
+      // position: 'absolute',
+      // left: 0,
+    },
+    'strong': {
+      color: `var(--foreground)`,
+    },
+    'codespan': {
+      'padding': `3px 6px`,
+      'border-radius': `4px`,
+      'font-size': `0.9em`,
+      'border': `1px solid #ff2e63`,
+      'background-color': `#252a34`,
+      'color': `#eaeaea`,
+    },
+    'link': {
+      'color': `#ff2e63`,
+      'text-decoration': `none`,
+      'border-bottom': `3px solid #252a34`,
+      'padding': `0 3px`,
+      'cursor': `pointer`,
+      'transition': `all .3s ease`,
+      'font-weight': 700,
+    },
+    'wx_link': {
+      'color': `#ff2e63`,
+      'text-decoration': `none`,
+      'border-bottom': `3px solid #252a34`,
+      'padding': `0 3px`,
+      'cursor': `pointer`,
+      'transition': `all .3s ease`,
+      'font-weight': 700,
+    },
+    'table': {
+      'border': `3px solid #252a34`,
+      'box-shadow': `5px 5px 0 #ff2e63`,
+      'border-radius': `5px`,
+      'border-collapse': `collapse`,
+      'border-spacing': 0,
+      'margin': `20px 0`,
+    },
+    'thead': {
+
+    },
+    'tr': {
+
+    },
+    'th': {
+      'background-color': `#252a34`,
+      'color': `#eaeaea`,
+      'padding': `12px`,
+      'text-align': `left`,
+      'letter-spacing': `1px`,
+    },
+    'td': {
+      'border': `none`,
+      'padding': `0.5em`,
+      'border-bottom': `2px solid #252a34`,
     },
   },
 })
@@ -1273,6 +1524,7 @@ export const themeMap = {
   aurora: auroraTheme,
   tech: techTheme,
   symbol: symbolTheme,
+  bopu: bopuTheme,
 }
 
 export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
@@ -1304,6 +1556,11 @@ export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
   {
     label: `符号`,
     value: `symbol`,
+    desc: `@dotSpecs`,
+  },
+  {
+    label: `波普`,
+    value: `bopu`,
     desc: `@dotSpecs`,
   },
 ]

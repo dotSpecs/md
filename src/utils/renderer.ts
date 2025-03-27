@@ -83,10 +83,10 @@ function getStyles(styleMapping: ThemeStyles, tokenName: string, addition: strin
 }
 
 function getStyleValue(styleMapping: ThemeStyles, tokenName: string, property: string): string {
-  console.log(styleMapping, tokenName, property)
+  // console.log(styleMapping, tokenName, property)
   const dict = styleMapping[tokenName as keyof ThemeStyles]
   if (!dict) {
-    console.log(`no dict`)
+    // console.log(`no dict`)
     return ``
   }
   return (dict[property as keyof typeof dict] as string) || ``
@@ -208,8 +208,7 @@ export function initRenderer(opts: IOpts) {
     }
 
     return (
-      `<blockquote ${styles(`blockquote`)}>${
-        styledContent(`h4`, `引用链接`)
+      `<blockquote ${styles(`blockquote`)}>${styledContent(`h4 .content`, `引用链接`)
       }${styledContent(`footnotes`, buildFootnoteArray(footnotes), `p`)
       }</blockquote>`
     )
@@ -229,7 +228,7 @@ export function initRenderer(opts: IOpts) {
       const prefixContent = getStyleValue(styleMapping, `${tag} .prefix`, `content`) || ``
       const suffixContent = getStyleValue(styleMapping, `${tag} .suffix`, `content`) || ``
 
-      console.log(styleMapping, prefixContent)
+      // console.log(styleMapping, prefixContent)
 
       const content = `
         <span class="prefix" ${prefixStyles}>${prefixContent}</span>
@@ -288,11 +287,20 @@ export function initRenderer(opts: IOpts) {
     },
 
     listitem(item: Tokens.ListItem): string {
-      const dotStyle = getStyleValue(styleMapping, `listitem`, `--md-primary-color`) || ``
-      const dot = getStyleValue(styleMapping, `listitem`, `content`) || ``
-      const prefix = isOrdered ? `${listIndex + 1}. ` : (dot ? `${dot}` : `• `)
-      const content = item.tokens.map(t => (this[t.type as keyof Renderer] as <T>(token: T) => string)(t)).join(``)
-      return styledContent(`listitem`, dot ? `<span style='color: ${dotStyle}'>${prefix}</span><span>${content}</span>` : `${prefix}${content}`, `li`)
+      if (isOrdered) {
+        const styletag = getStyles(styleMapping, `ol-listitem`) ? `ol-listitem` : `listitem`
+        const prefix = styletag === `listitem` ? `${listIndex + 1}. ` : `${listIndex + 1}`
+
+        const content = item.tokens.map(t => (this[t.type as keyof Renderer] as <T>(token: T) => string)(t)).join(``)
+        return styledContent(styletag, `<span ${styles(`ol-listitem .prefix`)}>${prefix}</span> <span>${content}</span>`, `li`)
+      }
+      else {
+        const dot = getStyleValue(styleMapping, `listitem .prefix`, `content`) || ``
+        const prefix = dot ? `${dot}` : `• `
+
+        const content = item.tokens.map(t => (this[t.type as keyof Renderer] as <T>(token: T) => string)(t)).join(``)
+        return styledContent(`listitem`, `<span ${styles(`listitem .prefix`)}>${prefix}</span><span>${content}</span>`, `li`)
+      }
     },
 
     list({ ordered, items, start = 1 }: Tokens.List): string {
@@ -351,7 +359,7 @@ export function initRenderer(opts: IOpts) {
         .join(``)
       return `
         <section style="padding:0 8px; max-width: 100%; overflow: auto">
-          <table class="preview-table">
+          <table class="preview-table" ${styles(`table`)}>
             <thead ${styles(`thead`)}>${headerRow}</thead>
             <tbody>${body}</tbody>
           </table>
@@ -360,7 +368,13 @@ export function initRenderer(opts: IOpts) {
     },
 
     tablecell(token: Tokens.TableCell): string {
+      console.log(token, token.header)
       const text = this.parser.parseInline(token.tokens)
+
+      if (token.header && getStyles(styleMapping, `th`)) {
+        return styledContent(`th`, text)
+      }
+
       return styledContent(`td`, text)
     },
 
@@ -379,7 +393,14 @@ export function initRenderer(opts: IOpts) {
     parseFrontMatterAndContent,
     buildReadingTime,
     createContainer(content: string) {
-      return styledContent(`container`, content, `section`)
+      if (getStyles(styleMapping, `md-content`)) {
+        const prefixStyles = styles(`md-content .prefix`)
+        const suffixStyles = styles(`md-content .suffix`)
+        return styledContent(`container`, `<section class="prefix" ${prefixStyles}></section>${styledContent(`md-content`, content, `section`)}<section class="suffix" ${suffixStyles}></section>`, `section`)
+      }
+      else {
+        return styledContent(`container`, content, `section`)
+      }
     },
   }
 }
