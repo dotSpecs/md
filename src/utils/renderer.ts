@@ -123,6 +123,16 @@ const macCodeSvg = `
   </svg>
 `.trim()
 
+// const popTopArea = `<section style="display: flex;justify-content:space-between;align-items:flex-start;margin:-30px 0px 0px 0px">
+// <section style="width: 50px; height: 50px; background-image: url('https://cdn.meirishici.com/md/static/images/bg/pink-star.png');background-size: 80px 80px;background-repeat: no-repeat;background-position: -20px -15px;margin-left:-30px;"></section>
+// <section style="width: 50px; height: 50px; background-image: url('https://cdn.meirishici.com/md/static/images/bg/pop.png');background-size: 80px 80px;background-repeat: no-repeat;;background-position: -5px -15px;margin-right:-30px;"></section>
+// </section>`.trim()
+
+// const popBottomArea = `<section style="display: flex;justify-content:space-between;align-items:flex-start;margin:10px 0px -30px 0px">
+// <section style="width: 50px; height: 50px; background-image: url('https://cdn.meirishici.com/md/static/images/bg/blue-star.png');background-size: 80px 80px;background-repeat: no-repeat;background-position: -25px 0px;margin-left:-30px;"></section>
+// <section style="width: 50px; height: 50px; background-image: url('https://cdn.meirishici.com/md/static/images/bg/pink-star.png');background-size: 80px 80px;background-repeat: no-repeat;;background-position: -5px 0px;margin-right:-30px;"></section>
+// </section>`.trim()
+
 interface ParseResult {
   yamlData: Record<string, any>
   markdownContent: string
@@ -153,13 +163,23 @@ function parseFrontMatterAndContent(markdownText: string): ParseResult {
   }
 }
 
+function removeContentFromStyle(styleString: string): string {
+  return styleString
+  return styleString
+    .replace(/content\s*:\s*['"]*[^;'"]*['"]*;?\s*/, ``)
+    .replace(/;\s*;/g, `;`)
+    .replace(/;\s*$/, `"`)
+}
+
 export function initRenderer(opts: IOpts) {
+  // console.log('opts', opts)
   const footnotes: [number, string, string][] = []
   let footnoteIndex: number = 0
   let styleMapping: ThemeStyles = buildTheme(opts)
   let codeIndex: number = 0
   let listIndex: number = 0
   let isOrdered: boolean = false
+  // let themeName = opts.themeName;
 
   function styles(tag: string, addition: string = ``): string {
     return getStyles(styleMapping, tag, addition)
@@ -167,8 +187,9 @@ export function initRenderer(opts: IOpts) {
 
   function styledContent(styleLabel: string, content: string, tagName?: string): string {
     const tag = tagName ?? styleLabel
+    const labelStyle = styles(styleLabel)
 
-    return `<${tag} ${/^h\d$/.test(tag) ? `data-heading="true"` : ``} ${styles(styleLabel)}>${content}</${tag}>`
+    return `<${tag} ${/^h\d$/.test(tag) ? `data-heading="true"` : ``} ${labelStyle}>${content}</${tag}>`
   }
 
   function addFootnote(title: string, link: string): number {
@@ -208,9 +229,9 @@ export function initRenderer(opts: IOpts) {
     }
 
     return (
-      `<blockquote ${styles(`blockquote`)}>${styledContent(`h4 .content`, `引用链接`)
+      `<section ${styles(`blockquote`)}>${styledContent(`h4 .content`, `引用链接`, `h4`)
       }${styledContent(`footnotes`, buildFootnoteArray(footnotes), `p`)
-      }</blockquote>`
+      }</section>`
     )
   }
 
@@ -221,20 +242,18 @@ export function initRenderer(opts: IOpts) {
 
       // 获取各个部分的样式
       const contentStyles = styles(`${tag} .content`)
-      const prefixStyles = styles(`${tag} .prefix`)
-      const suffixStyles = styles(`${tag} .suffix`)
+
+      const prefixStyles = removeContentFromStyle(styles(`${tag} .prefix`))
+      const suffixStyles = removeContentFromStyle(styles(`${tag} .suffix`))
 
       // 获取 content 属性值
       const prefixContent = getStyleValue(styleMapping, `${tag} .prefix`, `content`) || ``
       const suffixContent = getStyleValue(styleMapping, `${tag} .suffix`, `content`) || ``
 
-      // console.log(styleMapping, prefixContent)
+      const content = `${prefixStyles ? `<section ${prefixStyles}>${prefixContent}</section>` : ``
+      }<section ${contentStyles}>${text}</section>${
+        suffixStyles ? `<section ${suffixStyles}>${suffixContent}</section>` : ``}`
 
-      const content = `
-        <span class="prefix" ${prefixStyles}>${prefixContent}</span>
-        <span class="content" ${contentStyles}>${text}</span>
-        <span class="suffix" ${suffixStyles}>${suffixContent}</span>
-      `
       return styledContent(tag, content)
     },
 
@@ -252,11 +271,11 @@ export function initRenderer(opts: IOpts) {
       let text = this.parser.parse(tokens)
       text = text.replace(/<p .*?>/g, `<p ${styles(`blockquote_p`)}>`)
 
-      const contentStyles = styles(`blockquote .quote-mark`)
+      const contentStyles = removeContentFromStyle(styles(`blockquote .quote-mark`))
       const markContent = getStyleValue(styleMapping, `blockquote .quote-mark`, `content`) || ``
 
       const quote = `<section class="quote-mark" ${contentStyles}>${markContent}</section>`
-      return styledContent(`blockquote`, `${quote}${text}`, `blockquote`)
+      return styledContent(`blockquote`, markContent ? `${quote}${text}` : `${text}`, `blockquote`)
     },
 
     code({ text, lang = `` }: Tokens.Code): string {
@@ -292,14 +311,15 @@ export function initRenderer(opts: IOpts) {
         const prefix = styletag === `listitem` ? `${listIndex + 1}. ` : `${listIndex + 1}`
 
         const content = item.tokens.map(t => (this[t.type as keyof Renderer] as <T>(token: T) => string)(t)).join(``)
-        return styledContent(styletag, `<span ${styles(`ol-listitem .prefix`)}>${prefix}</span> <span>${content}</span>`, `li`)
+
+        return styledContent(styletag, `<span ${(styles(`ol-listitem .prefix`))}>${prefix}</span> <span>${content}</span>`, `li`)
       }
       else {
         const dot = getStyleValue(styleMapping, `listitem .prefix`, `content`) || ``
         const prefix = dot ? `${dot}` : `• `
 
         const content = item.tokens.map(t => (this[t.type as keyof Renderer] as <T>(token: T) => string)(t)).join(``)
-        return styledContent(`listitem`, `<span ${styles(`listitem .prefix`)}>${prefix}</span><span>${content}</span>`, `li`)
+        return styledContent(`listitem`, `<span ${removeContentFromStyle(styles(`listitem .prefix`))}>${prefix}</span><span>${content}</span>`, `li`)
       }
     },
 
@@ -368,7 +388,7 @@ export function initRenderer(opts: IOpts) {
     },
 
     tablecell(token: Tokens.TableCell): string {
-      console.log(token, token.header)
+      // console.log(token, token.header)
       const text = this.parser.parseInline(token.tokens)
 
       if (token.header && getStyles(styleMapping, `th`)) {
@@ -394,17 +414,18 @@ export function initRenderer(opts: IOpts) {
     buildReadingTime,
     createContainer(content: string) {
       if (getStyles(styleMapping, `md-content`)) {
-        const prefixStyles = styles(`md-content .prefix`)
-        const suffixStyles = styles(`md-content .suffix`)
+        const prefixStyles = removeContentFromStyle(styles(`md-content .prefix`))
+        const suffixStyles = removeContentFromStyle(styles(`md-content .suffix`))
         const prefixContent = getStyleValue(styleMapping, `md-content .prefix`, `content`)
         const suffixContent = getStyleValue(styleMapping, `md-content .suffix`, `content`)
 
-        const bodyPrefixStyles = styles(`md-body .prefix`)
-        const bodySuffixStyles = styles(`md-body .suffix`)
+        const bodyPrefixStyles = removeContentFromStyle(styles(`md-body .prefix`))
+        const bodySuffixStyles = removeContentFromStyle(styles(`md-body .suffix`))
         const bodyPrefixContent = getStyleValue(styleMapping, `md-body .prefix`, `content`)
         const bodySuffixContent = getStyleValue(styleMapping, `md-body .suffix`, `content`)
 
         return styledContent(`container`, [
+          // themeName === 'pop' ? `${popTopArea}` : ``,
           // md-content .prefix
           `<section class="prefix" ${prefixStyles}>${prefixContent}</section>`,
 
@@ -422,6 +443,8 @@ export function initRenderer(opts: IOpts) {
 
           // md-content .suffix
           `<section class="suffix" ${suffixStyles}>${suffixContent}</section>`,
+
+          // themeName === 'pop' ? `${popBottomArea}` : ``,
         ].join(``), `section`)
       }
       else {

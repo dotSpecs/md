@@ -102,7 +102,7 @@ const defaultTheme: Theme = {
       'padding': `1em`,
       'border-left': `4px solid var(--md-primary-color)`,
       'border-radius': `6px`,
-      'color': `rgba(0,0,0,0.5)`,
+      'color': `var(--foreground)`,
       'background': `var(--blockquote-background)`,
       'margin-bottom': `1em`,
     },
@@ -1004,7 +1004,7 @@ const techTheme = toMerged(defaultTheme, {
     },
 
     'code_pre': {
-      'background': `hsl(var(--muted))`,
+      'background': `#f5f5f5`,
       'border-radius': `6px`,
       'padding': `1em`,
       'margin': `1.2em 0`,
@@ -1195,14 +1195,31 @@ const symbolTheme = toMerged(defaultTheme, {
       content: `✧`,
       color: `var(--md-primary-color)`,
     },
-
+    'h4': {
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+    },
     'h4 .prefix': {
       content: `✦`,
       color: `var(--md-primary-color)`,
     },
+    'h5': {
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+    },
     'h5 .prefix': {
       content: `❉`,
       color: `var(--md-primary-color)`,
+    },
+    'h6': {
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
     },
     'h6 .prefix': {
       content: `◆`,
@@ -1214,6 +1231,7 @@ const symbolTheme = toMerged(defaultTheme, {
       'border-left': `4px solid var(--md-primary-color)`,
       'padding': `1em`,
       'border-radius': `4px`,
+      'margin': `20px 0 `,
     },
 
     'code_pre': {
@@ -1293,57 +1311,59 @@ const popTheme = toMerged(defaultTheme, {
       'box-shadow': `10px 10px 0 rgba(37,42,52,.8)`,
     },
     'md-content .prefix': {
-      'position': `absolute`,
-      'top': 0,
-      'right': 0,
-      'width': `80px`,
-      'height': `80px`,
-      'background-image': `url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100\\' height=\\'100\\' viewBox=\\'0 0 100 100\\'%3E%3Cpath d=\\'M50 10C60 10 70 15 75 25C80 35 80 45 75 55C70 65 60 70 50 70C40 70 30 65 25 55C20 45 20 35 25 25C30 15 40 10 50 10Z\\' fill=\\'%2351bafa\\' stroke=\\'%23252a34\\' stroke-width=\\'3\\'/%3E%3Ctext x=\\'50\\' y=\\'50\\' font-family=\\'Arial\\' font-size=\\'20\\' font-weight=\\'bold\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\' fill=\\'%23252a34\\'%3EPOP!%3C/text%3E%3C/svg%3E')`,
-      'background-size': `80px 80px`,
-      'background-position': `20px -20px`,
-      'background-repeat': `no-repeat`,
-      'z-index': `1`,
+      // 'position': `absolute`,
+      // 'top': 0,
+      // 'right': 0,
+      // 'width': `80px`,
+      // 'height': `80px`,
+      // 'background-image': `url('https://cdn.meirishici.com/md/static/images/bg/pop.png')`,
+      // 'background-size': `80px 80px`,
+      // 'background-position': `20px -20px`,
+      // 'background-repeat': `no-repeat`,
+      // 'z-index': `1`,
     },
     'md-content .suffix': {
-      'bottom': 0,
-      'left': 0,
-      'width': `100%`,
-      'height': `100%`,
-      'background-image': `url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\' viewBox=\\'0 0 80 80\\'%3E%3Cpath d=\\'M40 5L47.8 27.1H71.7L52.3 40.8L60.1 62.9L40 49.2L19.9 62.9L27.7 40.8L8.3 27.1H32.2L40 5Z\\' fill=\\'%2351bafa\\' stroke=\\'%23333\\' stroke-width=\\'3\\' /%3E%3C/svg%3E'),url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\' viewBox=\\'0 0 80 80\\'%3E%3Cpath d=\\'M40 5L47.8 27.1H71.7L52.3 40.8L60.1 62.9L40 49.2L19.9 62.9L27.7 40.8L8.3 27.1H32.2L40 5Z\\' fill=\\'%23ff2e63\\' stroke=\\'%23333\\' stroke-width=\\'3\\' /%3E%3C/svg%3E'),url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'80\\' viewBox=\\'0 0 80 80\\'%3E%3Cpath d=\\'M40 5L47.8 27.1H71.7L52.3 40.8L60.1 62.9L40 49.2L19.9 62.9L27.7 40.8L8.3 27.1H32.2L40 5Z\\' fill=\\'%23ff2e63\\' stroke=\\'%23333\\' stroke-width=\\'3\\' /%3E%3C/svg%3E')`,
-      'background-size': `80px 80px,80px 80px,80px 80px`,
-      'background-position': `-20px 100%,-20px 0,105% 100%`,
-      'position': `absolute`,
-      'background-repeat': `no-repeat`,
-      'z-index': `1`,
+      // 'bottom': 0,
+      // 'left': 0,
+      // 'width': `100%`,
+      // 'height': `100%`,
+      // 'background-image': `url('https://cdn.meirishici.com/md/static/images/bg/blue-star.png'),url('https://cdn.meirishici.com/md/static/images/bg/pink-star.png'),url('https://cdn.meirishici.com/md/static/images/bg/pink-star.png')`,
+      // 'background-size': `80px 80px,80px 80px,80px 80px`,
+      // 'background-position': `-20px 100%,-20px 0,105% 100%`,
+      // 'position': `absolute`,
+      // 'background-repeat': `no-repeat`,
+      // 'z-index': `1`,
     },
     'container': {
-      'padding': `30px`,
-      'background': `#fde041`,
-      'background-image': `url('data:image/svg+xml;charset=utf8,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 20 20\\'%3E%3Ccircle cx=\\'2\\' cy=\\'2\\' r=\\'2\\' fill=\\'%23d3b000\\'/%3E%3C/svg%3E')`,
-      'background-size': `24px 24px`,
-      'background-position': `12px 12px`,
-      'position': `relative`,
+      padding: `0px 10px`,
+      // 'background': `#fde041`,
+      // 'background-image': `radial-gradient(#999 8%, transparent 8%), radial-gradient(#999 8%, transparent 8%)`,
+      // 'background-position': `0 0, 10px 10px`,
+      // 'background-size': `20px 20px`,
+      position: `relative`,
     },
     'h1': {
-      position: `relative`,
+      'position': `relative`,
+      'margin-top': `20px`,
+      'margin-bottom': `20px`,
     },
     'h1 .content': {
       'font-size': `1.5em`,
       'color': `#252a34`,
-      'margin-top': `20px`,
-      'margin-bottom': `20px`,
       'text-transform': `uppercase`,
       'letter-spacing': `1px`,
       'text-shadow': `3px 3px 0 #ff2e63`,
       'padding-bottom': `10px`,
       'padding': `0`,
       'border': `none`,
+      'display': `block`,
     },
     'h1 .suffix': {
-      position: `absolute`,
-      bottom: 0,
-      left: 0,
-      width: `100%`,
+      display: `block`,
+      // position: `absolute`,
+      // bottom: 0,
+      // left: 0,
+      // width: `100%`,
       height: `6px`,
       background: `repeating-linear-gradient(45deg,#ff2e63,#ff2e63 10px,#252a34 0,#252a34 20px)`,
     },
@@ -1475,6 +1495,7 @@ const popTheme = toMerged(defaultTheme, {
       'cursor': `pointer`,
       'transition': `all .3s ease`,
       'font-weight': 700,
+      'font-family': `Comic Sans MS,Chalkboard SE,Comic Neue,sans-serif`,
     },
     'wx_link': {
       'color': `#ff2e63`,
@@ -1484,6 +1505,7 @@ const popTheme = toMerged(defaultTheme, {
       'cursor': `pointer`,
       'transition': `all .3s ease`,
       'font-weight': 700,
+      'font-family': `Comic Sans MS,Chalkboard SE,Comic Neue,sans-serif`,
     },
     'table': {
       'border': `3px solid #252a34`,
@@ -1517,29 +1539,32 @@ const popTheme = toMerged(defaultTheme, {
 const cyberTheme = toMerged(defaultTheme, {
   base: {
     '--md-primary-color': `#0ff`,
-    '--foreground': `#e0e0e0`,
-    '--cyber-pink': `#ff2d6a`,
-    '--cyber-blue': `#0ff`,
     'font-family': `Rajdhani, Orbitron, "PingFang SC", sans-serif`,
   },
   block: {
     'md-content': {
       'position': `relative`,
       'background': `rgba(13,14,25,.7)`,
-      'padding': `20px`,
+      'padding': `20px 15px`,
       'border': `1px solid rgba(0,255,255,.2)`,
-      'box-shadow': `inset 0 0 10px rgba(0,255,255,.1)`,
+      'box-shadow': `3px 3px 3px rgba(0255,0,128,0.5)`,
     },
     'md-content .prefix': {
       'position': `relative`,
       'height': `5px`,
-      'background': `linear-gradient(90deg, var(--cyber-pink), var(--cyber-blue))`,
+      'background': `linear-gradient(90deg, #ff2d6a, #0ff)`,
       'margin-bottom': `20px`,
+    },
+    'md-content .suffix': {
+      'position': `relative`,
+      'height': `5px`,
+      'background': `linear-gradient(90deg, #ff2d6a, #0ff)`,
+      'margin-top': `20px`,
     },
     'container': {
       'border-radius': `2px`,
       'background': `#0d0e19`,
-      'padding': `30px 25px`,
+      'padding': `30px 10px`,
       'position': `relative`,
       'overflow': `hidden`,
       'box-shadow': `0 0 25px rgba(0,255,255,.2), 0 0 5px rgba(255,0,128,.15)`,
@@ -1548,58 +1573,69 @@ const cyberTheme = toMerged(defaultTheme, {
       'background-size': `20px 20px`,
     },
     'h1 .content': {
-      'font-size': `2em`,
+      'font-size': `1.5em`,
       'font-weight': `600`,
-      'letter-spacing': `2px`,
+      'letter-spacing': `1px`,
       'text-transform': `uppercase`,
-      'color': `var(--cyber-blue)`,
-      'text-shadow': `0 0 10px rgba(0,255,255,.5)`,
-      'border-bottom': `2px solid var(--cyber-blue)`,
+      'color': `#0ff`,
+      'text-shadow': `3px 3px 0px rgba(255,0,128,.8)`,
+      'border-bottom': `2px solid #0ff`,
+      'border-image-slice': `1`,
+      'border-image-source': `linear-gradient(90deg, #ff2d6a, #0ff)`,
       'padding': `0.5em 0`,
       'margin-bottom': `1em`,
     },
     'h2 .content': {
-      'font-size': `1.6em`,
+      'font-size': `1.4em`,
       'font-weight': `500`,
       'letter-spacing': `1px`,
       'text-transform': `uppercase`,
-      'color': `var(--cyber-pink)`,
-      'padding': `0.4em 1em`,
-      'background': `rgba(255,45,106,.1)`,
-      'border': `1px solid var(--cyber-pink)`,
-      'box-shadow': `0 0 10px rgba(255,45,106,.2)`,
+      'color': `#0ff`,
+      'text-shadow': `3px 3px 0px rgba(255,0,128,.8)`,
+      'background': `none`,
     },
     'h3 .content': {
       'font-size': `1.3em`,
       'line-height': `2em`,
       'font-weight': `500`,
       'letter-spacing': `1px`,
-      'color': `var(--cyber-blue)`,
-      'border-left': `3px solid var(--cyber-blue)`,
-      'padding': `0.3em 1em`,
-      'background': `rgba(0,255,255,.1)`,
+      'color': `#0ff`,
+      'text-shadow': `3px 3px 0px rgba(255,0,128,.8)`,
+      'border-left': `3px solid `,
+      'border-image-slice': `1`,
+      'border-image-source': `linear-gradient(0deg, #ff2d6a, #0ff)`,
+      // 'padding': `0.3em 1em`,
+      'background': `none`,
+    },
+    'h4': {
+      'font-size': `1.2em`,
+      'color': `#0ff`,
     },
     'h4 .content': {
       'font-size': `1.2em`,
-      'color': `var(--cyber-blue)`,
+      'color': `#0ff`,
     },
     'h5 .content': {
       'font-size': `1.1em`,
-      'color': `var(--cyber-blue)`,
+      'color': `#0ff`,
     },
     'h6 .content': {
-      color: `var(--cyber-blue)`,
+      color: `#0ff`,
     },
     'blockquote': {
       'background': `rgba(0,255,255,.05)`,
-      'border': `1px solid var(--cyber-blue)`,
-      'border-left': `4px solid var(--cyber-blue)`,
+      'border': `1px solid #0ff`,
+      'border-left': `4px solid #0ff`,
       'padding': `1em 1.2em`,
-      'box-shadow': `inset 0 0 10px rgba(0,255,255,.1)`,
+      'box-shadow': `3px 3px 3px rgba(255,0,128,0.8)`,
+      'margin': `20px 0 `,
+    },
+    'blockquote_p': {
+      color: `#0ff`,
     },
     'blockquote .quote-mark': {
       'content': `[CITE]`,
-      'color': `var(--cyber-blue)`,
+      'color': `#0ff`,
       'font-family': `Orbitron, monospace`,
       'font-size': `0.9em`,
       'letter-spacing': `1px`,
@@ -1608,64 +1644,67 @@ const cyberTheme = toMerged(defaultTheme, {
     },
     'code_pre': {
       'background': `#151823`,
-      'border': `1px solid var(--cyber-pink)`,
+      'border': `1px solid #ff2d6a`,
       'border-radius': `2px`,
       'padding': `1.2em`,
       'font-family': `\\'Fira Code\\', monospace`,
       'font-size': `0.9em`,
-      'box-shadow': `inset 0 0 10px rgba(255,45,106,.1)`,
+      'box-shadow': `3px 3px 5px rgba(0,255,255,.8)`,
     },
     'image': {
-      'border': `2px solid var(--cyber-blue)`,
-      'box-shadow': `0 0 15px rgba(0,255,255,.3)`,
+      'border': `2px solid #0ff`,
+      'box-shadow': `5px 5px 0px rgba(255,0,128,.8)`,
       'border-radius': `2px`,
     },
     'hr': {
       height: `3px`,
       border: `none`,
-      background: `linear-gradient(90deg, transparent, var(--cyber-blue), transparent)`,
+      background: `linear-gradient(90deg,transparent,rgba(0,255,255,.5),rgba(255,0,128,.5),transparent)`,
       margin: `2em 0`,
     },
     'footnotes': {
-      color: `var(--foreground)`,
+      color: `#e0e0e0`,
     },
   },
   inline: {
+    'listitem': {
+      color: `#e5e5e5`,
+    },
     'listitem .prefix': {
       'content': `*`,
-      'color': `var(--cyber-pink)`,
+      'color': `#ff2d6a`,
       'font-family': `Orbitron, monospace`,
       'margin-right': `0.5em`,
     },
     'ol-listitem .prefix': {
-      'color': `var(--cyber-pink)`,
+      'color': `#ff2d6a`,
       'font-family': `Orbitron, monospace`,
       'text-indent': 0,
     },
     'codespan': {
       'background': `rgba(255,45,106,.1)`,
-      'color': `var(--cyber-pink)`,
+      'color': `#ff2d6a`,
       'padding': `0.2em 0.4em`,
       'border-radius': `2px`,
-      'border': `1px solid var(--cyber-pink)`,
+      'border': `1px solid #ff2d6a`,
       'font-family': `\\'Fira Code\\', monospace`,
     },
     'link': {
-      'color': `var(--cyber-blue)`,
+      'color': `#0ff`,
       'text-decoration': `none`,
-      'border-bottom': `1px solid var(--cyber-blue)`,
+      'border-bottom': `1px solid #0ff`,
       'box-shadow': `0 4px 8px -4px rgba(0,255,255,.3)`,
       'transition': `all 0.3s ease`,
     },
     'wx_link': {
-      'color': `var(--cyber-blue)`,
+      'color': `#0ff`,
       'text-decoration': `none`,
-      'border-bottom': `1px solid var(--cyber-blue)`,
+      'border-bottom': `1px solid #0ff`,
       'box-shadow': `0 4px 8px -4px rgba(0,255,255,.3)`,
       'transition': `all 0.3s ease`,
     },
     'strong': {
-      'color': `var(--cyber-pink)`,
+      'color': `#ff2d6a`,
       'font-weight': `600`,
       'letter-spacing': `0.5px`,
     },
@@ -1673,12 +1712,17 @@ const cyberTheme = toMerged(defaultTheme, {
       'width': `100%`,
       'border-collapse': `separate`,
       'border-spacing': `0`,
-      'border': `1px solid var(--cyber-blue)`,
+      'border': `1px solid #0ff`,
       'background': `rgba(13,14,25,.9)`,
       'box-shadow': `0 0 15px rgba(0,255,255,.2)`,
     },
     'thead': {
       background: `rgba(0,255,255,.1)`,
+    },
+    'th': {
+      color: `#0ff`,
+      border: `1px solid rgba(0,255,255,.3)`,
+      padding: `0.8em 1em`,
     },
     'td': {
       padding: `0.8em 1em`,
@@ -1691,10 +1735,6 @@ const cyberTheme = toMerged(defaultTheme, {
 const kidsTheme = toMerged(defaultTheme, {
   base: {
     '--md-primary-color': `#FF6B6B`,
-    '--kid-yellow': `#FFD93D`,
-    '--kid-blue': `#4DD0E1`,
-    '--kid-green': `#6BCB77`,
-    '--kid-purple': `#B39DDB`,
     'font-family': `"Comic Sans MS", "Comic Sans", cursive, "PingFang SC", sans-serif`,
   },
   block: {
@@ -1707,13 +1747,13 @@ const kidsTheme = toMerged(defaultTheme, {
       'border-radius': `20px`,
       'border': `3px solid #FFD93D`,
       'box-shadow': `0 8px 0 #FFB562`,
-      'padding': `25px`,
+      'padding': `25px 15px`,
       'background-image': `
         radial-gradient(#FF6B6B 3px, transparent 3px),
         radial-gradient(#4DD0E1 3px, transparent 3px)
       `,
-      'background-size': `40px 40px`,
-      'background-position': `0 0, 20px 20px`,
+      'background-size': `20px 20px`,
+      'background-position': `0 0, 10px 10px`,
       'background-attachment': `fixed`,
     },
 
@@ -1748,52 +1788,62 @@ const kidsTheme = toMerged(defaultTheme, {
     },
     'h2 .content': {
       'font-size': `1.4em`,
-      'background': `var(--kid-yellow)`,
+      'background': `#FFD93D`,
       'color': `#fff`,
       'padding': `8px 20px`,
       'border-radius': `25px`,
       'text-shadow': `1px 1px 0 #FFB562`,
     },
-
+    'h3': {
+      'display': `flex`,
+      'gap': `.5em`,
+      'align-items': `center`,
+    },
     'h3 .prefix': {
       content: `✨`,
     },
     'h3 .content': {
       'font-size': `1.3em`,
-      'color': `var(--kid-blue)`,
-      'border-bottom': `3px dotted var(--kid-blue)`,
+      'color': `#4DD0E1`,
+      // 'border-bottom': `3px wave #4DD0E1`,
+      'text-decoration': `underline`,
+      'text-decoration-color': `#4DD0E1`,
+      'text-decoration-style': `wavy`,
+      'text-underline-offset': `4px`,
       'padding': `5px 0`,
       'border-left': `none`,
+      'line-height': `1.5em`,
     },
     'h4 .content': {
       'font-size': `1.2em`,
-      'color': `var(--kid-blue)`,
+      'color': `#4DD0E1`,
     },
     'h5 .content': {
       'font-size': `1.1em`,
-      'color': `var(--kid-blue)`,
+      'color': `#4DD0E1`,
     },
     'h6 .content': {
-      color: `var(--kid-blue)`,
+      color: `#4DD0E1`,
     },
 
     'blockquote': {
       'background': `#F8F9FA`,
-      'border': `2px dashed var(--kid-purple)`,
+      'border': `2px dashed #4DD0E1`,
       'border-radius': `15px`,
       'padding': `15px 20px`,
+      'margin': `20px 0 `,
     },
 
     'blockquote .quote-mark': {
       'content': `✎`,
       'font-size': `24px`,
-      'color': `var(--kid-purple)`,
+      'color': `#4DD0E1`,
       'margin-top': `-20px`,
     },
 
     'code_pre': {
-      'background': `#F8F9FA`,
-      'border': `2px solid var(--kid-green)`,
+      // 'background': `#F8F9FA`,
+      'border': `2px solid #6BCB77`,
       'border-radius': `15px`,
       'font-family': `\\'Fira Code\\', monospace`,
     },
@@ -1825,8 +1875,13 @@ const kidsTheme = toMerged(defaultTheme, {
       'content': `🌟`,
       'margin-right': `8px`,
     },
+    'ol-listitem': {
+      'text-indent': 0,
+      'display': `flex`,
+      'align-items': `center`,
+    },
     'ol-listitem .prefix': {
-      'background': `var(--kid-yellow)`,
+      'background': `#FFD93D`,
       'color': `#fff`,
       'width': `24px`,
       'height': `24px`,
@@ -1841,39 +1896,45 @@ const kidsTheme = toMerged(defaultTheme, {
 
     'codespan': {
       'background': `#F8F9FA`,
-      'border': `2px solid var(--kid-green)`,
+      'border': `2px solid #6BCB77`,
       'border-radius': `5px`,
       'padding': `2px 6px`,
-      'color': `var(--kid-green)`,
+      'color': `#6BCB77`,
       'font-family': `"Fira Code", monospace`,
     },
 
     'strong': {
-      'color': `var(--kid-blue)`,
+      'color': `#4DD0E1`,
       'font-weight': `bold`,
     },
 
     'link': {
-      'color': `var(--kid-purple)`,
+      'color': `#4DD0E1`,
       'text-decoration': `none`,
-      'border-bottom': `2px solid var(--kid-purple)`,
+      'border-bottom': `2px solid #4DD0E1`,
+    },
+
+    'wx_link': {
+      'color': `#4DD0E1`,
+      'text-decoration': `none`,
+      'border-bottom': `2px solid #4DD0E1`,
     },
 
     'table': {
       'border-collapse': `separate`,
       'border-spacing': `0`,
-      'border': `3px solid var(--kid-yellow)`,
+      'border': `3px solid #FFD93D`,
       'border-radius': `15px`,
       'overflow': `hidden`,
     },
 
     'thead': {
-      background: `var(--kid-yellow)`,
+      background: `#FFD93D`,
       color: `#fff`,
     },
 
     'td': {
-      border: `2px solid var(--kid-yellow)`,
+      border: `2px solid #FFD93D`,
       padding: `10px 15px`,
     },
   },
@@ -1882,10 +1943,6 @@ const kidsTheme = toMerged(defaultTheme, {
 const notebookTheme = toMerged(defaultTheme, {
   base: {
     '--md-primary-color': `#2B4B6F`,
-    '--notebook-ink': `#1B365C`,
-    '--notebook-red': `#CC4B4B`,
-    '--notebook-blue': `#2B4B6F`,
-    '--notebook-accent': `#FFA41B`,
     'font-family': `"Patrick Hand", "Comic Sans MS", "PingFang SC", sans-serif`,
     'line-height': `1.6`,
     'letter-spacing': `0.5px`,
@@ -1945,8 +2002,8 @@ const notebookTheme = toMerged(defaultTheme, {
 
     'h1 .content': {
       'font-size': `2em`,
-      'color': `var(--notebook-ink)`,
-      'border-bottom': `2px solid var(--notebook-red)`,
+      'color': `#1B365C`,
+      'border-bottom': `2px solid #CC4B4B`,
       'padding': `0.2em 0`,
       'font-family': `"Permanent Marker", cursive`,
       'text-align': `left`,
@@ -1989,14 +2046,14 @@ const notebookTheme = toMerged(defaultTheme, {
     },
     'h3 .content': {
       'font-size': `1.3em`,
-      'color': `var(--notebook-ink)`,
+      'color': `#1B365C`,
       'padding-left': `0.5em`,
-      'border-left': `3px solid var(--notebook-accent)`,
+      'border-left': `3px solid #FFA41B`,
     },
 
     'blockquote': {
       'background': `#FFFBE6`,
-      'border-left': `3px solid var(--notebook-accent)`,
+      'border-left': `3px solid #FFA41B`,
       'padding': `1em`,
       'margin': `1em 0`,
       'font-style': `italic`,
@@ -2005,7 +2062,7 @@ const notebookTheme = toMerged(defaultTheme, {
 
     'blockquote .quote-mark': {
       'content': `"Note:"`,
-      'color': `var(--notebook-accent)`,
+      'color': `#FFA41B`,
       'font-family': `"Permanent Marker", cursive`,
       'font-size': `1.1em`,
       'font-style': `normal`,
@@ -2040,20 +2097,20 @@ const notebookTheme = toMerged(defaultTheme, {
   inline: {
     'listitem .prefix': {
       'content': `✓`,
-      'color': `var(--notebook-blue)`,
+      'color': `#2B4B6F`,
       'margin-right': `0.5em`,
       'font-weight': `bold`,
     },
 
     'ol-listitem .prefix': {
-      'color': `var(--notebook-ink)`,
+      'color': `#1B365C`,
       'font-family': `"Permanent Marker", cursive`,
       'margin-right': `0.5em`,
     },
 
     'codespan': {
       'background': `#F3F4F6`,
-      'color': `var(--notebook-red)`,
+      'color': `#CC4B4B`,
       'padding': `0.2em 0.4em`,
       'border-radius': `3px`,
       'font-family': `"Fira Code", monospace`,
@@ -2061,17 +2118,17 @@ const notebookTheme = toMerged(defaultTheme, {
     },
 
     'link': {
-      'color': `var(--notebook-blue)`,
+      'color': `#2B4B6F`,
       'text-decoration': `none`,
-      'border-bottom': `1px solid var(--notebook-blue)`,
+      'border-bottom': `1px solid #2B4B6F`,
       'transition': `all 0.2s ease`,
     },
 
     'strong': {
-      'color': `var(--notebook-ink)`,
+      'color': `#1B365C`,
       'font-weight': `bold`,
       'text-decoration': `underline`,
-      'text-decoration-color': `var(--notebook-accent)`,
+      'text-decoration-color': `#FFA41B`,
       'text-decoration-thickness': `2px`,
       'text-underline-offset': `2px`,
     },
@@ -2086,13 +2143,13 @@ const notebookTheme = toMerged(defaultTheme, {
 
     'thead': {
       'background': `#F3F4F6`,
-      'border-bottom': `2px solid var(--notebook-blue)`,
+      'border-bottom': `2px solid #2B4B6F`,
     },
 
     'td': {
       padding: `0.8em`,
       border: `1px solid #E1E4E8`,
-      color: `var(--notebook-ink)`,
+      color: `#1B365C`,
     },
   },
 })

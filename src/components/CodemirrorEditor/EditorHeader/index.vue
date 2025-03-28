@@ -84,6 +84,7 @@ function copy() {
         nextTick(() => toggleDark())
       }
       if (copyMode.value === `html`) {
+        console.log(`inner html`, temp)
         await copyContent(temp)
       }
 

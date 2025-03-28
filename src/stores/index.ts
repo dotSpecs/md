@@ -220,6 +220,7 @@ export const useStore = defineStore(`store`, () => {
     fonts: fontFamily.value,
     size: fontSize.value,
     isUseIndent: isUseIndent.value,
+    themeName: theme.value,
   })
 
   const readingTime = ref<ReadTimeResults | null>(null)

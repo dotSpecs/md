@@ -24,6 +24,7 @@ export interface IOpts {
   fonts: string
   size: string
   isUseIndent: boolean
+  themeName?: string
   legend?: string
   citeStatus?: boolean
   countStatus?: boolean
