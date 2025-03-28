@@ -56,3 +56,6 @@ components.d.ts
 .wxt
 .output
 web-ext.config.ts
+
+# Vite cache
+.vite/
