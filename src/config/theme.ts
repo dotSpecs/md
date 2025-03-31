@@ -865,7 +865,7 @@ const techTheme = toMerged(defaultTheme, {
 
     'h1 .content': {
       'display': `inline-block`,
-      'padding': `0.4em 0.8em`,
+      'padding': `0.4em 0.6em`,
       'background': `var(--md-primary-color)`,
       'color': `white`,
       'font-weight': `600`,
@@ -1041,7 +1041,7 @@ const techTheme = toMerged(defaultTheme, {
     },
 
     'hr': {
-      height: `1px`,
+      height: `3px`,
       border: `none`,
       margin: `2em 0`,
       background: `linear-gradient(to right, 
