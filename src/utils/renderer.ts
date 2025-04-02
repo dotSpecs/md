@@ -79,7 +79,7 @@ function getStyles(styleMapping: ThemeStyles, tokenName: string, addition: strin
     return ``
   }
   const styles = getStyleString(dict)
-  return `style="${styles}${addition}"`
+  return `style="${styles};${addition}"`
 }
 
 function getStyleValue(styleMapping: ThemeStyles, tokenName: string, property: string): string {
@@ -185,9 +185,9 @@ export function initRenderer(opts: IOpts) {
     return getStyles(styleMapping, tag, addition)
   }
 
-  function styledContent(styleLabel: string, content: string, tagName?: string): string {
+  function styledContent(styleLabel: string, content: string, tagName?: string, addition: string = ``): string {
     const tag = tagName ?? styleLabel
-    const labelStyle = styles(styleLabel)
+    const labelStyle = styles(styleLabel, addition)
 
     return `<${tag} data-website="https://md.vvvtools.com" data-tool="三维md微信编辑器" ${/^h\d$/.test(tag) ? `data-heading="true"` : ``} ${labelStyle}>${content}</${tag}>`
   }
@@ -394,7 +394,18 @@ export function initRenderer(opts: IOpts) {
         return styledContent(`th`, text)
       }
 
-      return styledContent(`td`, text)
+      let align = ``
+      if (token.align === `left`) {
+        align = `text-align: left;`
+      }
+      else if (token.align === `center`) {
+        align = `text-align: center;`
+      }
+      else if (token.align === `right`) {
+        align = `text-align: right;`
+      }
+
+      return styledContent(`td`, text, `td`, align)
     },
 
     hr(_: Tokens.Hr): string {
