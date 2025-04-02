@@ -189,7 +189,7 @@ export function initRenderer(opts: IOpts) {
     const tag = tagName ?? styleLabel
     const labelStyle = styles(styleLabel)
 
-    return `<${tag} data-tool="三维md微信编辑器" ${/^h\d$/.test(tag) ? `data-heading="true"` : ``} ${labelStyle}>${content}</${tag}>`
+    return `<${tag} data-website="https://md.vvvtools.com" data-tool="三维md微信编辑器" ${/^h\d$/.test(tag) ? `data-heading="true"` : ``} ${labelStyle}>${content}</${tag}>`
   }
 
   function addFootnote(title: string, link: string): number {
@@ -431,13 +431,13 @@ export function initRenderer(opts: IOpts) {
           // md-content
           styledContent(`md-content`, [
             // md-body .prefix
-            `<section data-tool="三维md微信编辑器" class="prefix" ${bodyPrefixStyles}>${bodyPrefixContent}</section>`,
+            `<section data-website="https://md.vvvtools.com" data-tool="三维md微信编辑器" class="prefix" ${bodyPrefixStyles}>${bodyPrefixContent}</section>`,
 
             // md-body container
             styledContent(`md-body`, content, `section`),
 
             // md-body .suffix
-            `<section data-tool="三维md微信编辑器" class="suffix" ${bodySuffixStyles}>${bodySuffixContent}</section>`,
+            `<section data-website="https://md.vvvtools.com" data-tool="三维md微信编辑器" class="suffix" ${bodySuffixStyles}>${bodySuffixContent}</section>`,
           ].join(``), `section`),
 
           // md-content .suffix
