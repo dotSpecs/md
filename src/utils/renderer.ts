@@ -189,7 +189,7 @@ export function initRenderer(opts: IOpts) {
     const tag = tagName ?? styleLabel
     const labelStyle = styles(styleLabel)
 
-    return `<${tag} ${/^h\d$/.test(tag) ? `data-heading="true"` : ``} ${labelStyle}>${content}</${tag}>`
+    return `<${tag} data-tool="三维md微信编辑器" ${/^h\d$/.test(tag) ? `data-heading="true"` : ``} ${labelStyle}>${content}</${tag}>`
   }
 
   function addFootnote(title: string, link: string): number {
@@ -251,8 +251,7 @@ export function initRenderer(opts: IOpts) {
       const suffixContent = getStyleValue(styleMapping, `${tag} .suffix`, `content`) || ``
 
       const content = `${prefixStyles ? `<section ${prefixStyles}>${prefixContent}</section>` : ``
-      }<section ${contentStyles}>${text}</section>${
-        suffixStyles ? `<section ${suffixStyles}>${suffixContent}</section>` : ``}`
+      }<section ${contentStyles}>${text}</section>${suffixStyles ? `<section ${suffixStyles}>${suffixContent}</section>` : ``}`
 
       return styledContent(tag, content)
     },
@@ -432,13 +431,13 @@ export function initRenderer(opts: IOpts) {
           // md-content
           styledContent(`md-content`, [
             // md-body .prefix
-            `<section class="prefix" ${bodyPrefixStyles}>${bodyPrefixContent}</section>`,
+            `<section data-tool="三维md微信编辑器" class="prefix" ${bodyPrefixStyles}>${bodyPrefixContent}</section>`,
 
             // md-body container
             styledContent(`md-body`, content, `section`),
 
             // md-body .suffix
-            `<section class="suffix" ${bodySuffixStyles}>${bodySuffixContent}</section>`,
+            `<section data-tool="三维md微信编辑器" class="suffix" ${bodySuffixStyles}>${bodySuffixContent}</section>`,
           ].join(``), `section`),
 
           // md-content .suffix

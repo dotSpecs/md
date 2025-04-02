@@ -249,6 +249,9 @@ export const useStore = defineStore(`store`, () => {
     readingTime.value = readingTimeResult
     let outputTemp = marked.parse(markdownContent) as string
 
+    console.log(`output temp`, outputTemp)
+    console.log(`markdownContent`, markdownContent)
+
     // 提取标题
     const div = document.createElement(`div`)
     div.innerHTML = outputTemp
