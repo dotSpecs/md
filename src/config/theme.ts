@@ -821,6 +821,7 @@ const auroraTheme = toMerged(defaultTheme, {
       'border-radius': `6px`,
       'overflow': `hidden`,
       'background': `#fff`,
+      'min-width': `100%`,
     },
 
     thead: {
