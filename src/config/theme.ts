@@ -820,6 +820,7 @@ const auroraTheme = toMerged(defaultTheme, {
       'color': `hsl(var(--foreground))`,
       'border-radius': `6px`,
       'overflow': `hidden`,
+      'background': `#fff`,
     },
 
     thead: {
