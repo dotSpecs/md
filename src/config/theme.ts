@@ -626,7 +626,7 @@ const auroraTheme = toMerged(defaultTheme, {
       'padding': `0`,
       'border-bottom': `none`,
       'text-align': `left`,
-      'background-image': `linear-gradient(0deg, var(--md-primary-color) 40%, transparent 40%)`,
+      'background-image': `linear-gradient(0deg, var(--md-primary-color) 30%, transparent 30%)`,
     },
 
     'h2 .content': {
@@ -2175,6 +2175,11 @@ export const themeMap = {
 
 export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
   {
+    label: `极光`,
+    value: `aurora`,
+    desc: `@dotSpecs`,
+  },
+  {
     label: `经典`,
     value: `default`,
     desc: ``,
@@ -2188,11 +2193,6 @@ export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
     label: `简洁`,
     value: `simple`,
     desc: `@okooo5km`,
-  },
-  {
-    label: `极光`,
-    value: `aurora`,
-    desc: `@dotSpecs`,
   },
   {
     label: `科技`,
