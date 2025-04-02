@@ -283,6 +283,7 @@ const defaultTheme: Theme = {
       'text-align': `center`,
       'margin': `1em 8px`,
       'color': `hsl(var(--foreground))`,
+      'min-width': `100%`,
     },
 
     thead: {
