@@ -1247,7 +1247,7 @@ const symbolTheme = toMerged(defaultTheme, {
 
     },
     'listitem .prefix': {
-      content: `◌ `,
+      content: `✴ `,
       color: `var(--md-primary-color)`,
     },
     // 'ol-listitem': {
