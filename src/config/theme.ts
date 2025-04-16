@@ -619,25 +619,25 @@ const auroraTheme = toMerged(defaultTheme, {
       'background-size': `20px 20px, 20px 20px`,
     },
     'h1': {
-
+      'text-align': `center`,
     },
 
     'h1 .content': {
       'display': `inline-block`,
       'padding': `0`,
       'border-bottom': `none`,
-      'text-align': `left`,
-      'background-image': `linear-gradient(0deg, var(--md-primary-color) 30%, transparent 30%)`,
+      'text-align': `center`,
+      'background-image': `linear-gradient(0deg, color-mix(in srgb, var(--md-primary-color) 80%, transparent 90%) 30%, transparent 30%)`,
     },
 
     'h2 .content': {
       'display': `block`,
       'padding-left': `10px`,
       // 'border-radius': `6px`,
-      'border-left': `4px solid var(--md-primary-color)`,
+      // 'border-left': `4px solid var(--md-primary-color)`,
       'background': `none`,
       'color': `hsl(var(--foreground))`,
-      'text-align': `left`,
+      'text-align': `center`,
     },
 
     'h2 .content strong': {
@@ -2163,6 +2163,156 @@ const notebookTheme = toMerged(defaultTheme, {
   },
 })
 
+const paperTheme = toMerged(defaultTheme, {
+  base: {
+    '--md-primary-color': `#8b5cf6`, // 使用紫色作为主色
+  },
+  block: {
+    'container': {
+      'padding': `10px`,
+      'background': `hsl(var(--background))`,
+      'background-image': `url(https://cdn.meirishici.com/md/static/images/bg/paper.jpeg)`,
+      'background-repeat': `repeat`,
+      'background-size': `100%`,
+    },
+    'h1': {
+      'margin': `2em auto 1em`,
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+      'text-align': `center`,
+    },
+    'h1 .content': {
+      'font-size': `1.6em`,
+      'font-weight': `bold`,
+      'padding': `0`,
+      'border-bottom': `none`,
+      'text-align': `center`, // 确保内容文字居中
+      'color': `var(--md-primary-color)`,
+    },
+
+    'h2': {
+      'margin': `1.8em auto 1em`,
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+    },
+    'h2 .content': {
+      'font-size': `1.4em`,
+      'border-bottom': `none`,
+      'background': `none`,
+      'color': `var(--md-primary-color)`,
+      'padding': `0`,
+    },
+
+    'h3': {
+      'margin': `1.5em auto 1em`,
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+    },
+    'h3 .content': {
+      'font-size': `1.2em`,
+      'border-radius': `4px`,
+      'border-bottom': `none`,
+      'background': `none`,
+      'border': `none`,
+      'padding': `0`,
+      'color': `var(--md-primary-color)`,
+    },
+    'h4': {
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+    },
+    'h5': {
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+    },
+    'h6': {
+      'display': `flex`,
+      'align-items': `center`,
+      'justify-content': `center`, // 添加这行实现水平居中
+      'gap': `0.5em`,
+    },
+
+    'blockquote': {
+      'background': `color-mix(in srgb, var(--md-primary-color) 5%, transparent)`,
+      'border-left': `4px solid var(--md-primary-color)`,
+      'padding': `1em`,
+      'border-radius': `4px`,
+      'margin': `20px 0 `,
+    },
+
+    'code_pre': {
+      border: `1px solid color-mix(in srgb, var(--md-primary-color) 30%, transparent)`,
+      background: `color-mix(in srgb, var(--md-primary-color) 5%, transparent)`,
+    },
+  },
+  inline: {
+    'listitem': {
+
+    },
+    'listitem .prefix': {
+      content: `✴ `,
+      color: `var(--md-primary-color)`,
+    },
+    // 'ol-listitem': {
+    //   display: `flex`,
+    //   'align-items': `center`,
+    //   'justify-content': `flex-start`,
+    //   'gap': `1em`,
+    // },
+    'ol-listitem .prefix': {
+      color: `var(--md-primary-color)`,
+    },
+    'strong': {
+      'color': `var(--md-primary-color)`,
+      'font-weight': `bold`,
+    },
+    'em': {
+      'color': `color-mix(in srgb, var(--md-primary-color) 80%, black)`,
+      'font-style': `italic`,
+    },
+    'link': {
+      'color': `var(--md-primary-color)`,
+      'text-decoration': `none`,
+      'border-bottom': `1px dashed var(--md-primary-color)`,
+    },
+    'wx_link': {
+      'color': `var(--md-primary-color)`,
+      'text-decoration': `none`,
+      'border-bottom': `1px dashed var(--md-primary-color)`,
+    },
+    'table': {
+      'border-collapse': `collapse`,
+      'text-align': `center`,
+      'margin': `1.5em 0`,
+      'color': `hsl(var(--foreground))`,
+      'border-radius': `6px`,
+      'overflow': `hidden`,
+    },
+
+    'thead': {
+      'background': `color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
+      'font-weight': `bold`,
+      'color': `hsl(var(--foreground))`,
+    },
+
+    'td': {
+      border: `1px solid color-mix(in srgb, var(--md-primary-color) 20%, transparent)`,
+      padding: `0.5em 1em`,
+      color: `hsl(var(--foreground))`,
+    },
+  },
+})
+
 export const themeMap = {
   default: defaultTheme,
   grace: graceTheme,
@@ -2174,6 +2324,7 @@ export const themeMap = {
   cyber: cyberTheme,
   kids: kidsTheme,
   notebook: notebookTheme,
+  paper: paperTheme,
 }
 
 export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
@@ -2225,6 +2376,11 @@ export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
   {
     label: `笔记本`,
     value: `notebook`,
+    desc: `@dotSpecs`,
+  },
+  {
+    label: `纸张`,
+    value: `paper`,
     desc: `@dotSpecs`,
   },
 ]
