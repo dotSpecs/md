@@ -2165,7 +2165,10 @@ const notebookTheme = toMerged(defaultTheme, {
 
 const paperTheme = toMerged(defaultTheme, {
   base: {
-    '--md-primary-color': `#8b5cf6`, // 使用紫色作为主色
+    '--md-primary-color': `#2C3E50`, // 改用更深沉的墨水色
+    'font-family': `'Noto Serif', 'Times New Roman', serif`, // 使用衬线字体增加文档感
+    'line-height': `1.8`, // 增加行高提升可读性
+    'color': `#2C3E50`, // 使用深色文字
   },
   block: {
     'container': {
