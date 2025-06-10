@@ -476,8 +476,17 @@ const isOpenHeadingSlider = ref(false)
         <CssEditor class="order-2 flex-1" />
         <RightSlider class="order-2" />
       </div>
-      <footer class="h-[30px] flex select-none items-center justify-end px-4 text-[12px]">
-        字数 {{ readingTime?.words }}， 阅读大约需 {{ Math.ceil(readingTime?.minutes ?? 0) }} 分钟
+      <footer class="h-[30px] flex select-none items-center justify-between px-4 text-[12px]">
+        <div class="flex items-center gap-2">
+          <a href="https://vvvtools.com/" target="_blank" class="hover:text-primary">VVV Tools 工具站</a>
+          <!-- <span>•</span>
+          <a href="https://github.com/marktext/marktext" target="_blank" class="hover:text-primary">MarkText</a>
+          <span>•</span>
+          <a href="https://md.mzz.pub" target="_blank" class="hover:text-primary">MDX</a> -->
+        </div>
+        <div>
+          字数 {{ readingTime?.words }}， 阅读大约需 {{ Math.ceil(readingTime?.minutes ?? 0) }} 分钟
+        </div>
       </footer>
 
       <UploadImgDialog @upload-image="uploadImage" />
@@ -563,5 +572,15 @@ const isOpenHeadingSlider = ref(false)
 
 .codeMirror-wrapper {
   overflow-x: auto;
+}
+
+footer {
+  a {
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--md-primary-color);
+    }
+  }
 }
 </style>
