@@ -1,15 +1,15 @@
-import type { ExtendedProperties, IOpts, ThemeStyles } from '@/types'
-import type { RendererAPI } from '@/types/renderer-types'
 import type { PropertiesHyphen } from 'csstype'
 import type { RendererObject, Tokens } from 'marked'
 import type { ReadTimeResults } from 'reading-time'
 import { cloneDeep, toMerged } from 'es-toolkit'
 import frontMatter from 'front-matter'
-
 import hljs from 'highlight.js'
 import { marked } from 'marked'
+
 import mermaid from 'mermaid'
 import readingTime from 'reading-time'
+import type { ExtendedProperties, IOpts, ThemeStyles } from '@/types'
+import type { RendererAPI } from '@/types/renderer-types'
 
 import { getStyleString } from '.'
 import markedAlert from './MDAlert'
@@ -355,7 +355,7 @@ export function initRenderer(opts: IOpts): RendererAPI {
       let styletag: string
       if (ordered) {
         styletag = getStyles(styleMapping, `ol-listitem`) ? `ol-listitem` : `listitem`
-        const prefix = styletag === `listitem` ? `${idx + 1}. ` : `${idx + 1}`
+        const prefix = styletag === `listitem` ? `${idx}. ` : `${idx}`
 
         return styledContent(styletag, `<span ${(styles(`ol-listitem .prefix`))}>${prefix}</span> <span>${content}</span>`, `li`)
       }
