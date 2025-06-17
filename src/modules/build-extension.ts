@@ -1,20 +1,19 @@
+import type { OutputOptions } from 'rollup'
 import type * as vite from 'vite'
 import type * as wxt from 'wxt'
 import { writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { parseHTML } from 'linkedom'
-import { murmurHash } from 'ohash'
+import { hash } from 'ohash'
 import {
   addViteConfig,
   defineWxtModule,
 } from 'wxt/modules'
 
-interface FakeRollupOptions {
-  manualChunks: (id: string) => string | undefined
-}
 export default defineWxtModule({
   async setup(wxt) {
     wxt.config.alias[`/src/main.ts`] = `./src/main.ts`
+    wxt.config.alias[`/src/sidepanel.ts`] = `./src/sidepanel.ts`
     wxt.config.manifest.options_page = `options.html`
     wxt.hook(`entrypoints:grouped`, (_, groups) => {
       groups.push([{
@@ -25,18 +24,32 @@ export default defineWxtModule({
         outputDir: wxt.config.outDir,
         skipped: false,
       }])
+      groups.push([{
+        type: `sidepanel`,
+        name: `sidepanel`,
+        options: { openAtInstall: true, browserStyle: true },
+        inputPath: path.resolve(wxt.config.root, `./index.html`),
+        outputDir: wxt.config.outDir,
+        skipped: false,
+      }])
     })
     wxt.hook(`vite:build:extendConfig`, (_, config) => {
-      if (config.build?.rollupOptions?.input && config.build?.rollupOptions?.input) {
+      if (config.build?.rollupOptions?.input && config.build?.rollupOptions?.output) {
         const input = config.build?.rollupOptions.input as Record<string, string>
-        if (input.options) {
-          const output = config.build?.rollupOptions.output as FakeRollupOptions
-          output.manualChunks = (id) => {
-            if (id.includes(`prettier`)) {
-              return `prettier-chunk`
-            }
-            if (id.includes(`highlight.js`)) {
-              return `highlight-chunk`
+        if (input.options || input.sidepanel) {
+          const wxtOutput = config.build?.rollupOptions.output as OutputOptions
+          wxtOutput.manualChunks = (id) => {
+            if (id.includes(`node_modules`)) {
+              if (id.includes(`prettier`))
+                return `prettier`
+              if (id.includes(`katex`))
+                return `katex`
+              if (id.includes(`mermaid`))
+                return `mermaid`
+              if (id.includes(`cytoscape`))
+                return `cytoscape`
+              if (id.includes(`highlight.js`))
+                return `hljs`
             }
           }
         }
@@ -55,7 +68,7 @@ export default defineWxtModule({
 })
 
 // Stored outside the plugin to effect all instances of the htmlScriptToVirtual plugin.
-const inlineScriptContents: Record<number, string> = {}
+const inlineScriptContents: Record<string, string> = {}
 export function htmlScriptToVirtual(
   config: wxt.ResolvedConfig,
   getWxtDevServer: () => wxt.WxtDevServer | undefined,
@@ -68,38 +81,41 @@ export function htmlScriptToVirtual(
     {
       name: `md:dev-html-prerender`,
       apply: `build`,
-      async transform(code, id) {
-        if (
-          server == null
-          || !id.endsWith(`.html`)
-        ) {
-          return
-        }
-        const { document } = parseHTML(code)
-        // Replace inline script with virtual module served via dev server.
-        // Extension CSP blocks inline scripts, so that's why we're pulling them out.
-        const promises: Promise<void>[] = []
-        const inlineScripts = document.querySelectorAll(`script[src^=http]`)
-        inlineScripts.forEach(async (script) => {
-          promises.push(new Promise<void>((resolve) => {
-            const url = script.getAttribute(`src`) ?? ``
-            doFetch(url).then((textContent) => {
-              const hash = murmurHash(textContent)
-              inlineScriptContents[hash] = textContent
-              script.setAttribute(`src`, `${server.origin}/@id/${virtualInlineScript}?${hash}`)
-              if (script.hasAttribute(`id`)) {
-                script.setAttribute(`type`, `module`)
+      transformIndexHtml: {
+        order: `post`,
+        async handler(html) {
+          if (server == null) {
+            return html
+          }
+          const { document } = parseHTML(html)
+          // Replace inline script with virtual module served via dev server.
+          // Extension CSP blocks inline scripts, so that's why we're pulling them out.
+          const promises: Promise<void>[] = []
+          const inlineScripts = document.querySelectorAll(`script[src^=http]`)
+          inlineScripts.forEach(async (script) => {
+            promises.push(new Promise<void>((resolve) => {
+              const url = script.getAttribute(`src`) ?? ``
+              if (url?.startsWith(`http://localhost`)) {
+                resolve()
+                return
               }
-              resolve()
-            })
-          }))
-        })
-        await Promise.all(promises)
-        const newHtml = document.toString()
-        config.logger.debug(`transform ${id}`)
-        config.logger.debug(`Old HTML:\n${code}`)
-        config.logger.debug(`New HTML:\n${newHtml}`)
-        return newHtml
+              doFetch(url).then((textContent) => {
+                const key = hash(textContent)
+                inlineScriptContents[key] = textContent
+                script.setAttribute(`src`, `${server.origin}/@id/${virtualInlineScript}?${key}`)
+                if (script.hasAttribute(`id`)) {
+                  script.setAttribute(`type`, `module`)
+                }
+                resolve()
+              })
+            }))
+          })
+          await Promise.all(promises)
+          const newHtml = document.toString()
+          config.logger.debug(`\nhtmlScriptToVirtual Old HTML:\n${html}`)
+          config.logger.debug(`\nhtmlScriptToVirtual New HTML:\n${newHtml}`)
+          return newHtml
+        },
       },
     },
     {
@@ -120,8 +136,8 @@ export function htmlScriptToVirtual(
         // Resolve virtualized inline scripts
         if (id.startsWith(resolvedVirtualInlineScript)) {
           // id="virtual:md-inline-script?<hash>"
-          const hash = Number(id.substring(id.indexOf(`?`) + 1))
-          return inlineScriptContents[hash]
+          const key = id.substring(id.indexOf(`?`) + 1)
+          return inlineScriptContents[key]
         }
 
         // Ignore chunks during HTML file pre-rendering
@@ -140,7 +156,7 @@ export function htmlScriptToLocal(
     name: `md:build-html-prerender`,
     apply: `build`,
     transformIndexHtml: {
-      order: `pre`,
+      order: `post`,
       async handler(html) {
         const { document } = parseHTML(html)
         const promises: Promise<void>[] = []
@@ -155,9 +171,12 @@ export function htmlScriptToLocal(
                 return
               }
               const textContent = await doFetch(url)
-              const hash = murmurHash(textContent)
-              const jsName = url.match(/\/([^/]+)\.js$/)?.[1] ?? `.js`
-              const fileName = `${jsName.split(`.`)[0]}-${hash}.js`
+              const key = hash(textContent)
+              let jsName = url.match(/\/([^/]+)\.js$/)?.[1] ?? `.js`
+              if (url.indexOf(`?`) > 0) {
+                jsName = `${url.substring(url.indexOf(`?`) + 1)}.js`
+              }
+              const fileName = `${jsName.split(`.`)[0]}-${key}.js`
               // write to file
               const outFile = path.resolve(wxt.config.outDir, `./${fileName}`)
               await writeFile(outFile, textContent, `utf8`)
@@ -177,8 +196,8 @@ export function htmlScriptToLocal(
             promises.push(new Promise<void>(async (resolve) => {
               // Save the text content for later
               const textContent = script.textContent ?? ``
-              const hash = murmurHash(textContent)
-              const fileName = `md-inline-${hash}.js`
+              const key = hash(textContent)
+              const fileName = `md-inline-${key}.js`
               // write to file
               const outFile = path.resolve(wxt.config.outDir, `./${fileName}`)
               await writeFile(outFile, textContent, `utf8`)
@@ -194,8 +213,8 @@ export function htmlScriptToLocal(
         }
         await Promise.all(promises)
         const newHtml = document.toString()
-        wxt.config.logger.debug(`Old HTML:\n${html}`)
-        wxt.config.logger.debug(`New HTML:\n${newHtml}`)
+        wxt.config.logger.debug(`\nhtmlScriptToLocal Old HTML:\n${html}`)
+        wxt.config.logger.debug(`\nhtmlScriptToLocal New HTML:\n${newHtml}`)
         return newHtml
       },
     },

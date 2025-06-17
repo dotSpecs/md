@@ -1,17 +1,20 @@
+import type { OutputOptions } from 'rollup'
 import { defineConfig } from 'wxt'
 import ViteConfig from './vite.config'
 
+function getBuildOptions() {
+  delete (ViteConfig.build!.rollupOptions!.output as OutputOptions)!.manualChunks
+  return ViteConfig.build
+}
 export default defineConfig({
   srcDir: `src`,
-  publicDir: `../public`,
-  extensionApi: `chrome`,
-  manifest: {
+  modulesDir: `src/modules`,
+  manifest: ({ mode, browser }) => ({
     name: `公众号内容编辑器`,
-    description: `一款高度简洁的微信 Markdown 编辑器：支持 Markdown 语法、色盘取色、多图上传、一键下载文档、自定义 CSS 样式、一键重置、微信公众号图床等特性`,
     icons: {
-      256: `/mpmd/icon-256.png`,
+      256: mode === `development` ? `/mpmd/icon-256-gray.png` : `/mpmd/icon-256.png`,
     },
-    permissions: [`storage`],
+    permissions: [`storage`, `tabs`, `activeTab`, `sidePanel`, `contextMenus`],
     host_permissions: [
       `https://*.github.com/*`,
       `https://*.githubusercontent.com/*`,
@@ -22,16 +25,44 @@ export default defineConfig({
     ],
     web_accessible_resources: [
       {
-        resources: [`*.png`, `*.svg`],
+        resources: [`*.png`, `*.svg`, `injected.js`],
         matches: [`<all_urls>`],
       },
     ],
-  },
+    side_panel: browser === `chrome`
+      ? {
+          default_path: `sidepanel.html`,
+        }
+      : undefined,
+    sidebar_action: browser === `firefox`
+      ? {
+          default_panel: `sidepanel.html`,
+          default_icon: {
+            256: `mpmd/icon-256.png`,
+          },
+          default_title: `MD 公众号编辑器`,
+        }
+      : undefined,
+    commands: {
+      _execute_sidebar_action: {
+        description: `Open MD Editor Side Panel`,
+        suggested_key: {
+          default: `Ctrl+Shift+Y`,
+        },
+      },
+    },
+  }),
   analysis: {
     open: true,
   },
   vite: () => ({
     ...ViteConfig,
+    plugins: ViteConfig.plugins!.filter(plugin =>
+      typeof plugin === `object`
+      && plugin !== null
+      && !(`name` in plugin && plugin.name === `vite-plugin-Radar`),
+    ),
+    build: getBuildOptions(),
     base: `/`,
   }),
 })

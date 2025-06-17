@@ -6,6 +6,7 @@ import {
   fontSizeOptions,
   legendOptions,
   themeOptions,
+  widthOptions,
 } from '@/config'
 import { useDisplayStore, useStore } from '@/stores'
 import { Moon, Sun } from 'lucide-vue-next'
@@ -40,12 +41,8 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
 
 <template>
   <div
-    class="overflow-hidden border-l-2 border-gray/20 bg-white transition-width duration-300 dark:bg-[#191919]"
-    :class="{
-      'w-0 border-l-0': !store.isOpenRightSlider,
-      'w-100': store.isOpenRightSlider,
-    }"
-    style="z-index: 1;"
+    class="relative overflow-hidden border-l-2 border-gray/20 bg-white transition-width duration-300 dark:bg-[#191919]"
+    :class="[store.isOpenRightSlider ? 'w-100' : 'w-0 border-l-0']"
   >
     <div
       class="space-y-4 h-full overflow-auto p-4 transition-transform" :class="{
@@ -58,7 +55,7 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-3 justify-items-center gap-2">
           <Button
             v-for="{ label, value } in themeOptions" :key="value" class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': store.theme === value,
+              'border-black dark:border-white border-2': store.theme === value,
             }" @click="store.themeChanged(value)"
           >
             {{ label }}
@@ -70,8 +67,7 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-3 justify-items-center gap-2">
           <Button
             v-for="{ label, value } in fontFamilyOptions" :key="value" variant="outline" class="w-full"
-            :class="{ 'border-black dark:border-white': store.fontFamily === value }"
-            @click="store.fontChanged(value)"
+            :class="{ 'border-black dark:border-white border-2': store.fontFamily === value }" @click="store.fontChanged(value)"
           >
             {{ label }}
           </Button>
@@ -82,7 +78,7 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-5 justify-items-center gap-2">
           <Button
             v-for="{ value, desc } in fontSizeOptions" :key="value" variant="outline" class="w-full" :class="{
-              'border-black dark:border-white': store.fontSize === value,
+              'border-black dark:border-white border-2': store.fontSize === value,
             }" @click="store.sizeChanged(value)"
           >
             {{ desc }}
@@ -94,7 +90,7 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-3 justify-items-center gap-2">
           <Button
             v-for="{ label, value } in colorOptions" :key="value" class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': store.primaryColor === value,
+              'border-black dark:border-white border-2': store.primaryColor === value,
             }" @click="store.colorChanged(value)"
           >
             <span
@@ -110,13 +106,9 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <h2>自定义主题色</h2>
         <div ref="pickColorsContainer">
           <PickColors
-            v-if="pickColorsContainer"
-            v-model:value="primaryColor"
-            show-alpha :format="format"
-            :format-options="formatOptions"
-            :theme="store.isDark ? 'dark' : 'light'"
-            :popup-container="pickColorsContainer"
-            @change="store.colorChanged"
+            v-if="pickColorsContainer" v-model:value="primaryColor" show-alpha :format="format"
+            :format-options="formatOptions" :theme="store.isDark ? 'dark' : 'light'"
+            :popup-container="pickColorsContainer" @change="store.colorChanged"
           />
         </div>
       </div>
@@ -140,7 +132,7 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-3 justify-items-center gap-2">
           <Button
             v-for="{ label, value } in legendOptions" :key="value" class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': store.legend === value,
+              'border-black dark:border-white border-2': store.legend === value,
             }" @click="store.legendChanged(value)"
           >
             {{ label }}
@@ -153,15 +145,34 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-5 justify-items-center gap-2">
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': store.isMacCodeBlock,
+              'border-black dark:border-white border-2': store.isMacCodeBlock,
             }" @click="!store.isMacCodeBlock && store.macCodeBlockChanged()"
           >
             开启
           </Button>
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': !store.isMacCodeBlock,
+              'border-black dark:border-white border-2': !store.isMacCodeBlock,
             }" @click="store.isMacCodeBlock && store.macCodeBlockChanged()"
+          >
+            关闭
+          </Button>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <h2>AI 工具箱</h2>
+        <div class="grid grid-cols-5 justify-items-center gap-2">
+          <Button
+            class="w-full" variant="outline" :class="{
+              'border-black dark:border-white border-2': store.showAIToolbox,
+            }" @click="!store.showAIToolbox && store.aiToolboxChanged()"
+          >
+            开启
+          </Button>
+          <Button
+            class="w-full" variant="outline" :class="{
+              'border-black dark:border-white border-2': !store.showAIToolbox,
+            }" @click="store.showAIToolbox && store.aiToolboxChanged()"
           >
             关闭
           </Button>
@@ -172,14 +183,14 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-5 justify-items-center gap-2">
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': store.isCiteStatus,
+              'border-black dark:border-white border-2': store.isCiteStatus,
             }" @click="!store.isCiteStatus && store.citeStatusChanged()"
           >
             开启
           </Button>
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': !store.isCiteStatus,
+              'border-black dark:border-white border-2': !store.isCiteStatus,
             }" @click="store.isCiteStatus && store.citeStatusChanged()"
           >
             关闭
@@ -191,14 +202,14 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-5 justify-items-center gap-2">
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': store.isUseIndent,
+              'border-black dark:border-white border-2': store.isUseIndent,
             }" @click="!store.isUseIndent && store.useIndentChanged()"
           >
             开启
           </Button>
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': !store.isUseIndent,
+              'border-black dark:border-white border-2': !store.isUseIndent,
             }" @click="store.isUseIndent && store.useIndentChanged()"
           >
             关闭
@@ -210,14 +221,14 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-5 justify-items-center gap-2">
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': displayStore.isShowCssEditor,
+              'border-black dark:border-white border-2': displayStore.isShowCssEditor,
             }" @click="!displayStore.isShowCssEditor && customStyle()"
           >
             开启
           </Button>
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': !displayStore.isShowCssEditor,
+              'border-black dark:border-white border-2': !displayStore.isShowCssEditor,
             }" @click="displayStore.isShowCssEditor && customStyle()"
           >
             关闭
@@ -229,17 +240,29 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-5 justify-items-center gap-2">
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': store.isEditOnLeft,
+              'border-black dark:border-white border-2': store.isEditOnLeft,
             }" @click="!store.isEditOnLeft && store.toggleEditOnLeft()"
           >
             左侧
           </Button>
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': !store.isEditOnLeft,
+              'border-black dark:border-white border-2': !store.isEditOnLeft,
             }" @click="store.isEditOnLeft && store.toggleEditOnLeft()"
           >
             右侧
+          </Button>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <h2>预览模式</h2>
+        <div class="grid grid-cols-5 justify-items-center gap-2">
+          <Button
+            v-for="{ label, value } in widthOptions" :key="value" class="w-full" variant="outline" :class="{
+              'border-black dark:border-white border-2': store.previewWidth === value,
+            }" @click="store.previewWidthChanged(value)"
+          >
+            {{ label }}
           </Button>
         </div>
       </div>
@@ -248,14 +271,14 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
         <div class="grid grid-cols-5 justify-items-center gap-2">
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': !isDark,
+              'border-black dark:border-white border-2': !isDark,
             }" @click="store.toggleDark(false)"
           >
             <Sun class="h-4 w-4" />
           </Button>
           <Button
             class="w-full" variant="outline" :class="{
-              'border-black dark:border-white': isDark,
+              'border-black dark:border-white border-2': isDark,
             }" @click="store.toggleDark(true)"
           >
             <Moon class="h-4 w-4" />
@@ -264,7 +287,7 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
       </div>
       <div class="space-y-2">
         <h2>样式配置</h2>
-        <Button @click="store.resetStyleConfirm">
+        <Button variant="destructive" @click="store.resetStyleConfirm">
           重置
         </Button>
       </div>
@@ -272,6 +295,4 @@ const formatOptions = ref<Format[]>([`rgb`, `hex`, `hsl`, `hsv`])
   </div>
 </template>
 
-<style scoped lang="less">
-
-</style>
+<style scoped lang="less"></style>

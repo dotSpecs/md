@@ -179,7 +179,7 @@ const defaultTheme: Theme = {
 
     // 代码块
     'code_pre': {
-      'font-size': `14px`,
+      'font-size': `90%`,
       'overflow-x': `auto`,
       'border-radius': `8px`,
       'padding': `1em`,
@@ -191,13 +191,14 @@ const defaultTheme: Theme = {
     'code': {
       'margin': 0,
       'white-space': `nowrap`,
+      'font-size': `90%`,
       'font-family': `Menlo, Operator Mono, Consolas, Monaco, monospace`,
     },
 
     // 图片
     'image': {
       'display': `block`,
-      'width': `100% !important`,
+      'max-width': `100%`,
       'margin': `0.1em auto 0.5em`,
       'border-radius': `4px`,
     },
@@ -238,6 +239,13 @@ const defaultTheme: Theme = {
       'transform': `scale(1, 0.5)`,
       'height': `0.4em`,
       'margin': `1.5em 0`,
+    },
+
+    'block_katex': {
+      'max-width': `100%`,
+      'overflow-x': `auto`,
+      '-webkit-overflow-scrolling': `touch`,
+      'padding': `0.5em 0`,
     },
   },
   inline: {
@@ -309,6 +317,14 @@ const defaultTheme: Theme = {
       'color': `#888`,
       'font-size': `0.8em`,
     },
+
+    inline_katex: {
+      'display': `inline-flex`,
+      'max-width': `100%`,
+      'overflow-x': `auto`,
+      'padding-bottom': `5px`,
+      'vertical-align': `middle`,
+    },
   },
 }
 
@@ -375,7 +391,6 @@ const graceTheme = toMerged(defaultTheme, {
     },
 
     'code': {
-      'white-space': `pre-wrap`,
       'font-family': `'Fira Code', Menlo, Operator Mono, Consolas, Monaco, monospace`,
     },
 
@@ -567,7 +582,6 @@ const simpleTheme = toMerged(defaultTheme, {
     },
 
     'code': {
-      'white-space': `pre-wrap`,
       'font-family': `'Fira Code', Menlo, Operator Mono, Consolas, Monaco, monospace`,
     },
 

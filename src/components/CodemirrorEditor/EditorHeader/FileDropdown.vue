@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useStore } from '@/stores'
-import { Download, FileCode, Upload } from 'lucide-vue-next'
+import { Download, FileCode, FileCog, Upload } from 'lucide-vue-next'
 
 const store = useStore()
 
@@ -13,7 +13,10 @@ const {
   exportEditorContent2HTML,
   exportEditorContent2MD,
   importMarkdownContent,
+  downloadAsCardImage,
 } = store
+
+const editorStateDialogVisible = ref(false)
 </script>
 
 <template>
@@ -34,6 +37,15 @@ const {
         <FileCode class="mr-2 size-4" />
         导出 .html
       </MenubarItem>
+      <MenubarItem @click="downloadAsCardImage()">
+        <Download class="mr-2 size-4" />
+        导出 .png
+      </MenubarItem>
+      <MenubarSeparator />
+      <MenubarItem @click="editorStateDialogVisible = true">
+        <FileCog class="mr-2 size-4" />
+        导入/导出项目配置
+      </MenubarItem>
       <MenubarSeparator />
       <MenubarCheckboxItem v-model:checked="isDark">
         深色模式
@@ -44,4 +56,7 @@ const {
       </MenubarCheckboxItem>
     </MenubarContent>
   </MenubarMenu>
+
+  <!-- 各弹窗挂载 -->
+  <EditorStateDialog :visible="editorStateDialogVisible" @close="editorStateDialogVisible = false" />
 </template>

@@ -6,8 +6,10 @@ import {
   ctrlSign,
   shiftSign,
 } from '@/config'
+
 import { useStore } from '@/stores'
 import { addPrefix, processClipboardContent } from '@/utils'
+import { copyPlain } from '@/utils/clipboard'
 import { ChevronDownIcon, Moon, PanelLeftClose, PanelLeftOpen, Settings, Sun } from 'lucide-vue-next'
 
 const emit = defineEmits([`addFormat`, `formatContent`, `startCopy`, `endCopy`])
@@ -39,6 +41,21 @@ const formatItems = [
     emitArgs: [`addFormat`, `${ctrlKey}-E`],
   },
   {
+    label: `标题`,
+    kbd: [ctrlSign, `H`],
+    emitArgs: [`addFormat`, `${ctrlKey}-H`],
+  },
+  {
+    label: `无序列表`,
+    kbd: [ctrlSign, `U`],
+    emitArgs: [`addFormat`, `${ctrlKey}-U`],
+  },
+  {
+    label: `有序列表`,
+    kbd: [ctrlSign, `O`],
+    emitArgs: [`addFormat`, `${ctrlKey}-O`],
+  },
+  {
     label: `格式化`,
     kbd: [altSign, shiftSign, `F`],
     emitArgs: [`formatContent`],
@@ -47,7 +64,7 @@ const formatItems = [
 
 const store = useStore()
 
-const { isDark, isCiteStatus, isCountStatus, output, primaryColor, isOpenPostSlider } = storeToRefs(store)
+const { isDark, isCiteStatus, isCountStatus, output, primaryColor, isOpenPostSlider, editor } = storeToRefs(store)
 
 const { toggleDark, editorRefresh, citeStatusChanged, countStatusChanged } = store
 
@@ -57,7 +74,18 @@ const { copy: copyContent } = useClipboard({ source })
 
 // 复制到微信公众号
 function copy() {
+  // 如果是 Markdown 源码，直接复制并返回
+  if (copyMode.value === `md`) {
+    const mdContent = editor.value?.getValue() || ``
+    copyPlain(mdContent)
+    toast.success(`已复制 Markdown 源码到剪贴板。`)
+    editorRefresh()
+    return
+  }
+
+  // 以下处理非 Markdown 的复制流程
   emit(`startCopy`)
+
   setTimeout(() => {
     // 如果是深色模式，复制之前需要先切换到白天模式
     const isBeforeDark = isDark.value
@@ -71,6 +99,7 @@ function copy() {
       clipboardDiv.focus()
       window.getSelection()!.removeAllRanges()
       const temp = clipboardDiv.innerHTML
+
       if (copyMode.value === `txt`) {
         const range = document.createRange()
         range.setStartBefore(clipboardDiv.firstChild!)
@@ -79,10 +108,13 @@ function copy() {
         document.execCommand(`copy`)
         window.getSelection()!.removeAllRanges()
       }
+
       clipboardDiv.innerHTML = output.value
+
       if (isBeforeDark) {
         nextTick(() => toggleDark())
       }
+
       if (copyMode.value === `html`) {
         console.log(`inner html`, temp)
         await copyContent(temp)
@@ -94,7 +126,11 @@ function copy() {
           ? `已复制 HTML 源码，请进行下一步操作。`
           : `已复制渲染后的内容到剪贴板，可直接到公众号后台粘贴。`,
       )
-
+      window.dispatchEvent(new CustomEvent(`copyToMp`, {
+        detail: {
+          content: output.value,
+        },
+      }))
       editorRefresh()
       emit(`endCopy`)
     })
@@ -103,8 +139,9 @@ function copy() {
 </script>
 
 <template>
-  <header class="header-container h-15 flex items-center justify-between px-5 dark:bg-[#191c20]">
-    <div class="space-x-2 flex">
+  <header class="header-container h-15 flex flex-wrap items-center justify-between px-5 dark:bg-[#191c20]">
+    <!-- 左侧菜单：移动端隐藏 -->
+    <div class="space-x-2 hidden sm:flex">
       <Menubar class="menubar">
         <FileDropdown />
 
@@ -112,7 +149,8 @@ function copy() {
           <MenubarTrigger> 格式 </MenubarTrigger>
           <MenubarContent class="w-60" align="start">
             <MenubarCheckboxItem
-              v-for="{ label, kbd, emitArgs } in formatItems" :key="label"
+              v-for="{ label, kbd, emitArgs } in formatItems"
+              :key="label"
               @click="emitArgs[0] === 'addFormat' ? $emit(emitArgs[0], emitArgs[1]) : $emit(emitArgs[0])"
             >
               {{ label }}
@@ -141,26 +179,21 @@ function copy() {
       </Menubar>
     </div>
 
-    <div class="space-x-2 flex">
-      <TooltipProvider :delay-duration="200">
-        <Tooltip>
-          <TooltipTrigger as-child>
-            <Button variant="outline" @click="isOpenPostSlider = !isOpenPostSlider">
-              <PanelLeftOpen v-show="!isOpenPostSlider" class="size-4" />
-              <PanelLeftClose v-show="isOpenPostSlider" class="size-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="left">
-            {{ isOpenPostSlider ? "关闭" : "内容管理" }}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+    <!-- 右侧操作区：移动端保留核心按钮 -->
+    <div class="space-x-2 flex flex-wrap">
+      <!-- 展开/收起左侧内容栏 -->
+      <Button variant="outline" size="icon" @click="isOpenPostSlider = !isOpenPostSlider">
+        <PanelLeftOpen v-show="!isOpenPostSlider" class="size-4" />
+        <PanelLeftClose v-show="isOpenPostSlider" class="size-4" />
+      </Button>
 
-      <Button variant="outline" @click="toggleDark()">
+      <!-- 暗色切换 -->
+      <Button variant="outline" size="icon" @click="toggleDark()">
         <Moon v-show="isDark" class="size-4" />
         <Sun v-show="!isDark" class="size-4" />
       </Button>
 
+      <!-- 复制按钮组 -->
       <div class="bg-background space-x-1 text-background-foreground mx-2 flex items-center border rounded-md">
         <Button variant="ghost" class="shadow-none" @click="copy">
           复制
@@ -184,14 +217,19 @@ function copy() {
               <DropdownMenuRadioItem value="html">
                 HTML 格式
               </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="md">
+                MD 格式
+              </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
 
-      <PostInfo />
+      <!-- 文章信息（移动端隐藏） -->
+      <PostInfo class="hidden sm:inline-flex" />
 
-      <Button variant="outline" @click="store.isOpenRightSlider = !store.isOpenRightSlider">
+      <!-- 设置按钮 -->
+      <Button variant="outline" size="icon" @click="store.isOpenRightSlider = !store.isOpenRightSlider">
         <Settings class="size-4" />
       </Button>
 

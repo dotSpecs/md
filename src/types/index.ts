@@ -3,8 +3,8 @@ import type { PropertiesHyphen } from 'csstype'
 import type { Token } from 'marked'
 
 type GFMBlock = `blockquote_note` | `blockquote_tip` | `blockquote_important` | `blockquote_warning` | `blockquote_caution` | `blockquote_title` | `blockquote_title_note` | `blockquote_title_tip` | `blockquote_title_important` | `blockquote_title_warning` | `blockquote_title_caution` | `blockquote_p` | `blockquote_p_note` | `blockquote_p_tip` | `blockquote_p_important` | `blockquote_p_warning` | `blockquote_p_caution`
-export type Block = `container` | `h1` | `h2` | `h3` | `h4` | `h5` | `h6` | `p` | `blockquote` | `blockquote .quote-mark` | `blockquote_p` | `code_pre` | `code` | `image` | `ol` | `ul` | `footnotes` | `figure` | `hr` | `h1 .content` | `h2 .content` | `h3 .content` | `h4 .content` | `h5 .content` | `h6 .content` | GFMBlock
-export type Inline = `listitem` | `codespan` | `link` | `wx_link` | `strong` | `table` | `thead` | `td` | `footnote` | `figcaption` | `em`
+export type Block = `container` | `h1` | `h2` | `h3` | `h4` | `h5` | `h6` | `p` | `blockquote` | `blockquote .quote-mark` | `blockquote_p` | `code_pre` | `code` | `image` | `ol` | `ul` | `footnotes` | `figure` | `hr` | `h1 .content` | `h2 .content` | `h3 .content` | `h4 .content` | `h5 .content` | `h6 .content` | `block_katex` | GFMBlock
+export type Inline = `listitem` | `codespan` | `link` | `wx_link` | `strong` | `table` | `thead` | `td` | `footnote` | `figcaption` | `em` | `inline_katex`
 
 interface CustomCSSProperties {
   [`--md-primary-color`]?: string
@@ -28,6 +28,7 @@ export interface IOpts {
   legend?: string
   citeStatus?: boolean
   countStatus?: boolean
+  isMacCodeBlock?: boolean
 }
 
 export type ThemeStyles = Record<Block | Inline, ExtendedProperties>

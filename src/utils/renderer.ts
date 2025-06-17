@@ -1,6 +1,7 @@
 import type { ExtendedProperties, IOpts, ThemeStyles } from '@/types'
+import type { RendererAPI } from '@/types/renderer-types'
 import type { PropertiesHyphen } from 'csstype'
-import type { Renderer, RendererObject, Tokens } from 'marked'
+import type { RendererObject, Tokens } from 'marked'
 import type { ReadTimeResults } from 'reading-time'
 import { cloneDeep, toMerged } from 'es-toolkit'
 import frontMatter from 'front-matter'
@@ -12,13 +13,14 @@ import readingTime from 'reading-time'
 
 import { getStyleString } from '.'
 import markedAlert from './MDAlert'
-
+import markedFootnotes from './MDFootnotes'
 import { MDKatex } from './MDKatex'
+import markedSlider from './MDSlider'
 
 marked.setOptions({
   breaks: true,
 })
-marked.use(MDKatex({ nonStandard: true }))
+marked.use(markedSlider())
 
 function buildTheme({ theme: _theme, fonts, size, isUseIndent }: IOpts): ThemeStyles {
   const theme = cloneDeep(_theme)
@@ -171,15 +173,17 @@ function removeContentFromStyle(styleString: string): string {
     .replace(/;\s*$/, `"`)
 }
 
-export function initRenderer(opts: IOpts) {
-  // console.log('opts', opts)
+export function initRenderer(opts: IOpts): RendererAPI {
   const footnotes: [number, string, string][] = []
   let footnoteIndex: number = 0
   let styleMapping: ThemeStyles = buildTheme(opts)
   let codeIndex: number = 0
-  let listIndex: number = 0
-  let isOrdered: boolean = false
-  // let themeName = opts.themeName;
+  const listOrderedStack: boolean[] = []
+  const listCounters: number[] = []
+
+  function getOpts(): IOpts {
+    return opts
+  }
 
   function styles(tag: string, addition: string = ``): string {
     return getStyles(styleMapping, tag, addition)
@@ -205,8 +209,16 @@ export function initRenderer(opts: IOpts) {
 
   function setOptions(newOpts: Partial<IOpts>): void {
     opts = { ...opts, ...newOpts }
+    const oldStyle = JSON.stringify(styleMapping)
     styleMapping = buildTheme(opts)
-    marked.use(markedAlert({ styles: styleMapping }))
+    const newStyle = JSON.stringify(styleMapping)
+    if (oldStyle !== newStyle) {
+      marked.use(markedAlert({ styles: styleMapping }))
+      marked.use(
+        MDKatex({ nonStandard: true }, styles(`inline_katex`, `;vertical-align: middle; line-height: 1;`), styles(`block_katex`, `;text-align: center;`),
+        ),
+      )
+    }
   }
 
   function buildReadingTime(readingTime: ReadTimeResults): string {
@@ -304,34 +316,54 @@ export function initRenderer(opts: IOpts) {
       return styledContent(`codespan`, escapedText, `code`)
     },
 
-    listitem(item: Tokens.ListItem): string {
-      if (isOrdered) {
-        const styletag = getStyles(styleMapping, `ol-listitem`) ? `ol-listitem` : `listitem`
-        const prefix = styletag === `listitem` ? `${listIndex + 1}. ` : `${listIndex + 1}`
+    list({ ordered, items, start = 1 }: Tokens.List) {
+      listOrderedStack.push(ordered)
+      listCounters.push(Number(start))
 
-        const content = item.tokens.map(t => (this[t.type as keyof Renderer] as <T>(token: T) => string)(t)).join(``)
+      const html = items
+        .map(item => this.listitem(item))
+        .join(``)
+
+      listOrderedStack.pop()
+      listCounters.pop()
+
+      return styledContent(
+        ordered ? `ol` : `ul`,
+        html,
+      )
+    },
+
+    // 2. listitem：从栈顶取 ordered + counter，计算 prefix 并自增
+    listitem(token: Tokens.ListItem) {
+      const ordered = listOrderedStack[listOrderedStack.length - 1]
+      const idx = listCounters[listCounters.length - 1]!
+
+      // 准备下一个
+      listCounters[listCounters.length - 1] = idx + 1
+
+      // 渲染内容：优先 inline，fallback 去掉 <p> 包裹
+      let content: string
+      try {
+        content = this.parser.parseInline(token.tokens)
+      }
+      catch {
+        content = this.parser
+          .parse(token.tokens)
+          .replace(/^<p(?:\s[^>]*)?>([\s\S]*?)<\/p>/, `$1`)
+      }
+
+      let styletag: string
+      if (ordered) {
+        styletag = getStyles(styleMapping, `ol-listitem`) ? `ol-listitem` : `listitem`
+        const prefix = styletag === `listitem` ? `${idx + 1}. ` : `${idx + 1}`
 
         return styledContent(styletag, `<span ${(styles(`ol-listitem .prefix`))}>${prefix}</span> <span>${content}</span>`, `li`)
       }
       else {
         const dot = getStyleValue(styleMapping, `listitem .prefix`, `content`) || ``
         const prefix = dot ? `${dot}` : `• `
-
-        const content = item.tokens.map(t => (this[t.type as keyof Renderer] as <T>(token: T) => string)(t)).join(``)
         return styledContent(`listitem`, `<span ${removeContentFromStyle(styles(`listitem .prefix`))}>${prefix}</span><span>${content}</span>`, `li`)
       }
-    },
-
-    list({ ordered, items, start = 1 }: Tokens.List): string {
-      const listItems = []
-      for (let i = 0; i < items.length; i++) {
-        isOrdered = ordered
-        listIndex = Number(start) + i - 1
-        const item = items[i]
-        listItems.push(this.listitem(item))
-      }
-      const label = ordered ? `ol` : `ul`
-      return styledContent(label, listItems.join(``))
     },
 
     image({ href, title, text }: Tokens.Image): string {
@@ -414,6 +446,13 @@ export function initRenderer(opts: IOpts) {
   }
 
   marked.use({ renderer })
+  marked.use(markedSlider({ styles: styleMapping }))
+  marked.use(markedAlert({ styles: styleMapping }))
+  marked.use(
+    MDKatex({ nonStandard: true }, styles(`inline_katex`, `;vertical-align: middle; line-height: 1;`), styles(`block_katex`, `;text-align: center;`),
+    ),
+  )
+  marked.use(markedFootnotes())
 
   return {
     buildAddition,
@@ -461,5 +500,6 @@ export function initRenderer(opts: IOpts) {
         return styledContent(`container`, content, `section`)
       }
     },
+    getOpts,
   }
 }
