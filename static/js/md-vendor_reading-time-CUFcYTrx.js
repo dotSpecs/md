@@ -1,4 +1,4 @@
-import{g as y}from"./md-cytoscape-BS5BTURY.js";import{r as C}from"./md-vendor_stream-browserify-yFN-A1ld.js";import{r as M}from"./md-vendor_util-Bs1cMKjb.js";var f={exports:{}};/*!
+import{g as y}from"./md-cytoscape-BS5BTURY.js";import{r as C}from"./md-vendor_stream-browserify-t7o60NLs.js";import{r as M}from"./md-vendor_util-DWIXOKm_.js";var f={exports:{}};/*!
  * reading-time
  * Copyright (c) Nicolas Gryman <ngryman@gmail.com>
  * MIT Licensed
