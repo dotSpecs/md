@@ -246,7 +246,7 @@ export const defaultStyleConfig = {
   theme: themeOptions[0].value,
   fontFamily: fontFamilyOptions[0].value,
   fontSize: fontSizeOptions[2].value,
-  primaryColor: colorOptions[0].value,
+  primaryColor: colorOptions[2].value,
   codeBlockTheme: codeBlockThemeOptions[23].value,
   legend: legendOptions[3].value,
 }

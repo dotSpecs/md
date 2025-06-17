@@ -46,6 +46,7 @@ const defaultTheme: Theme = {
     'h3': {
       'margin': `2em auto 1em`,
       'font-size': `1.1em`,
+      'text-align': `center`,
     },
     'h3 .content': {
       'padding-left': `8px`,
@@ -54,6 +55,7 @@ const defaultTheme: Theme = {
       'font-size': `1.1em`,
       'font-weight': `bold`,
       'line-height': `1.2`,
+      'display': `inline-block`,
     },
 
     // 四级标题
@@ -95,7 +97,7 @@ const defaultTheme: Theme = {
     'p': {
       'margin': `1.5em 8px`,
       'letter-spacing': `0.1em`,
-      'color': `var(--foreground)`,
+      'color': `hsl(var(--foreground))`,
     },
 
     // 引用
@@ -104,7 +106,7 @@ const defaultTheme: Theme = {
       'padding': `1em`,
       'border-left': `4px solid var(--md-primary-color)`,
       'border-radius': `6px`,
-      'color': `var(--foreground)`,
+      'color': `hsl(var(--foreground))`,
       'background': `var(--blockquote-background)`,
       'margin-bottom': `1em`,
     },
@@ -118,7 +120,7 @@ const defaultTheme: Theme = {
       'display': `block`,
       'font-size': `1em`,
       'letter-spacing': `0.1em`,
-      'color': `var(--foreground)`,
+      'color': `hsl(var(--foreground))`,
     },
 
     'blockquote_note': {
@@ -248,6 +250,7 @@ const defaultTheme: Theme = {
       'overflow-x': `auto`,
       '-webkit-overflow-scrolling': `touch`,
       'padding': `0.5em 0`,
+      'color': `var(--md-primary-color)`,
     },
   },
   inline: {
@@ -507,6 +510,7 @@ const simpleTheme = toMerged(defaultTheme, {
 
     'h3 .content': {
       'padding-left': `12px`,
+      'padding-right': `12px`,
       'font-size': `1.2em`,
       'border-radius': `6px`,
       'line-height': `2.4em`,
@@ -1197,7 +1201,7 @@ const symbolTheme = toMerged(defaultTheme, {
       'font-size': `1.4em`,
       'border-bottom': `none`,
       'background': `none`,
-      'color': `var(--foreground)`,
+      'color': `hsl(var(--foreground))`,
       'padding': `0`,
     },
     'h2 .suffix': {
@@ -1407,6 +1411,9 @@ const popTheme = toMerged(defaultTheme, {
       'padding': `2px 10px`,
       'display': `block`,
     },
+    'h3': {
+      'text-align': `center`,
+    },
     'h3 .content': {
       'font-size': `1.3em`,
       'margin-top': `20px`,
@@ -1415,19 +1422,25 @@ const popTheme = toMerged(defaultTheme, {
       'border-radius': `4px`,
       'border': `none`,
       'padding': `5px 10px`,
-      'display': `block`,
+      'display': `inline-block`,
       'color': `#fff`,
     },
     'h4 .content': {
       'font-size': `1.2em`,
       'color': `#ff2e63`,
+      'text-align': `center`,
     },
     'h5 .content': {
       'font-size': `1.1em`,
       'color': `#ff2e63`,
+      'text-align': `center`,
     },
     'h6 .content': {
-      color: `#ff2e63`,
+      'color': `#ff2e63`,
+      'text-align': `center`,
+    },
+    'p': {
+      color: `var(--md-primary-color)`,
     },
     'ul': {
       'background-color': `hsla(0,0%,100%,.7)`,
@@ -1467,6 +1480,9 @@ const popTheme = toMerged(defaultTheme, {
       'color': `#ff2e63`,
       'line-height': 1,
     },
+    'blockquote_p': {
+      color: `var(--md-primary-color)`,
+    },
     'code_pre': {
       'border': `2px solid #ff2e63`,
       'box-shadow': `5px 5px 0 #252a34`,
@@ -1478,8 +1494,14 @@ const popTheme = toMerged(defaultTheme, {
       'margin': `25px 0`,
       'border-radius': `3px`,
     },
+    'footnotes': {
+      color: `var(--md-primary-color)`,
+    },
   },
   inline: {
+    'listitem': {
+      color: `var(--md-primary-color)`,
+    },
     'listitem .prefix': {
       content: `★ `,
       color: `#ff2e63`,
@@ -1491,6 +1513,7 @@ const popTheme = toMerged(defaultTheme, {
       'display': `flex`,
       'align-items': `center`,
       'gap': `0.5em`,
+      'color': `var(--md-primary-color)`,
     },
     'ol-listitem .prefix': {
       'background-color': `#ff2e63`,
@@ -1510,7 +1533,7 @@ const popTheme = toMerged(defaultTheme, {
       // left: 0,
     },
     'strong': {
-      color: `var(--foreground)`,
+      color: `var(--md-primary-color)`,
     },
     'codespan': {
       'padding': `3px 6px`,
@@ -1565,6 +1588,7 @@ const popTheme = toMerged(defaultTheme, {
       'border': `none`,
       'padding': `0.5em`,
       'border-bottom': `2px solid #252a34`,
+      'color': `var(--md-primary-color)`,
     },
   },
 })
@@ -1627,6 +1651,9 @@ const cyberTheme = toMerged(defaultTheme, {
       'text-shadow': `3px 3px 0px rgba(255,0,128,.8)`,
       'background': `none`,
     },
+    'h3': {
+      'text-align': `center`,
+    },
     'h3 .content': {
       'font-size': `1.3em`,
       'line-height': `2em`,
@@ -1639,21 +1666,32 @@ const cyberTheme = toMerged(defaultTheme, {
       'border-image-source': `linear-gradient(0deg, #ff2d6a, #0ff)`,
       // 'padding': `0.3em 1em`,
       'background': `none`,
+      'display': `inline-block`,
     },
     'h4': {
       'font-size': `1.2em`,
       'color': `#0ff`,
+      'text-align': `center`,
     },
     'h4 .content': {
       'font-size': `1.2em`,
       'color': `#0ff`,
+      'text-align': `center`,
+    },
+    'h5': {
+      'text-align': `center`,
     },
     'h5 .content': {
       'font-size': `1.1em`,
       'color': `#0ff`,
+      'text-align': `center`,
+    },
+    'h6': {
+      'text-align': `center`,
     },
     'h6 .content': {
-      color: `#0ff`,
+      'color': `#0ff`,
+      'text-align': `center`,
     },
     'blockquote': {
       'background': `rgba(0,255,255,.05)`,
@@ -1697,6 +1735,12 @@ const cyberTheme = toMerged(defaultTheme, {
     },
     'footnotes': {
       color: `#e0e0e0`,
+    },
+    'p': {
+      color: `hsl(var(--md-primary-color))`,
+    },
+    'block_katex': {
+      color: `hsl(var(--md-primary-color))`,
     },
   },
   inline: {
@@ -1794,6 +1838,7 @@ const kidsTheme = toMerged(defaultTheme, {
       'display': `flex`,
       'gap': `.5em`,
       'align-items': `center`,
+      'justify-content': `center`,
     },
     'h1 .prefix': {
       'content': `🌈`,
@@ -1814,6 +1859,7 @@ const kidsTheme = toMerged(defaultTheme, {
       'display': `flex`,
       'gap': `.5em`,
       'align-items': `center`,
+      'justify-content': `center`,
     },
     'h2 .prefix': {
       'content': `🎨`,
@@ -1831,6 +1877,7 @@ const kidsTheme = toMerged(defaultTheme, {
       'display': `flex`,
       'gap': `.5em`,
       'align-items': `center`,
+      'justify-content': `center`,
     },
     'h3 .prefix': {
       content: `✨`,
@@ -1847,18 +1894,26 @@ const kidsTheme = toMerged(defaultTheme, {
       'border-left': `none`,
       'line-height': `1.5em`,
     },
+    'h4': {
+      'text-align': `center`,
+    },
     'h4 .content': {
       'font-size': `1.2em`,
       'color': `#4DD0E1`,
+      'text-align': `center`,
     },
     'h5 .content': {
       'font-size': `1.1em`,
       'color': `#4DD0E1`,
+      'text-align': `center`,
     },
     'h6 .content': {
-      color: `#4DD0E1`,
+      'color': `#4DD0E1`,
+      'text-align': `center`,
     },
-
+    'p': {
+      color: `var(--md-primary-color)`,
+    },
     'blockquote': {
       'background': `#F8F9FA`,
       'border': `2px dashed #4DD0E1`,
@@ -1872,6 +1927,10 @@ const kidsTheme = toMerged(defaultTheme, {
       'font-size': `24px`,
       'color': `#4DD0E1`,
       'margin-top': `-20px`,
+    },
+
+    'blockquote_p': {
+      color: `var(--md-primary-color)`,
     },
 
     'code_pre': {
@@ -1902,8 +1961,14 @@ const kidsTheme = toMerged(defaultTheme, {
       // background: `url('https://cdn.meirishici.com/md/static/images/bg/dots-pattern.png') repeat-x 0 0`,
       margin: `20px 0`,
     },
+    'footnotes': {
+      color: `var(--md-primary-color)`,
+    },
   },
   inline: {
+    'listitem': {
+      color: `var(--md-primary-color)`,
+    },
     'listitem .prefix': {
       'content': `🌟`,
       'margin-right': `8px`,
@@ -1912,6 +1977,7 @@ const kidsTheme = toMerged(defaultTheme, {
       'text-indent': 0,
       'display': `flex`,
       'align-items': `center`,
+      'color': `var(--md-primary-color)`,
     },
     'ol-listitem .prefix': {
       'background': `#FFD93D`,
@@ -1969,6 +2035,7 @@ const kidsTheme = toMerged(defaultTheme, {
     'td': {
       border: `2px solid #FFD93D`,
       padding: `10px 15px`,
+      color: `var(--md-primary-color)`,
     },
   },
 })
@@ -1997,7 +2064,7 @@ const notebookTheme = toMerged(defaultTheme, {
 
     'h1': {
       'margin': `1.5em 0 1em`,
-      'color': `var(--foreground)`,
+      'color': `hsl(var(--foreground))`,
       'text-align': `center`,
       'border-bottom': `2px dashed var(--md-primary-color)`,
       'font-size': `1.8em`,
@@ -2063,6 +2130,9 @@ const notebookTheme = toMerged(defaultTheme, {
       'color': `var(--md-primary-color)`,
     },
 
+    'p': {
+      color: `var(--md-primary-color)`,
+    },
     'blockquote': {
       'background': `#f8f9fa`,
       'border-left': `4px solid #3498db`,
@@ -2072,7 +2142,9 @@ const notebookTheme = toMerged(defaultTheme, {
       'border-radius': `0px`,
       'box-shadow': `2px 2px 5px rgba(0,0,0,0.05)`,
     },
-
+    'blockquote_p': {
+      color: `var(--md-primary-color)`,
+    },
     'blockquote .quote-mark': {
       'content': `“`,
       'color': `rgba(52,152,219,.2)`,
@@ -2105,8 +2177,14 @@ const notebookTheme = toMerged(defaultTheme, {
       background: `repeating-linear-gradient(90deg,transparent,transparent 5px,#3498db 0,#3498db 10px)`,
       margin: `2em 0`,
     },
+    'footnotes': {
+      color: `var(--md-primary-color)`,
+    },
   },
   inline: {
+    'listitem': {
+      color: `var(--md-primary-color)`,
+    },
     'listitem .prefix': {
       'content': `✓`,
       'color': `var(--md-primary-color)`,
@@ -2121,6 +2199,7 @@ const notebookTheme = toMerged(defaultTheme, {
       'display': `flex`,
       'align-items': `center`,
       'gap': `0.5em`,
+      'color': `var(--md-primary-color)`,
     },
 
     'ol-listitem .prefix': {
