@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { ComponentPublicInstance } from 'vue'
+import CodeMirror from 'codemirror'
+import { Eye, List, Pen } from 'lucide-vue-next'
 import {
   AIPolishButton,
   AIPolishPopover,
@@ -23,8 +25,6 @@ import { useDisplayStore, useStore } from '@/stores'
 import { checkImage, formatDoc, toBase64 } from '@/utils'
 import { toggleFormat } from '@/utils/editor'
 import fileApi from '@/utils/file'
-import CodeMirror from 'codemirror'
-import { Eye, List, Pen } from 'lucide-vue-next'
 
 const store = useStore()
 const displayStore = useDisplayStore()

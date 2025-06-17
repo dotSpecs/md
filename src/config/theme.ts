@@ -1,6 +1,6 @@
-import type { IConfigOption, Theme } from '@/types'
-
 import { toMerged } from 'es-toolkit'
+
+import type { IConfigOption, Theme } from '@/types'
 
 const defaultTheme: Theme = {
   base: {
@@ -14,9 +14,10 @@ const defaultTheme: Theme = {
     'h1': {
       'margin': `2em auto 1em`,
       'font-size': `1.3em`,
+      'text-align': `center`,
     },
     'h1 .content': {
-      'display': `table`,
+      'display': `inline-block`,
       'padding': `0 1em`,
       'border-bottom': `2px solid var(--md-primary-color)`,
       'color': `hsl(var(--foreground))`,
@@ -29,9 +30,10 @@ const defaultTheme: Theme = {
     'h2': {
       'margin': `2em auto 1em`,
       'font-size': `1.2em`,
+      'text-align': `center`,
     },
     'h2 .content': {
-      'display': `table`,
+      'display': `inline-block`,
       'padding': `0 0.2em`,
       'color': `#fff`,
       'background': `var(--md-primary-color)`,
@@ -333,14 +335,21 @@ const graceTheme = toMerged(defaultTheme, {
   },
   block: {
     'container': {},
+    'h1': {
+      'text-align': `center`,
+    },
     'h1 .content': {
+      'display': `inline-block`,
       'padding': `0.5em 1em`,
       'border-bottom': `2px solid var(--md-primary-color)`,
       'font-size': `1.4em`,
       'text-shadow': `2px 2px 4px rgba(0,0,0,0.1)`,
     },
-
+    'h2': {
+      'text-align': `center`,
+    },
     'h2 .content': {
+      'display': `inline-block`,
       'padding': `0.3em 1em`,
       'border-radius': `8px`,
       'font-size': `1.3em`,
@@ -351,7 +360,7 @@ const graceTheme = toMerged(defaultTheme, {
       'padding-left': `12px`,
       'font-size': `1.2em`,
       'border-left': `4px solid var(--md-primary-color)`,
-      'border-bottom': `1px dashed var(--md-primary-color)`,
+      // 'border-bottom': `1px dashed var(--md-primary-color)`,
     },
 
     'h4 .content': {
@@ -476,13 +485,20 @@ const simpleTheme = toMerged(defaultTheme, {
   },
   block: {
     'container': {},
+    'h1': {
+      'text-align': `center`,
+    },
     'h1 .content': {
+      'display': `inline-block`,
       'padding': `0.5em 1em`,
       'font-size': `1.4em`,
       'text-shadow': `1px 1px 3px rgba(0,0,0,0.05)`,
     },
-
+    'h2': {
+      'text-align': `center`,
+    },
     'h2 .content': {
+      'display': `inline-block`,
       'padding': `0.3em 1.2em`,
       'font-size': `1.3em`,
       'border-radius': `8px 24px 8px 24px`,
