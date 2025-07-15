@@ -2,6 +2,7 @@
 import { Expand, UploadCloud } from 'lucide-vue-next'
 import { storeLabels } from '@/config/store'
 import { getAllStoreStates, useDisplayStore, useStore } from '@/stores'
+import { downloadFile } from '@/utils'
 import { copyPlain } from '@/utils/clipboard'
 
 const props = defineProps({
@@ -106,13 +107,7 @@ function exportSelectedConfig() {
     return acc
   }, {} as Record<string, any>)
 
-  const blob = new Blob([JSON.stringify(selectedConfig, null, 2)], { type: `application/json` })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement(`a`)
-  a.href = url
-  a.download = `exported_config.json`
-  a.click()
-  URL.revokeObjectURL(url)
+  downloadFile(JSON.stringify(selectedConfig, null, 2), `exported_config.json`, `application/json`)
   toast.success(`配置文件导出成功`)
   emit(`close`)
 }
@@ -235,7 +230,7 @@ function applyImportedConfig() {
           <TabsTrigger value="import">
             导入配置
           </TabsTrigger>
-          <TabsTrigger v-for="item in tabs.filter(item => item.value !== 'import')" :key="item.value" :value="item.value">
+          <TabsTrigger v-for="item in tabs.filter(tab => tab.value !== 'import')" :key="item.value" :value="item.value">
             {{ item.label }}
           </TabsTrigger>
         </TabsList>
@@ -353,15 +348,14 @@ function applyImportedConfig() {
                 @change="handleFileImport"
               >
               <Button
-                type="button"
-                class="mr-2 h-10 cursor-pointer rounded-md bg-gray-200 px-4 py-2 text-gray-700 dark:bg-gray-700 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-600"
+                variant="ghost"
+                class="mr-2"
                 @click="triggerFileInput"
               >
                 重新导入
               </Button>
 
               <Button
-                type="primary"
                 :disabled="Object.values(importStates.selected).every(v => !v)"
                 @click="applyImportedConfig"
               >

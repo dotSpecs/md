@@ -1,4 +1,3 @@
-import type { ReadTimeResults } from 'reading-time'
 import CodeMirror from 'codemirror'
 import { toPng } from 'html-to-image'
 import { v4 as uuid } from 'uuid'
@@ -14,8 +13,11 @@ import {
 } from '@/config'
 import {
   addPrefix,
+  downloadFile,
   downloadMD,
   exportHTML,
+  exportPDF,
+  exportPureHTML,
   formatDoc,
   sanitizeTitle,
 } from '@/utils'
@@ -272,7 +274,10 @@ export const useStore = defineStore(`store`, () => {
   const setCssEditorValue = (content: string) => {
     cssEditor.value!.setValue(content)
   }
-  // 自定义 CSS 内容
+  /**
+   * 自定义 CSS 内容
+   * @deprecated 在后续版本中将会移除
+   */
   const cssContent = useStorage(`__css_content`, DEFAULT_CSS_CONTENT)
   const cssContentConfig = useStorage(addPrefix(`css_content_config`), {
     active: `方案1`,
@@ -337,9 +342,13 @@ export const useStore = defineStore(`store`, () => {
     isMacCodeBlock: isMacCodeBlock.value,
   })
 
-  const readingTime = ref<ReadTimeResults | null>(null)
+  const readingTime = reactive({
+    chars: 0,
+    words: 0,
+    minutes: 0,
+  })
 
-  // 文章标题
+  // 文章标题,用于生成目录
   const titleList = ref<{
     url: string
     title: string
@@ -359,7 +368,9 @@ export const useStore = defineStore(`store`, () => {
 
     const raw = editor.value!.getValue()
     const { html: baseHtml, readingTime: readingTimeResult } = renderMarkdown(raw, renderer)
-    readingTime.value = readingTimeResult
+    readingTime.chars = raw.length
+    readingTime.words = readingTimeResult.words
+    readingTime.minutes = Math.ceil(readingTimeResult.minutes)
     output.value = postProcessHtml(baseHtml, readingTimeResult, renderer)
 
     // 提取标题
@@ -573,24 +584,30 @@ export const useStore = defineStore(`store`, () => {
     document.querySelector(`#output`)!.innerHTML = output.value
   }
 
+  // 导出编辑器内容为无样式 HTML
+  const exportEditorContent2PureHTML = () => {
+    exportPureHTML(editor.value!.getValue(), posts.value[currentPostIndex.value].title)
+  }
+
   // 下载卡片
-  const downloadAsCardImage = () => {
-    const el = document.querySelector(`#output-wrapper>.preview`)! as HTMLElement
-    toPng(el, {
+  const downloadAsCardImage = async () => {
+    const el = document.querySelector<HTMLElement>(`#output-wrapper>.preview`)!
+    const url = await toPng(el, {
       backgroundColor: isDark.value ? `` : `#fff`,
       skipFonts: true,
       pixelRatio: Math.max(window.devicePixelRatio || 1, 2),
       style: {
         margin: `0`,
       },
-    }).then((url) => {
-      const a = document.createElement(`a`)
-      a.download = sanitizeTitle(posts.value[currentPostIndex.value].title)
-      document.body.appendChild(a)
-      a.href = url
-      a.click()
-      document.body.removeChild(a)
     })
+
+    downloadFile(url, `${sanitizeTitle(posts.value[currentPostIndex.value].title)}.png`, `image/png`)
+  }
+
+  // 导出编辑器内容为 PDF
+  const exportEditorContent2PDF = () => {
+    exportPDF(primaryColor.value, posts.value[currentPostIndex.value].title)
+    document.querySelector(`#output`)!.innerHTML = output.value
   }
 
   // 导出编辑器内容到本地
@@ -625,32 +642,21 @@ export const useStore = defineStore(`store`, () => {
     }
   }
 
-  // 导入 Markdown 文档
-  const importMarkdownContent = () => {
-    const body = document.body
-    const input = document.createElement(`input`)
-    input.type = `file`
-    input.name = `filename`
-    input.accept = `.md`
-    input.onchange = () => {
-      const file = input.files![0]
-      if (!file) {
-        return
-      }
-
-      const reader = new FileReader()
-      reader.readAsText(file)
-      reader.onload = (event) => {
-        editor.value!.setValue(event.target!.result as string)
-        toast.success(`文档导入成功`)
-      }
+  // 撤销操作
+  const undo = () => {
+    if (editor.value) {
+      editor.value.undo()
     }
-
-    body.appendChild(input)
-    input.click()
-    body.removeChild(input)
   }
 
+  // 重做操作
+  const redo = () => {
+    if (editor.value) {
+      editor.value.redo()
+    }
+  }
+
+  // 是否打开重置样式对话框
   const isOpenConfirmDialog = ref(false)
 
   // 重置样式
@@ -701,15 +707,19 @@ export const useStore = defineStore(`store`, () => {
 
     formatContent,
     exportEditorContent2HTML,
+    exportEditorContent2PureHTML,
     exportEditorContent2MD,
+    exportEditorContent2PDF,
     downloadAsCardImage,
 
-    importMarkdownContent,
     importDefaultContent,
     clearContent,
 
     copyToClipboard,
     pasteFromClipboard,
+
+    undo,
+    redo,
 
     isOpenConfirmDialog,
     resetStyleConfirm,

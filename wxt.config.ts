@@ -1,11 +1,6 @@
-import type { OutputOptions } from 'rollup'
 import { defineConfig } from 'wxt'
 import ViteConfig from './vite.config'
 
-function getBuildOptions() {
-  delete (ViteConfig.build!.rollupOptions!.output as OutputOptions)!.manualChunks
-  return ViteConfig.build
-}
 export default defineConfig({
   srcDir: `src`,
   modulesDir: `src/modules`,
@@ -14,7 +9,7 @@ export default defineConfig({
     icons: {
       256: mode === `development` ? `/mpmd/icon-256-gray.png` : `/mpmd/icon-256.png`,
     },
-    permissions: [`storage`, `tabs`, `activeTab`, `sidePanel`, `contextMenus`],
+    permissions: [`storage`, `activeTab`, `sidePanel`, `contextMenus`],
     host_permissions: [
       `https://*.github.com/*`,
       `https://*.githubusercontent.com/*`,
@@ -62,7 +57,8 @@ export default defineConfig({
       && plugin !== null
       && !(`name` in plugin && plugin.name === `vite-plugin-Radar`),
     ),
-    build: getBuildOptions(),
+    define: undefined,
+    build: undefined,
     base: `/`,
   }),
 })

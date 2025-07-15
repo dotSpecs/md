@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { ClipboardPasteIcon, Contact2Icon, CopyIcon, TableIcon, UploadCloudIcon } from 'lucide-vue-next'
-import { useDisplayStore, useStore } from '@/stores'
+import { ClipboardPasteIcon, Contact2Icon, CopyIcon, Redo2Icon, TableIcon, Undo2Icon, UploadCloudIcon } from 'lucide-vue-next'
 
 const { toggleShowInsertFormDialog, toggleShowUploadImgDialog, toggleShowInsertMpCardDialog } = useDisplayStore()
 
-const { copyToClipboard, pasteFromClipboard } = useStore()
+const { copyToClipboard, pasteFromClipboard, undo, redo } = useStore()
 </script>
 
 <template>
@@ -13,6 +12,15 @@ const { copyToClipboard, pasteFromClipboard } = useStore()
       编辑
     </MenubarTrigger>
     <MenubarContent align="start">
+      <MenubarItem @click="undo()">
+        <Undo2Icon class="mr-2 h-4 w-4" />
+        撤销
+      </MenubarItem>
+      <MenubarItem @click="redo()">
+        <Redo2Icon class="mr-2 h-4 w-4" />
+        重做
+      </MenubarItem>
+      <MenubarSeparator />
       <MenubarItem @click="toggleShowUploadImgDialog()">
         <UploadCloudIcon class="mr-2 h-4 w-4" />
         上传图片
@@ -26,11 +34,11 @@ const { copyToClipboard, pasteFromClipboard } = useStore()
         插入公众号名片
       </MenubarItem>
       <MenubarSeparator />
-      <MenubarItem @click="copyToClipboard">
+      <MenubarItem @click="copyToClipboard()">
         <CopyIcon class="mr-2 h-4 w-4" />
         复制
       </MenubarItem>
-      <MenubarItem @click="pasteFromClipboard">
+      <MenubarItem @click="pasteFromClipboard()">
         <ClipboardPasteIcon class="mr-2 h-4 w-4" />
         粘贴
       </MenubarItem>

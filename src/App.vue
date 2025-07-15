@@ -1,9 +1,18 @@
 <script setup lang="ts">
+import { Toaster } from '@/components/ui/sonner'
 import CodemirrorEditor from '@/views/CodemirrorEditor.vue'
+
+const store = useStore()
 </script>
 
 <template>
+  <AppSplash />
   <CodemirrorEditor />
+  <Toaster
+    rich-colors
+    position="top-center"
+    :theme="store.isDark ? 'dark' : 'light'"
+  />
 </template>
 
 <style lang="less">

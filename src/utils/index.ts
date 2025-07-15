@@ -3,7 +3,8 @@ import type { PropertiesHyphen } from 'csstype'
 import type { ReadTimeResults } from 'reading-time'
 import DOMPurify from 'isomorphic-dompurify'
 import juice from 'juice'
-import { marked } from 'marked'
+import { Marked, marked } from 'marked'
+
 import * as prettierPluginBabel from 'prettier/plugins/babel'
 import * as prettierPluginEstree from 'prettier/plugins/estree'
 import * as prettierPluginMarkdown from 'prettier/plugins/markdown'
@@ -12,8 +13,9 @@ import { format } from 'prettier/standalone'
 import { prefix } from '@/config/prefix'
 import type { Block, ExtendedProperties, Inline, Theme } from '@/types'
 import type { RendererAPI } from '@/types/renderer-types'
-
 import { addSpacingToMarkdown } from '@/utils/autoSpace'
+import markedAlert from './MDAlert'
+import { MDKatex } from './MDKatex'
 
 export function addPrefix(str: string) {
   return `${prefix}__${str}`
@@ -40,7 +42,7 @@ export function customizeTheme(theme: Theme, options: {
 export function customCssWithTemplate(jsonString: Partial<Record<Block | Inline, PropertiesHyphen>>, color: string, theme: Theme) {
   const newTheme = customizeTheme(theme, { color })
 
-  const mergeProperties = <T extends Block | Inline = Block>(target: Record<T, PropertiesHyphen>, source: Partial<Record<Block | Inline | string, PropertiesHyphen>>, keys: T[]) => {
+  const mergeProperties = <T extends Block | Inline = Block>(target: Record<T, PropertiesHyphen>, source: Partial<Record<Block | Inline, PropertiesHyphen>>, keys: T[]) => {
     keys.forEach((key) => {
       if (source[key]) {
         target[key] = Object.assign(target[key] || {}, source[key])
@@ -145,17 +147,17 @@ export function css2json(css: string): Partial<Record<Block | Inline, Properties
  * @param {ExtendedProperties} style - 样式对象
  * @returns {string} - CSS 字符串
  */
-export function getStyleString(style: ExtendedProperties) {
+export function getStyleString(style: ExtendedProperties): string {
   return Object.entries(style ?? {}).map(([key, value]) => `${key}: ${value}`).join(`; `)
 }
 
 /**
  * 格式化内容
  * @param {string} content - 要格式化的内容
- * @param {'markdown' | 'css'} [type] - 内容类型，决定使用的解析器，默认为'markdown'
+ * @param {'markdown' | 'css'} [type] - 内容类型，决定使用的解析器，默认为 'markdown'
  * @returns {Promise<string>} - 格式化后的内容
  */
-export async function formatDoc(content: string, type: `markdown` | `css` = `markdown`) {
+export async function formatDoc(content: string, type: `markdown` | `css` = `markdown`): Promise<string> {
   const plugins = {
     markdown: [prettierPluginMarkdown, prettierPluginBabel, prettierPluginEstree],
     css: [prettierPluginCss],
@@ -194,107 +196,141 @@ export function sanitizeTitle(title: string) {
  */
 export function downloadMD(doc: string, title: string = `untitled`) {
   const safeTitle = sanitizeTitle(title)
-  const downLink = document.createElement(`a`)
+  downloadFile(doc, `${safeTitle}.md`, `text/markdown;charset=utf-8`)
+}
 
-  downLink.download = `${safeTitle}.md`
-  downLink.style.display = `none`
+/**
+ * 设置元素样式，确保导出时的样式正确
+ * @param {Element} element - 要设置样式的元素
+ */
+function setStyles(element: Element) {
+  /**
+   * 获取一个 DOM 元素的所有样式，
+   * @param {DOM 元素} element DOM 元素
+   * @param {排除的属性} excludes 如果某些属性对结果有不良影响，可以使用这个参数来排除
+   * @returns 行内样式拼接结果
+   */
+  function getElementStyles(element: Element, excludes = [`width`, `height`, `inlineSize`, `webkitLogicalWidth`, `webkitLogicalHeight`]) {
+    const styles = getComputedStyle(element, null)
+    return Object.entries(styles)
+      .filter(
+        ([key]) => {
+          // 将驼峰转换为短横线格式
+          const kebabKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)
+          return styles.getPropertyValue(kebabKey) && !excludes.includes(key)
+        },
+      )
+      .map(([key, value]) => {
+        // 将驼峰转换为短横线格式
+        const kebabKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)
+        return `${kebabKey}:${value};`
+      })
+      .join(``)
+  }
 
-  const blob = new Blob([doc], { type: `text/markdown;charset=utf-8` })
-  const objectUrl = URL.createObjectURL(blob)
-  downLink.href = objectUrl
+  switch (true) {
+    case isPre(element):
+    case isCode(element):
+    case isSpan(element):
+      element.setAttribute(`style`, getElementStyles(element))
+  }
+  if (element.children.length) {
+    Array.from(element.children).forEach(child => setStyles(child))
+  }
 
-  document.body.appendChild(downLink)
-  downLink.click()
-  document.body.removeChild(downLink)
+  // 判断是否是包裹代码块的 pre 元素
+  function isPre(element: Element) {
+    return (
+      element.tagName === `PRE`
+      && Array.from(element.classList).includes(`code__pre`)
+    )
+  }
 
-  // 释放 URL 对象，避免内存泄漏
-  URL.revokeObjectURL(objectUrl)
+  // 判断是否是包裹代码块的 code 元素
+  function isCode(element: Element | null) {
+    if (element == null) {
+      return false
+    }
+    return element.tagName === `CODE`
+  }
+
+  // 判断是否是包裹代码字符的 span 元素
+  function isSpan(element: Element) {
+    return (
+      element.tagName === `SPAN`
+      && (isCode(element.parentElement)
+        || isCode((element.parentElement!).parentElement))
+    )
+  }
+}
+
+/**
+ * 处理HTML内容，应用样式和颜色变量
+ * @param {string} primaryColor - 主色调
+ * @returns {string} 处理后的HTML字符串
+ */
+function processHtmlContent(primaryColor: string): string {
+  const element = document.querySelector(`#output`)!
+  setStyles(element)
+
+  return element.innerHTML
+    .replace(/var\(--md-primary-color\)/g, primaryColor)
+    .replace(/--md-primary-color:.+?;/g, ``)
 }
 
 /**
  * 导出 HTML 生成内容
  */
 export function exportHTML(primaryColor: string, title: string = `untitled`) {
-  const element = document.querySelector(`#output`)!
+  const htmlStr = processHtmlContent(primaryColor)
+  const fullHtml = `<html><head><meta charset="utf-8" /></head><body><div style="width: 750px; margin: auto;">${htmlStr}</div></body></html>`
 
-  setStyles(element)
+  downloadFile(fullHtml, `${sanitizeTitle(title)}.html`, `text/html`)
+}
 
-  const htmlStr = element.innerHTML
-    .replace(/var\(--md-primary-color\)/g, primaryColor)
-    .replace(/--md-primary-color:.+?;/g, ``)
+export async function exportPureHTML(raw: string, title: string = `untitled`) {
+  const safeTitle = sanitizeTitle(title)
 
+  const marked = new Marked()
+  marked.use(markedAlert({ withoutStyle: true }))
+  marked.use(
+    MDKatex({ nonStandard: true }, ``, ``),
+  )
+  const pureHtml = await marked.parse(raw)
+
+  downloadFile(pureHtml, `${safeTitle}.html`, `text/html`)
+}
+
+/**
+ * 通用文件下载函数
+ * @param content - 文件内容
+ * @param filename - 文件名
+ * @param mimeType - MIME 类型，默认为 text/plain
+ */
+export function downloadFile(content: string, filename: string, mimeType: string = `text/plain`) {
   const downLink = document.createElement(`a`)
-
-  downLink.download = `${title}.html`
+  downLink.download = filename
   downLink.style.display = `none`
-  const blob = new Blob([
-    `<html><head><meta charset="utf-8" /></head><body><div style="width: 750px; margin: auto;">${htmlStr}</div></body></html>`,
-  ])
 
-  downLink.href = URL.createObjectURL(blob)
+  // 检查是否是 base64 data URL
+  if (content.startsWith(`data:`)) {
+    downLink.href = content
+  }
+  else if (mimeType === `text/html`) {
+    downLink.href = `data:text/html;charset=utf-8,${encodeURIComponent(content)}`
+  }
+  else {
+    const blob = new Blob([content], { type: mimeType })
+    downLink.href = URL.createObjectURL(blob)
+  }
+
   document.body.appendChild(downLink)
   downLink.click()
   document.body.removeChild(downLink)
 
-  function setStyles(element: Element) {
-    /**
-     * 获取一个 DOM 元素的所有样式，
-     * @param {DOM 元素} element DOM 元素
-     * @param {排除的属性} excludes 如果某些属性对结果有不良影响，可以使用这个参数来排除
-     * @returns 行内样式拼接结果
-     */
-    function getElementStyles(element: Element, excludes = [`width`, `height`, `inlineSize`, `webkitLogicalWidth`, `webkitLogicalHeight`]) {
-      const styles = getComputedStyle(element, null)
-      return Object.entries(styles)
-        .filter(
-          ([key]) => {
-            // 将驼峰转换为短横线格式
-            const kebabKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)
-            return styles.getPropertyValue(kebabKey) && !excludes.includes(key)
-          },
-        )
-        .map(([key, value]) => {
-          // 将驼峰转换为短横线格式
-          const kebabKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)
-          return `${kebabKey}:${value};`
-        })
-        .join(``)
-    }
-
-    switch (true) {
-      case isPre(element):
-      case isCode(element):
-      case isSpan(element):
-        element.setAttribute(`style`, getElementStyles(element))
-    }
-    if (element.children.length) {
-      Array.from(element.children).forEach(child => setStyles(child))
-    }
-
-    // 判断是否是包裹代码块的 pre 元素
-    function isPre(element: Element) {
-      return (
-        element.tagName === `PRE`
-        && Array.from(element.classList).includes(`code__pre`)
-      )
-    }
-
-    // 判断是否是包裹代码块的 code 元素
-    function isCode(element: Element | null) {
-      if (element == null) {
-        return false
-      }
-      return element.tagName === `CODE`
-    }
-
-    // 判断是否是包裹代码字符的 span 元素
-    function isSpan(element: Element) {
-      return (
-        element.tagName === `SPAN`
-        && (isCode(element.parentElement)
-          || isCode((element.parentElement!).parentElement))
-      )
-    }
+  // 如果是 blob URL，释放内存
+  if (!content.startsWith(`data:`) && mimeType !== `text/html`) {
+    URL.revokeObjectURL(downLink.href)
   }
 }
 
@@ -307,7 +343,7 @@ export function exportHTML(primaryColor: string, title: string = `untitled`) {
  * @param {number} options.cols - 列数
  * @returns {string} 生成的 Markdown 表格
  */
-export function createTable({ data, rows, cols }: { data: { [k: string]: string }, rows: number, cols: number }) {
+export function createTable({ data, rows, cols }: { data: { [k: string]: string }, rows: number, cols: number }): string {
   let table = ``
   for (let i = 0; i < rows + 2; ++i) {
     table += `| `
@@ -332,6 +368,73 @@ export function toBase64(file: Blob) {
   })
 }
 
+/**
+ * 导出 PDF 文档
+ * @param {string} primaryColor - 主色调
+ * @param {string} title - 文档标题
+ */
+export function exportPDF(primaryColor: string, title: string = `untitled`) {
+  const htmlStr = processHtmlContent(primaryColor)
+  const safeTitle = sanitizeTitle(title)
+
+  // 创建新窗口用于打印
+  const printWindow = window.open(``, `_blank`)
+  if (!printWindow) {
+    console.error(`无法打开打印窗口`)
+    return
+  }
+
+  // 写入HTML内容，包含自定义页眉页脚
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>${safeTitle}</title>
+      <style>
+        @page {
+          @top-center {
+            content: "${safeTitle}";
+            font-size: 12px;
+            color: #666;
+          }
+          @bottom-left {
+            content: "微信 Markdown 编辑器";
+            font-size: 10px;
+            color: #999;
+          }
+          @bottom-right {
+            content: "第 " counter(page) " 页，共 " counter(pages) " 页";
+            font-size: 10px;
+            color: #999;
+          }
+        }
+        
+        @media print {
+          body { margin: 0; }
+        }
+      </style>
+    </head>
+    <body>
+      <div style="width: 100%; max-width: 750px; margin: auto;">
+        ${htmlStr}
+      </div>
+    </body>
+    </html>
+  `)
+
+  printWindow.document.close()
+
+  // 等待内容加载完成后自动打开打印对话框
+  printWindow.onload = () => {
+    printWindow.print()
+    // 打印完成后关闭窗口
+    printWindow.onafterprint = () => {
+      printWindow.close()
+    }
+  }
+}
+
 export function checkImage(file: File) {
   // 检查文件名后缀
   const isValidSuffix = /\.(?:gif|jpe?g|png)$/i.test(file.name)
@@ -351,7 +454,7 @@ export function checkImage(file: File) {
     }
   }
 
-  return { ok: true }
+  return { ok: true, msg: `` }
 }
 
 /**
@@ -384,23 +487,14 @@ export function solveWeChatImage() {
   })
 }
 
-export function mergeCss(html: string): string {
+function mergeCss(html: string): string {
   return juice(html, {
     inlinePseudoElements: true,
     preserveImportant: true,
   })
 }
 
-export function createEmptyNode(): HTMLElement {
-  const node = document.createElement(`p`)
-  node.style.fontSize = `0`
-  node.style.lineHeight = `0`
-  node.style.margin = `0`
-  node.innerHTML = `&nbsp;`
-  return node
-}
-
-export function modifyHtmlStructure(htmlString: string): string {
+function modifyHtmlStructure(htmlString: string): string {
   const tempDiv = document.createElement(`div`)
   tempDiv.innerHTML = htmlString
 
@@ -410,6 +504,15 @@ export function modifyHtmlStructure(htmlString: string): string {
   })
 
   return tempDiv.innerHTML
+}
+
+function createEmptyNode(): HTMLElement {
+  const node = document.createElement(`p`)
+  node.style.fontSize = `0`
+  node.style.lineHeight = `0`
+  node.style.margin = `0`
+  node.innerHTML = `&nbsp;`
+  return node
 }
 
 export function processClipboardContent(primaryColor: string) {
@@ -495,22 +598,22 @@ export function postProcessHtml(baseHtml: string, reading: ReadTimeResults, rend
       `
   }
   html += `
-      <style>
-        .code__pre {
-          padding: 0 !important;
-        }
-  
-        .hljs.code__pre code {
-          display: -webkit-box;
-          padding: 0.5em 1em 1em;
-          overflow-x: auto;
-          text-indent: 0;
-        }
-        h2 strong {
-          color: inherit !important;
-        }
-      </style>
-    `
+    <style>
+      .code__pre {
+        padding: 0 !important;
+      }
+
+      .hljs.code__pre code {
+        display: -webkit-box;
+        padding: 0.5em 1em 1em;
+        overflow-x: auto;
+        text-indent: 0;
+      }
+      h2 strong {
+        color: inherit !important;
+      }
+    </style>
+  `
   // 包裹 HTML
   return renderer.createContainer(html)
 }

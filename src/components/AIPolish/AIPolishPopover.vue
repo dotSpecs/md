@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Pause, Settings, X } from 'lucide-vue-next'
-import { nextTick, ref, toRaw, watch } from 'vue'
 import { Button } from '@/components/ui/button'
 import {
   Select,

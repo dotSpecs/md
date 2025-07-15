@@ -46,6 +46,7 @@ export interface AlertOptions {
   className?: string
   variants?: AlertVariantItem[]
   styles?: ThemeStyles
+  withoutStyle?: boolean
 }
 
 /**

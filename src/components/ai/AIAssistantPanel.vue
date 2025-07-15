@@ -10,7 +10,6 @@ import {
   Settings,
   Trash2,
 } from 'lucide-vue-next'
-import { nextTick, onMounted, ref, watch } from 'vue'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -20,12 +19,10 @@ import {
 } from '@/components/ui/dialog'
 import { Textarea } from '@/components/ui/textarea'
 import useAIConfigStore from '@/stores/AIConfig'
-/* ---------- 依赖 ---------- */
 import type { QuickCommandRuntime } from '@/stores/useQuickCommands'
-
 import { useQuickCommands } from '@/stores/useQuickCommands'
-
 import { copyPlain } from '@/utils/clipboard'
+
 /* ---------- 组件属性 ---------- */
 const props = defineProps<{ open: boolean }>()
 const emit = defineEmits([`update:open`])
@@ -564,7 +561,7 @@ async function sendMessage() {
           <Button
             :disabled="!input.trim() && !loading"
             size="icon"
-            class="bg-primary hover:bg-primary/90 text-primary-foreground absolute bottom-3 right-3 rounded-full disabled:opacity-40"
+            class="hover:bg-primary/90 bg-primary text-primary-foreground absolute bottom-3 right-3 rounded-full disabled:opacity-40"
             :aria-label="loading ? '暂停' : '发送'"
             @click="loading ? pauseStreaming() : sendMessage()"
           >

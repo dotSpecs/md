@@ -36,14 +36,16 @@ export default defineWxtModule({
     wxt.hook(`vite:build:extendConfig`, (_, config) => {
       if (config.build?.rollupOptions?.input && config.build?.rollupOptions?.output) {
         const input = config.build?.rollupOptions.input as Record<string, string>
+        const wxtOutput = config.build?.rollupOptions.output as OutputOptions
         if (input.options || input.sidepanel) {
-          const wxtOutput = config.build?.rollupOptions.output as OutputOptions
           wxtOutput.manualChunks = (id) => {
             if (id.includes(`node_modules`)) {
               if (id.includes(`prettier`))
                 return `prettier`
               if (id.includes(`katex`))
                 return `katex`
+              if (id.includes(`diagram`) || id.includes(`Diagram`))
+                return `diagram`
               if (id.includes(`mermaid`))
                 return `mermaid`
               if (id.includes(`cytoscape`))

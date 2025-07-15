@@ -9,10 +9,25 @@
 /* 顶层容器样式 */
 container {
 }
+md-content {
+
+}
+md-content .prefix {
+
+}
+md-content .suffix {
+
+}
 /* 一级标题样式 */
 h1 {
 }
 h1 .content {
+
+}
+h1 .prefix {
+
+}
+h1 .suffix {
 
 }
 /* 二级标题样式 */
@@ -21,11 +36,23 @@ h2 {
 h2 .content {
 
 }
+h2 .prefix {
+
+}
+h2 .suffix {
+    
+}
 /* 三级标题样式 */
 h3 {
 }
 h3 .content {
 
+}
+h3 .prefix {
+
+}
+h3 .suffix {
+    
 }
 /* 四级标题样式 */
 h4 {
@@ -33,17 +60,35 @@ h4 {
 h4 .content {
 
 }
+h4 .prefix {
+
+}
+h4 .suffix {
+    
+}
 /* 五级标题样式 */
 h5 {
 }
 h5 .content {
 
 }
+h5 .prefix {
+
+}
+h5 .suffix {
+    
+}
 /* 六级标题样式 */
 h6 {
 }
 h6 .content {
 
+}
+h6 .prefix {
+
+}
+h6 .suffix {
+    
 }
 /* 图片样式 */
 image {
@@ -86,6 +131,12 @@ ul {
 /* 列表项样式 */
 listitem {
 }
+listitem .prefix {
+
+}
+ol-listitem .prefix {
+
+}
 /* 代码块样式 */
 code {
 }
@@ -103,6 +154,9 @@ blockquote_note {
 }
 /* GFM tip 样式 */
 blockquote_tip {
+}
+/* GFM info 样式 */
+blockquote_info {
 }
 /* GFM important 样式 */
 blockquote_important {
@@ -122,6 +176,9 @@ blockquote_title_note {
 /* GFM tip 标题 */
 blockquote_title_tip {
 }
+/* GFM info 标题 */
+blockquote_title_info {
+}
 /* GFM important 标题 */
 blockquote_title_important {
 }
@@ -136,6 +193,9 @@ blockquote_p_note {
 }
 /* GFM tip 段落样式 */
 blockquote_p_tip {
+}
+/* GFM info 段落样式 */
+blockquote_p_info {
 }
 /* GFM important 段落样式 */
 blockquote_p_important {
