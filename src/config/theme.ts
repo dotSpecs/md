@@ -1460,7 +1460,7 @@ const popTheme = toMerged(defaultTheme, {
       'text-align': `center`,
     },
     'p': {
-      color: `var(--md-primary-color)`,
+      color: `#0a0a0a`,
     },
     'ul': {
       'background-color': `hsla(0,0%,100%,.7)`,
@@ -1520,7 +1520,7 @@ const popTheme = toMerged(defaultTheme, {
   },
   inline: {
     'listitem': {
-      color: `var(--md-primary-color)`,
+      color: `#0a0a0a`,
     },
     'listitem .prefix': {
       content: `★ `,
@@ -1533,7 +1533,7 @@ const popTheme = toMerged(defaultTheme, {
       'display': `flex`,
       'align-items': `center`,
       'gap': `0.5em`,
-      'color': `var(--md-primary-color)`,
+      'color': `#0a0a0a`,
     },
     'ol-listitem .prefix': {
       'background-color': `#ff2e63`,
@@ -1932,7 +1932,7 @@ const kidsTheme = toMerged(defaultTheme, {
       'text-align': `center`,
     },
     'p': {
-      color: `var(--md-primary-color)`,
+      color: `#34495e`,
     },
     'blockquote': {
       'background': `#F8F9FA`,
@@ -1950,7 +1950,7 @@ const kidsTheme = toMerged(defaultTheme, {
     },
 
     'blockquote_p': {
-      color: `var(--md-primary-color)`,
+      color: `#34495e`,
     },
 
     'code_pre': {
@@ -1982,12 +1982,12 @@ const kidsTheme = toMerged(defaultTheme, {
       margin: `20px 0`,
     },
     'footnotes': {
-      color: `var(--md-primary-color)`,
+      color: `#34495e`,
     },
   },
   inline: {
     'listitem': {
-      color: `var(--md-primary-color)`,
+      color: `#34495e`,
     },
     'listitem .prefix': {
       'content': `🌟`,
@@ -1997,7 +1997,7 @@ const kidsTheme = toMerged(defaultTheme, {
       'text-indent': 0,
       'display': `flex`,
       'align-items': `center`,
-      'color': `var(--md-primary-color)`,
+      'color': `#34495e`,
     },
     'ol-listitem .prefix': {
       'background': `#FFD93D`,
@@ -2055,7 +2055,7 @@ const kidsTheme = toMerged(defaultTheme, {
     'td': {
       border: `2px solid #FFD93D`,
       padding: `10px 15px`,
-      color: `var(--md-primary-color)`,
+      color: `#34495e`,
     },
   },
 })
@@ -2151,7 +2151,7 @@ const notebookTheme = toMerged(defaultTheme, {
     },
 
     'p': {
-      color: `var(--md-primary-color)`,
+      color: `#34495e`,
     },
     'blockquote': {
       'background': `#f8f9fa`,
@@ -2203,7 +2203,7 @@ const notebookTheme = toMerged(defaultTheme, {
   },
   inline: {
     'listitem': {
-      color: `var(--md-primary-color)`,
+      color: `#34495e`,
     },
     'listitem .prefix': {
       'content': `✓`,
@@ -2219,7 +2219,7 @@ const notebookTheme = toMerged(defaultTheme, {
       'display': `flex`,
       'align-items': `center`,
       'gap': `0.5em`,
-      'color': `var(--md-primary-color)`,
+      'color': `#34495e`,
     },
 
     'ol-listitem .prefix': {
@@ -2382,14 +2382,26 @@ const paperTheme = toMerged(defaultTheme, {
       'margin': `20px 0 `,
     },
 
+    'blockquote_p': {
+      color: `#2C3E50`,
+    },
+
+    'p': {
+      color: `#2C3E50`,
+    },
+
     'code_pre': {
       border: `1px solid color-mix(in srgb, var(--md-primary-color) 30%, transparent)`,
       background: `color-mix(in srgb, var(--md-primary-color) 5%, transparent)`,
     },
+
+    'footnotes': {
+      color: `#2C3E50`,
+    },
   },
   inline: {
     'listitem': {
-
+      color: `#2C3E50`,
     },
     'listitem .prefix': {
       content: `✴ `,
@@ -2434,13 +2446,13 @@ const paperTheme = toMerged(defaultTheme, {
     'thead': {
       'background': `color-mix(in srgb, var(--md-primary-color) 10%, transparent)`,
       'font-weight': `bold`,
-      'color': `hsl(var(--foreground))`,
+      'color': `#2C3E50`,
     },
 
     'td': {
       border: `1px solid color-mix(in srgb, var(--md-primary-color) 20%, transparent)`,
       padding: `0.5em 1em`,
-      color: `hsl(var(--foreground))`,
+      color: `#2C3E50`,
     },
   },
 })
