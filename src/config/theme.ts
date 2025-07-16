@@ -345,6 +345,7 @@ const defaultTheme: Theme = {
 
 const graceTheme = toMerged(defaultTheme, {
   base: {
+    '--md-primary-color': `#FFB7C5`,
   },
   block: {
     'container': {},
@@ -655,7 +656,7 @@ const simpleTheme = toMerged(defaultTheme, {
 
 const auroraTheme = toMerged(defaultTheme, {
   base: {
-
+    '--md-primary-color': `#916dd5`,
   },
   block: {
     'container': {

@@ -509,6 +509,10 @@ export const useStore = defineStore(`store`, () => {
   }
 
   const themeChanged = withAfterRefresh((newTheme: keyof typeof themeMap) => {
+    const themeColor = themeMap[newTheme].base[`--md-primary-color`] ?? `#000000`
+    if (themeColor !== `#000000`) {
+      primaryColor.value = themeColor
+    }
     renderer.setOptions({
       theme: customCssWithTemplate(
         css2json(getCurrentTab().content),
