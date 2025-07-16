@@ -13,7 +13,7 @@ const defaultTheme: Theme = {
     // 一级标题
     'h1': {
       'margin': `2em auto 1em`,
-      // 'font-size': `1.3em`,
+      'font-size': `1em`,
       'text-align': `center`,
     },
     'h1 .content': {
@@ -29,7 +29,7 @@ const defaultTheme: Theme = {
     // 二级标题
     'h2': {
       'margin': `2em auto 1em`,
-      // 'font-size': `1.2em`,
+      'font-size': `1em`,
       'text-align': `center`,
     },
     'h2 .content': {
@@ -45,7 +45,7 @@ const defaultTheme: Theme = {
     // 三级标题
     'h3': {
       'margin': `2em auto 1em`,
-      // 'font-size': `1.1em`,
+      'font-size': `1em`,
       'text-align': `center`,
     },
     'h3 .content': {
