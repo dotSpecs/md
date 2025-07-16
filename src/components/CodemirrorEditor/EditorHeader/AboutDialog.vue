@@ -15,9 +15,9 @@ function onUpdate(val: boolean) {
 }
 
 const links = [
-  { label: `GitHub 仓库`, url: `https://github.com/doocs/md` },
-  { label: `Gitee 仓库`, url: `https://gitee.com/doocs/md` },
-  { label: `GitCode 仓库`, url: `https://gitcode.com/doocs/md` },
+  { label: `GitHub 仓库`, url: `https://github.com/dotSpecs/md` },
+  // { label: `Gitee 仓库`, url: `https://gitee.com/doocs/md` },
+  // { label: `GitCode 仓库`, url: `https://gitcode.com/doocs/md` },
 ]
 
 function onRedirect(url: string) {

@@ -295,7 +295,7 @@ export function initRenderer(opts: IOpts): RendererAPI {
         codeIndex = setTimeout(() => {
           mermaid.run()
         }, 0) as any as number
-        return `<pre class="mermaid">${text}</pre>`
+        return `<pre class="mermaid" style="display: flex; justify-content: center; margin: 1.2em 0;">${text}</pre>`
       }
       const langText = lang.split(` `)[0]
       const language = hljs.getLanguage(langText) ? langText : `plaintext`

@@ -13,7 +13,7 @@ const defaultTheme: Theme = {
     // 一级标题
     'h1': {
       'margin': `2em auto 1em`,
-      'font-size': `1.3em`,
+      // 'font-size': `1.3em`,
       'text-align': `center`,
     },
     'h1 .content': {
@@ -29,12 +29,12 @@ const defaultTheme: Theme = {
     // 二级标题
     'h2': {
       'margin': `2em auto 1em`,
-      'font-size': `1.2em`,
+      // 'font-size': `1.2em`,
       'text-align': `center`,
     },
     'h2 .content': {
       'display': `inline-block`,
-      'padding': `0 0.2em`,
+      // 'padding': `0 0.2em`,
       'color': `#fff`,
       'background': `var(--md-primary-color)`,
       'font-size': `1.2em`,
@@ -45,7 +45,7 @@ const defaultTheme: Theme = {
     // 三级标题
     'h3': {
       'margin': `2em auto 1em`,
-      'font-size': `1.1em`,
+      // 'font-size': `1.1em`,
       'text-align': `center`,
     },
     'h3 .content': {
@@ -2088,7 +2088,7 @@ const notebookTheme = toMerged(defaultTheme, {
       'color': `hsl(var(--foreground))`,
       'text-align': `center`,
       'border-bottom': `2px dashed var(--md-primary-color)`,
-      'font-size': `1.8em`,
+      // 'font-size': `1.8em`,
     },
 
     'h1 .content': {
@@ -2122,6 +2122,7 @@ const notebookTheme = toMerged(defaultTheme, {
       'margin': `1em 0 0.6em`,
       'display': `flex`,
       'align-items': `center`,
+      'justify-content': `center`,
       'gap': `0.5em`,
     },
     'h3 .prefix': {
@@ -2134,6 +2135,7 @@ const notebookTheme = toMerged(defaultTheme, {
       'color': `var(--md-primary-color)`,
       'border': `none`,
       'padding-left': `0`,
+      'text-align': `center`,
     },
 
     'h4 .content': {
@@ -2289,6 +2291,236 @@ const notebookTheme = toMerged(defaultTheme, {
       padding: `0.8em`,
       border: `1px solid #E1E4E8`,
       color: `#1B365C`,
+    },
+  },
+})
+
+const magazineTheme = toMerged(defaultTheme, {
+  base: {
+    '--md-primary-color': `#000`,
+    'font-family': `'Georgia', 'Times New Roman', serif`,
+    'line-height': `1.6`,
+    'letter-spacing': `0.5px`,
+  },
+  block: {
+    'container': {
+      'padding': `16px 20px`,
+      'background': `#ffffff`,
+      'color': `#333333`,
+      'max-width': `800px`,
+      'margin': `0 auto`,
+    },
+
+    'h1': {
+      // 'margin': `2em 0 1.5em`,
+      // 'border-left': `4px solid var(--md-primary-color)`,
+      // 'padding-left': `20px`,
+      'text-align': `left`,
+    },
+    'h1 .content': {
+      'font-size': `1.5em`,
+      'font-weight': `700`,
+      'color': `var(--md-primary-color)`,
+      'letter-spacing': `1px`,
+      'line-height': `1.2`,
+      'border-bottom': `none`,
+      'text-align': `left`,
+      'margin': `0`,
+      'padding': `0`,
+    },
+
+    'h2': {
+      'margin': `2em 0 1em`,
+      'position': `relative`,
+      // 'padding-left': `16px`,
+      'text-align': `left`,
+    },
+    'h2 .content': {
+      'font-size': `1.4em`,
+      'font-weight': `600`,
+      'color': `var(--md-primary-color)`,
+      'letter-spacing': `0.5px`,
+      'background': `none`,
+      // 'border-bottom': `2px solid #f0f0f0`,
+      // 'padding': `0 0 8px 0`,
+      'text-align': `left`,
+    },
+
+    'h3': {
+      'margin': `1.8em 0 1em`,
+      'text-align': `left`,
+    },
+    'h3 .content': {
+      'font-size': `1.3em`,
+      'font-weight': `500`,
+      'color': `var(--md-primary-color)`,
+      'border-left': `none`,
+      'padding': `0`,
+      'line-height': `1.3`,
+    },
+
+    'h4 .content': {
+      'font-size': `1.2em`,
+      'font-weight': `500`,
+      'color': `var(--md-primary-color)`,
+    },
+
+    'h5 .content': {
+      'font-size': `1.1em`,
+      'font-weight': `500`,
+      'color': `var(--md-primary-color)`,
+    },
+
+    'h6 .content': {
+      'font-size': `1em`,
+      'font-weight': `500`,
+      'color': `var(--md-primary-color)`,
+    },
+
+    'p': {
+      'margin': `1.2em 0`,
+      'color': `#444444`,
+      'line-height': `1.7`,
+      'letter-spacing': `0.3px`,
+    },
+
+    'blockquote': {
+      'background': `var(--background)`,
+      'border-left': `2px solid var(--md-primary-color)`,
+      'margin': `1.5em 0`,
+      'padding': `10px 20px`,
+      'font-style': `italic`,
+      'border-radius': `0`,
+    },
+
+    'blockquote_p': {
+      color: `var(--md-primary-color)`,
+      margin: `0`,
+    },
+
+    'image': {
+      'border-radius': `0`,
+      'box-shadow': `0 2px 8px rgba(0,0,0,0.1)`,
+      'margin': `2em auto`,
+    },
+
+    'ul': {
+      'list-style': `none`,
+      'padding-left': `0`,
+      'margin': `1.5em 0`,
+    },
+
+    'ol': {
+      'padding-left': `1.2em`,
+      'margin': `1.5em 0`,
+    },
+
+    'code_pre': {
+      'background': `#f8f9fa`,
+      'border': `1px solid #e9ecef`,
+      'border-radius': `0`,
+      'padding': `1.2em`,
+      'margin': `1.5em 0`,
+    },
+
+    'hr': {
+      border: `none`,
+      height: `1px`,
+      background: `#e9ecef`,
+      margin: `2.5em 0`,
+    },
+
+    'footnotes': {
+      'color': `#333`,
+      'font-size': `0.9em`,
+      'margin': `2em 0 1em`,
+      'padding-top': `1em`,
+      'border-top': `1px solid #e9ecef`,
+    },
+  },
+  inline: {
+    'listitem': {
+      'margin': `0.5em 0`,
+      'padding-left': `1.5em`,
+      'position': `relative`,
+      'color': `#444444`,
+    },
+
+    'listitem .prefix': {
+      'content': `• `,
+      'color': `var(--md-primary-color)`,
+      // 'position': `absolute`,
+      // 'left': `0`,
+      'font-weight': `bold`,
+    },
+
+    // 'ol-listitem': {
+    //   'margin': `0.5em 0`,
+    //   'color': `#444444`,
+    // },
+
+    // 'ol-listitem .prefix': {
+    //   'color': `var(--md-primary-color)`,
+    //   'font-weight': `600`,
+    // },
+
+    'codespan': {
+      'background': `#f1f3f4`,
+      'color': `#d73a49`,
+      'padding': `0.15em 0.4em`,
+      'border-radius': `3px`,
+      'font-size': `0.9em`,
+      'border': `none`,
+    },
+
+    'strong': {
+      'color': `var(--md-primary-color)`,
+      'font-weight': `700`,
+    },
+
+    'em': {
+      'color': `#555555`,
+      'font-style': `italic`,
+    },
+
+    'link': {
+      'color': `var(--md-primary-color)`,
+      'text-decoration': `none`,
+      'border-bottom': `1px solid #e9ecef`,
+      'transition': `border-color 0.2s ease`,
+    },
+
+    'wx_link': {
+      'color': `var(--md-primary-color)`,
+      'text-decoration': `none`,
+      'border-bottom': `1px solid #e9ecef`,
+      'transition': `border-color 0.2s ease`,
+    },
+
+    'table': {
+      'border-collapse': `collapse`,
+      'width': `100%`,
+      'margin': `2em 0`,
+      'background': `#ffffff`,
+    },
+
+    'thead': {
+      'background': `#f8f9fa`,
+      'border-bottom': `2px solid #e9ecef`,
+    },
+
+    'td': {
+      border: `1px solid #e9ecef`,
+      padding: `0.8em 1em`,
+      color: `#444444`,
+    },
+
+    'figcaption': {
+      'text-align': `center`,
+      'color': `#666666`,
+      'font-size': `0.9em`,
+      'margin-top': `0.5em`,
+      'font-style': `italic`,
     },
   },
 })
@@ -2470,6 +2702,7 @@ export const themeMap = {
   kids: kidsTheme,
   notebook: notebookTheme,
   paper: paperTheme,
+  magazine: magazineTheme,
 }
 
 export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
@@ -2526,6 +2759,11 @@ export const themeOptions: IConfigOption<keyof typeof themeMap>[] = [
   {
     label: `纸张`,
     value: `paper`,
+    desc: `@dotSpecs`,
+  },
+  {
+    label: `杂志`,
+    value: `magazine`,
     desc: `@dotSpecs`,
   },
 ]
