@@ -300,8 +300,7 @@ export function initRenderer(opts: IOpts): RendererAPI {
       const prefixContent = getStyleValue(styleMapping, `${tag} .prefix`, `content`) || ``
       const suffixContent = getStyleValue(styleMapping, `${tag} .suffix`, `content`) || ``
 
-      const content = `${prefixStyles ? `<section ${prefixStyles}>${prefixContent}</section>` : ``
-      }<section ${contentStyles}>${text}</section>${suffixStyles ? `<section ${suffixStyles}>${suffixContent}</section>` : ``}`
+      const content = `${prefixStyles ? `<section ${prefixStyles}>${prefixContent}</section>` : ``}<section ${contentStyles}>${text}</section>${suffixStyles ? `<section ${suffixStyles}>${suffixContent}</section>` : ``}`
 
       return styledContent(tag, content)
     },
