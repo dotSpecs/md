@@ -489,8 +489,9 @@ export function solveWeChatImage() {
 
 function mergeCss(html: string): string {
   return juice(html, {
+    applyStyleTags: true,
     inlinePseudoElements: true,
-    preserveImportant: true,
+    // preserveImportant: true,
   })
 }
 

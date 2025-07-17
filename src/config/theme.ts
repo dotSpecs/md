@@ -2548,6 +2548,22 @@ const magazineTheme = toMerged(defaultTheme, {
 })
 
 const paperTheme = toMerged(defaultTheme, {
+  elements: {
+    p: {
+      // color: 'red !important',
+    },
+  },
+  elementPseudos: {
+    blockquote: {
+      before: {
+        'content': `‘`,
+        'display': `inline-block`,
+        'font-size': `32px`,
+        'color': `#2C3E50`,
+        'margin-top': `-20px`,
+      },
+    },
+  },
   base: {
     '--md-primary-color': `#2C3E50`, // 改用更深沉的墨水色
     'font-family': `'Noto Serif', 'Times New Roman', serif`, // 使用衬线字体增加文档感
@@ -2558,7 +2574,7 @@ const paperTheme = toMerged(defaultTheme, {
     'container': {
       'padding': `10px`,
       'background': `hsl(var(--background))`,
-      'background-image': `url(https://cdn.meirishici.com/md/static/images/bg/paper.jpeg)`,
+      'background-image': `url(data:image/webp;base64,UklGRs4CAABXRUJQVlA4IMICAABwGwCdASrIACwBPjEYi0SiIaEQFAAgAwS0t2yGgyfgkwvgteGazrMBw5YMj/bb++nvxACeu3evikSWyy0/cqxiClNqdNcqIsiY9D4jTe1xI66yiiIQ/eQIbBdpXOIqmMKkIdsmJQJUkXL56hK7+ntk62KYrdbQEaxJUkz6GmtnWTRv7p3CYUmSo7G9CVIONmETz5s1tNv5OLoHW9OCmNsa/b2wBuQXIb/1GK0afsj+aeSbAyceOebcylJS61nXHU5M9DnJH1SKvES8hCH7SlDKO8bo6guNKfWVDeJcfp+R6GmUgAAA/v3DhPhr/QfFy7EWHzadcfiWIATvftFrDXF/ZAIp8TBtq/eIC7/w/lTtkaZ6aR0GA6RD34OLgf2MrH0DIIba7u30aOeOsbg4MuA1OStGEPm588ndbPK0u2Ts1KLBbJsD/lZMJxw/UG1s7asHe5gsKTzBBHVCeUAB6azCLCGopRvNBV1Uq9xUA9HpJH4hWYKPg93wo5KgsVN3P9FDaM4qnWJX4XQOn9hUUIKb6Oq7hh/uWveNQ9rp1LnLfwQCqcYEe/Sh8yk+/xpuxZyG7ygrrmhZOz3mNzY6RyaXz9AFNm4B3VOrqDWeiofAek+OnsF1KOx8/lS7Jn3gR9SzBfDo+hBXetIP0IoYezE/h3tb0hJGW8pp6FifqufmT0ZQVl9rfinU/hPcEb2viPpm3vvWZ2oHv5BWHzzSQTSexjaVV+2CRyXIyRk/cuqSFeRVUFt5nQvmuPcsOQDuMSbTwLajkeOSqvPQgoo92BehPLFe9zfrDDCbAf7SamJZwQ4W4Ha4+eLxQS1pHLu23MZgkwB343qxXTRaklFzQH0M3hkGV3IUnNLukyYOjOqWK5iw8X8wz6thRt6plljowFtG2M5F1ChY2g10NsGwWfrpz0cwiPjNt0R8EE+r0k/xgQAA)`,
       'background-repeat': `repeat`,
       'background-size': `100%`,
     },

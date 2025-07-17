@@ -204,7 +204,7 @@ export function initRenderer(opts: IOpts): RendererAPI {
       for (const [pseudo, styles] of Object.entries(pseudos)) {
         const selector = `${element}::${pseudo}`
         const styleDeclarations = Object.entries(styles)
-          .map(([property, value]) => `  ${property}: ${value};`)
+          .map(([property, value]) => property === `content` ? `  content: "${value}";` : `  ${property}: ${value};`)
           .join(`\n`)
 
         cssRules.push(`${selector} {\n${styleDeclarations}\n}`)
