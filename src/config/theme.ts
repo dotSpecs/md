@@ -3,6 +3,28 @@ import { toMerged } from 'es-toolkit'
 import type { IConfigOption, Theme } from '@/types'
 
 const defaultTheme: Theme = {
+  elements: {
+    // demo
+    // 'body': {
+    //   'font-family': `PingFang SC, sans-serif`,
+    // },
+  },
+  elementPseudos: {
+    // demo
+    // 'h1': {
+    //   'before': {
+    //     'content': `#`,
+    //     'color': `var(--md-primary-color)`,
+    //     'margin-right': `0.5em`,
+    //   }
+    // }
+  },
+  complexSelectors: {
+    // demo
+    // 'blockquote p::first-line': {
+    //   'font-weight': 'bold'
+    // }
+  },
   base: {
     '--md-primary-color': `#000000`,
     'text-align': `left`,

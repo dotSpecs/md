@@ -18,5 +18,6 @@ export interface RendererAPI {
   buildReadingTime: (reading: ReadTimeResults) => string
   buildFootnotes: () => string
   buildAddition: () => string
+  generateCSSFromTheme: () => string
   createContainer: (html: string) => string
 }

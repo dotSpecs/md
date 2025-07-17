@@ -614,6 +614,9 @@ export function postProcessHtml(baseHtml: string, reading: ReadTimeResults, rend
       }
     </style>
   `
+
+  html += `<style>${renderer.generateCSSFromTheme()}</style>`
+
   // 包裹 HTML
   return renderer.createContainer(html)
 }

@@ -185,6 +185,44 @@ export function initRenderer(opts: IOpts): RendererAPI {
     return opts
   }
 
+  function generateCSSFromTheme(): string {
+    const cssRules: string[] = []
+
+    // 处理普通元素样式
+    for (const [element, styles] of Object.entries(opts.theme.elements)) {
+      if (Object.keys(styles).length > 0) {
+        const styleDeclarations = Object.entries(styles)
+          .map(([property, value]) => `  ${property}: ${value};`)
+          .join(`\n`)
+
+        cssRules.push(`${element} {\n${styleDeclarations}\n}`)
+      }
+    }
+
+    // 处理 elementPseudos
+    for (const [element, pseudos] of Object.entries(opts.theme.elementPseudos)) {
+      for (const [pseudo, styles] of Object.entries(pseudos)) {
+        const selector = `${element}::${pseudo}`
+        const styleDeclarations = Object.entries(styles)
+          .map(([property, value]) => `  ${property}: ${value};`)
+          .join(`\n`)
+
+        cssRules.push(`${selector} {\n${styleDeclarations}\n}`)
+      }
+    }
+
+    // 处理复杂选择器
+    for (const [selector, styles] of Object.entries(opts.theme.complexSelectors)) {
+      const styleDeclarations = Object.entries(styles)
+        .map(([property, value]) => `  ${property}: ${value};`)
+        .join(`\n`)
+
+      cssRules.push(`${selector} {\n${styleDeclarations}\n}`)
+    }
+
+    return cssRules.join(`\n\n`)
+  }
+
   function styles(tag: string, addition: string = ``): string {
     return getStyles(styleMapping, tag, addition)
   }
@@ -461,6 +499,7 @@ export function initRenderer(opts: IOpts): RendererAPI {
     reset,
     parseFrontMatterAndContent,
     buildReadingTime,
+    generateCSSFromTheme,
     createContainer(content: string) {
       if (getStyles(styleMapping, `md-content`)) {
         const prefixStyles = removeContentFromStyle(styles(`md-content .prefix`))

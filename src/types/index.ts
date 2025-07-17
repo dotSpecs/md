@@ -17,6 +17,9 @@ interface CustomCSSProperties {
 export type ExtendedProperties = PropertiesHyphen & CustomCSSProperties
 
 export interface Theme {
+  elements: Record<string, ExtendedProperties>
+  elementPseudos: Record<string, Record<string, ExtendedProperties>>
+  complexSelectors: Record<string, ExtendedProperties> // 完全自定义的选择器
   base: ExtendedProperties
   block: Record<Block, ExtendedProperties>
   inline: Record<Inline, ExtendedProperties>
