@@ -31,6 +31,12 @@ const {
   citeStatusChanged,
   countStatusChanged,
   formatContent,
+  exportEditorContent2HTML,
+  exportEditorContent2PureHTML,
+  exportEditorContent2MD,
+  downloadAsCardImage,
+  copyImageToClipboard,
+  // exportEditorContent2PDF,
 } = store
 
 // 工具函数，添加格式
@@ -87,6 +93,7 @@ const formatItems = [
 ] as const
 
 const copyMode = useStorage(addPrefix(`copyMode`), `txt`)
+const exportMode = useStorage(addPrefix(`exportMode`), `md`)
 
 const { copy: copyContent } = useClipboard({
   legacy: true,
@@ -99,6 +106,12 @@ async function copy() {
     const mdContent = editor.value?.getValue() || ``
     await copyContent(mdContent)
     toast.success(`已复制 Markdown 源码到剪贴板。`)
+    return
+  }
+
+  if (copyMode.value === `png`) {
+    await copyImageToClipboard()
+    toast.success(`已复制 PNG 到剪贴板。`)
     return
   }
 
@@ -157,6 +170,26 @@ async function copy() {
       emit(`endCopy`)
     })
   }, 350)
+}
+
+// 导出函数
+async function exportContent() {
+  switch (exportMode.value) {
+    case `md`:
+      exportEditorContent2MD()
+      break
+    case `html`:
+      exportEditorContent2HTML()
+      break
+    case `pureHtml`:
+      exportEditorContent2PureHTML()
+      break
+    case `png`:
+      downloadAsCardImage()
+      break
+    default:
+      exportEditorContent2MD()
+  }
 }
 </script>
 
@@ -232,7 +265,7 @@ async function copy() {
 
       <!-- 复制按钮组 -->
       <div
-        class="bg-background space-x-1 text-background-foreground mx-2 flex items-center border rounded-md"
+        class="space-x-1 bg-background text-background-foreground mx-2 flex items-center border rounded-md"
       >
         <Button variant="ghost" class="shadow-none" @click="copy">
           复制
@@ -254,6 +287,39 @@ async function copy() {
               </DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="md">
                 MD 格式
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <!-- 导出按钮组 -->
+      <div
+        class="bg-background space-x-1 text-background-foreground mx-2 flex items-center border rounded-md"
+      >
+        <Button variant="ghost" class="shadow-none" @click="exportContent">
+          导出
+        </Button>
+        <Separator orientation="vertical" class="h-5" />
+        <DropdownMenu v-model="exportMode">
+          <DropdownMenuTrigger as-child>
+            <Button variant="ghost" class="px-2 shadow-none">
+              <ChevronDownIcon class="text-secondary-foreground h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" :align-offset="-5" class="w-[200px]">
+            <DropdownMenuRadioGroup v-model="exportMode">
+              <DropdownMenuRadioItem value="md">
+                .md 文档
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="html">
+                .html
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="pureHtml">
+                .html（无样式）
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="png">
+                .png
               </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>

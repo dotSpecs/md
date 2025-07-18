@@ -608,6 +608,33 @@ export const useStore = defineStore(`store`, () => {
     downloadFile(url, `${sanitizeTitle(posts.value[currentPostIndex.value].title)}.png`, `image/png`)
   }
 
+  const copyImageToClipboard = async () => {
+    const el = document.querySelector<HTMLElement>(`#output-wrapper>.preview`)!
+
+    try {
+      const dataUrl = await toPng(el, {
+        backgroundColor: isDark.value ? `` : `#fff`,
+        skipFonts: true,
+        pixelRatio: 2,
+      })
+
+      // 将 dataURL 转换为 Blob
+      const res = await fetch(dataUrl)
+      const blob = await res.blob()
+
+      // 复制到剪贴板
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          [blob.type]: blob,
+        }),
+      ])
+    }
+    catch (error) {
+      console.error(`复制图片到剪贴板失败:`, error)
+      toast.error(`复制失败，请检查浏览器权限`)
+    }
+  }
+
   // 导出编辑器内容为 PDF
   const exportEditorContent2PDF = () => {
     exportPDF(primaryColor.value, posts.value[currentPostIndex.value].title)
@@ -715,6 +742,7 @@ export const useStore = defineStore(`store`, () => {
     exportEditorContent2MD,
     exportEditorContent2PDF,
     downloadAsCardImage,
+    copyImageToClipboard,
 
     importDefaultContent,
     clearContent,
